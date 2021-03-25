@@ -1,4 +1,4 @@
-# UdonRabbit.Analyzer - Roslyn Analyzer for VRChat Udon/UdonSharp
+# UdonRabbit.Analyzer
 
 .NET Roslyn Analyzer for VRChat Udon and UdonSharp.
 
