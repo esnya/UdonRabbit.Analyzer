@@ -16,6 +16,8 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
+using UdonRabbit.Analyzer.Udon;
+
 #pragma warning disable RS1026
 
 namespace UdonRabbit.Analyzer
@@ -31,7 +33,7 @@ namespace UdonRabbit.Analyzer
         private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.URA0001Description), Resources.ResourceManager, typeof(Resources));
         private static readonly DiagnosticDescriptor RuleSet = new(ComponentId, Title, MessageFormat, Category, DiagnosticSeverity.Error, true, Description, HelpLinkUri);
 
-        private HashSet<string> exposedMethodSymbols;
+        private HashSet<string> _exposedMethodSymbols;
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RuleSet);
 
@@ -49,12 +51,9 @@ namespace UdonRabbit.Analyzer
             var invocation = (InvocationExpressionSyntax) context.Node;
 
             if (invocation.Expression is not MemberAccessExpressionSyntax member)
-            {
-                Debug.WriteLine("UDON DEBUGGER: invocation.Expression is not MemberAccessExpression");
                 return;
-            }
 
-            if (exposedMethodSymbols == null)
+            if (_exposedMethodSymbols == null)
                 LoadSdkAssemblies(context);
 
             var methodSymbol = context.SemanticModel.GetSymbolInfo(invocation);
@@ -65,10 +64,7 @@ namespace UdonRabbit.Analyzer
                 return;
 
             if (method.Name == "EmitInteract")
-            {
-                Debug.WriteLine("UDON DEBUGGER: Report Diagnostic");
                 context.ReportDiagnostic(Diagnostic.Create(RuleSet, invocation.GetLocation(), method.Name));
-            }
         }
 
         private void LoadSdkAssemblies(SyntaxNodeAnalysisContext context)
@@ -97,9 +93,12 @@ namespace UdonRabbit.Analyzer
 
             AppDomain.CurrentDomain.AssemblyResolve += ResolveDynamicLoadingAssemblies;
             var assembly = Assembly.LoadFrom(editor);
-            var manager = assembly.GetType("VRC.Udon.Editor.UdonEditorManager");
 
-            Debug.WriteLine(manager.GetType());
+            var manager = new UdonEditorManager(assembly);
+            if (!manager.HasInstance)
+                return;
+
+            _exposedMethodSymbols = new HashSet<string>(manager.GetUdonNodeDefinitions());
         }
 
         private string GetUdonNamedType(string name)
