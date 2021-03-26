@@ -6,8 +6,6 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace UdonRabbit.Analyzer
 {
-#pragma warning disable RS1026
-
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class FieldAccessorIsNotExposedToUdon : DiagnosticAnalyzer
     {
