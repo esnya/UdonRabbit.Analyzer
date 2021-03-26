@@ -67,6 +67,10 @@ namespace UdonRabbit.Analyzer.Udon
 
         public bool FindUdonMethodName(SemanticModel model, IMethodSymbol symbol)
         {
+            var receiver = symbol.ReceiverType;
+            if (receiver.BaseType.Equals(model.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
+                return true; // User-Defined Method, Skip
+
             return false;
         }
 
