@@ -61,7 +61,7 @@ namespace UdonRabbit.Analyzer
             if (methodSymbol.Symbol is not IMethodSymbol method)
                 return;
 
-            if (UdonSymbols.Instance != null && UdonSymbols.Instance.FindUdonMethodName(context.SemanticModel, method))
+            if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonMethodName(context.SemanticModel, method))
                 context.ReportDiagnostic(Diagnostic.Create(RuleSet, invocation.GetLocation(), method.Name));
         }
     }
