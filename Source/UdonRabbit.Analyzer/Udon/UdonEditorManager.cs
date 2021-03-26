@@ -35,6 +35,22 @@ namespace UdonRabbit.Analyzer.Udon
             }).Where(w => !string.IsNullOrWhiteSpace(w)).Distinct();
         }
 
+        public Dictionary<string, string> GetBuiltinEvents()
+        {
+            var m = _instance.GetType().GetMethod("GetNodeDefinitions", new[] { typeof(string) });
+            if (m == null)
+                return new Dictionary<string, string>();
+
+            var definitions = m.Invoke(_instance, new object[] { "Event_" }) as IEnumerable<object>;
+            return (definitions ?? Array.Empty<object>()).Select(w =>
+            {
+                var p = w.GetType().GetField("fullName", BindingFlags.Public | BindingFlags.Instance);
+                var fullName = p?.GetValue(w) as string;
+
+                return fullName == "Event_Custom" ? null : fullName?.Substring(6);
+            }).Where(w => !string.IsNullOrWhiteSpace(w)).ToDictionary(w => w, w => $"_{char.ToLowerInvariant(w[0])}{w.Substring(1)}");
+        }
+
         public Dictionary<Type, Type> GetVrcInheritedTypeMaps()
         {
             var dict = new Dictionary<Type, Type>();
