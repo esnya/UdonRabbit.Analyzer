@@ -25,8 +25,6 @@ namespace UdonRabbit.Analyzer
 
         public override void Initialize(AnalysisContext context)
         {
-            Debugger.Launch();
-
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.RegisterSyntaxNodeAction(AnalyzeMethodDeclaration, SyntaxKind.MethodDeclaration);
