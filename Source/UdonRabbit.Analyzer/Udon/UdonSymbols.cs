@@ -52,9 +52,9 @@ namespace UdonRabbit.Analyzer.Udon
 
         private UdonSymbols(UdonEditorManager manager)
         {
-            _nodeDefinitions = new HashSet<string>(manager?.GetUdonNodeDefinitions() ?? Array.Empty<string>());
             _builtinEvents = manager?.GetBuiltinEvents() ?? new Dictionary<string, string>();
             _inheritedTypeMap = manager?.GetVrcInheritedTypeMaps() ?? new Dictionary<Type, Type>();
+            _nodeDefinitions = new HashSet<string>(manager?.GetUdonNodeDefinitions() ?? Array.Empty<string>());
             _symbolToTypeMappings = new Dictionary<ITypeSymbol, Type>();
         }
 
@@ -86,16 +86,38 @@ namespace UdonRabbit.Analyzer.Udon
             if (!File.Exists(editor))
                 return null; // Invalid Path;
 
+            var loadedAssemblies = new HashSet<string>();
+
             Assembly ResolveDynamicLoadingAssemblies(object _, ResolveEventArgs args)
             {
-                var dll = $"{args.Name.Split(',').First()}.dll";
-                if (compilation.ExternalReferences.Any(w => w.Display.Contains(dll)))
-                    return Assembly.LoadFrom(compilation.ExternalReferences.First(w => w.Display.Contains(dll)).Display);
-                return Assembly.LoadFrom(Path.GetFullPath(Path.Combine(assemblies, dll)));
+                string LoadAssembly(string asmPath)
+                {
+                    if (compilation.ExternalReferences.Any(w => w.Display.Contains(asmPath)))
+                        return compilation.ExternalReferences.First(w => w.Display.Contains(asmPath)).Display;
+                    return Path.GetFullPath(Path.Combine(assemblies, asmPath));
+                }
+
+                var path = LoadAssembly($"{args.Name.Split(',').First()}.dll");
+                var asm = Assembly.LoadFrom(path);
+
+                loadedAssemblies.Add(path);
+                return asm;
             }
 
             AppDomain.CurrentDomain.AssemblyResolve += ResolveDynamicLoadingAssemblies;
             var assembly = Assembly.LoadFrom(editor);
+
+            foreach (var missingReference in compilation.ExternalReferences.Select(w => w.Display))
+            {
+                if (loadedAssemblies.Contains(missingReference))
+                    continue;
+
+                if (!File.Exists(missingReference))
+                    continue;
+
+                AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(missingReference));
+                loadedAssemblies.Add(missingReference);
+            }
 
             var manager = new UdonEditorManager(assembly);
             return manager.HasInstance ? manager : null;
@@ -167,6 +189,9 @@ namespace UdonRabbit.Analyzer.Udon
 
             var functionName = $"__{(isSetter ? "set" : "get")}_{symbol.Name.Trim('_')}";
             var param = $"__{GetUdonNamedType(symbol.Type)}";
+            if (isSetter)
+                param += "__SystemVoid";
+
             var signature = $"{functionNamespace}.{functionName}{param}";
             return _nodeDefinitions.Contains(signature);
         }
