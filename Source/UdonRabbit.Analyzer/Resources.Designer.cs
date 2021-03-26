@@ -167,5 +167,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0003Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not currently supports static method declarations. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0004Description {
+            get {
+                return ResourceManager.GetString("URA0004Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently supports static method declarations. Please use instance method. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0004MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0004MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not currently supports static method declaration. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0004Title {
+            get {
+                return ResourceManager.GetString("URA0004Title", resourceCulture);
+            }
+        }
     }
 }
