@@ -9,6 +9,12 @@ This analyzer accelerates your Udon development with UdonSharp.
 - VRCSDK3 that supports Udon
 - UdonSharp
 
+## Development Requirements
+
+- .NET 5
+- Visual Studio Version 16.8+ or Visual Studio for Mac 8.8+
+- Unity Project that containing VRCSDK3 and UdonSharp
+
 ## Analyzer Documents
 
 See https://docs.mochizuki.moe/udon-rabbit/analayzer/analyzers/
@@ -26,4 +32,4 @@ MIT by [@6jz](https://twitter.com/6jz)
 This project contains some code from the following project.  
 See method comments for details.
 
-* [MerlinVR/UdonSharp](https://github.com/MerlinVR/UdonSharp)
+- [MerlinVR/UdonSharp](https://github.com/MerlinVR/UdonSharp)
