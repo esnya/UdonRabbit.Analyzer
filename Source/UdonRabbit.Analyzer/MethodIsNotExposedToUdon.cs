@@ -4,7 +4,6 @@
  *------------------------------------------------------------------------------------------*/
 
 using System.Collections.Immutable;
-using System.Diagnostics;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -13,15 +12,13 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 using UdonRabbit.Analyzer.Udon;
 
-#pragma warning disable RS1026
-
 namespace UdonRabbit.Analyzer
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class MethodIsNotExposedToUdon : DiagnosticAnalyzer
     {
         private const string ComponentId = "URA0001";
-        private const string Category = "Udon";
+        private const string Category = UdonConstants.UdonCategory;
         private const string HelpLinkUri = "https://docs.mochizuki.moe/udon-rabbit/packages/analyzer/analyzers/URA0001/";
         private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.URA0001Title), Resources.ResourceManager, typeof(Resources));
         private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.URA0001MessageFormat), Resources.ResourceManager, typeof(Resources));
@@ -32,8 +29,6 @@ namespace UdonRabbit.Analyzer
 
         public override void Initialize(AnalysisContext context)
         {
-            Debugger.Launch();
-
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.RegisterSyntaxNodeAction(AnalyzeInvocation, SyntaxKind.InvocationExpression);
@@ -48,7 +43,7 @@ namespace UdonRabbit.Analyzer
                 return;
 
             var declaration = context.SemanticModel.GetDeclaredSymbol(classDeclaration);
-            if (!declaration.BaseType.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
+            if (!declaration.BaseType.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default))
                 return;
 
             if (UdonSymbols.Instance == null)

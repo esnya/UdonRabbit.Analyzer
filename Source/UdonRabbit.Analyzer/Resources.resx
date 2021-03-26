@@ -138,4 +138,13 @@
   <data name="URA0001Title" xml:space="preserve">
     <value>Method is not exposed to Udon.</value>
   </data>
+  <data name="URA0002Description" xml:space="preserve">
+    <value>Should not use field accessor that does not exposed to Udon.</value>
+  </data>
+  <data name="URA0002MessageFormat" xml:space="preserve">
+    <value>Field Accessor '{0}' is not exposed to Udon.</value>
+  </data>
+  <data name="URA0002Title" xml:space="preserve">
+    <value>Field Accessor is not exposed to Udon.</value>
+  </data>
 </root>
