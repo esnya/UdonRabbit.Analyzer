@@ -141,29 +141,27 @@ namespace UdonRabbit.Analyzer.Udon
             return _nodeDefinitions.Contains(signature);
         }
 
-        public bool FindUdonVariableName(SemanticModel model, IFieldSymbol symbol, bool isSetter)
+        public bool FindUdonVariableName(SemanticModel model, ITypeSymbol typeSymbol, IFieldSymbol fieldSymbol, bool isSetter)
         {
-            var receiver = symbol.ContainingType;
-            if (receiver.BaseType.Equals(model.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
+            if (typeSymbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
                 return true; // User-Defined Method, Skip
 
-            var functionNamespace = SanitizeTypeName($"{receiver.ContainingNamespace.Name}{receiver.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var functionNamespace = SanitizeTypeName($"{typeSymbol.ContainingNamespace.Name}{typeSymbol.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             if (AllowList.Contains(functionNamespace))
                 return true;
 
-            var functionName = $"__{(isSetter ? "set" : "get")}_{symbol.Name.Trim('_')}";
-            var param = $"__{GetUdonNamedType(symbol.Type)}";
+            var functionName = $"__{(isSetter ? "set" : "get")}_{fieldSymbol.Name.Trim('_')}";
+            var param = $"__{GetUdonNamedType(fieldSymbol.Type)}";
             var signature = $"{functionNamespace}.{functionName}{param}";
             return _nodeDefinitions.Contains(signature);
         }
 
-        public bool FindUdonVariableName(SemanticModel model, IPropertySymbol symbol, bool isSetter)
+        public bool FindUdonVariableName(SemanticModel model, ITypeSymbol typeSymbol, IPropertySymbol symbol, bool isSetter)
         {
-            var receiver = symbol.ContainingType;
-            if (receiver.BaseType.Equals(model.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
+            if (typeSymbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
                 return true; // User-Defined Method, Skip
 
-            var functionNamespace = SanitizeTypeName($"{receiver.ContainingNamespace.Name}{receiver.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var functionNamespace = SanitizeTypeName($"{typeSymbol.ContainingNamespace.Name}{typeSymbol.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             if (AllowList.Contains(functionNamespace))
                 return true;
 
