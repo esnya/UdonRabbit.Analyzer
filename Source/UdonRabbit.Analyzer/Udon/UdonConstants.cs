@@ -4,6 +4,7 @@
     {
         public const string UdonBehaviour = "VRCUdonUdonBehaviour";
         public const string UdonCommonInterfacesReceiver = "VRCUdonCommonInterfacesIUdonEventReceiver";
+        public const string UdonSharpBehaviour = "UdonSharpUdonSharpBehaviour";
         public const string UdonSharpBehaviourFullName = "UdonSharp.UdonSharpBehaviour";
 
         public const string UdonCategory = "Udon";
