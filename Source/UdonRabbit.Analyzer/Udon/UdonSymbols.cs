@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -100,8 +99,6 @@ namespace UdonRabbit.Analyzer.Udon
             var receiver = symbol.ReceiverType;
             if (receiver.BaseType.Equals(model.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
                 return true; // User-Defined Method, Skip
-
-            Debugger.Break();
 
             var functionNamespace = SanitizeTypeName($"{receiver.ContainingNamespace.Name}{receiver.Name}");
             var functionName = $"__{symbol.Name.Trim('_').TrimStart('.')}";
