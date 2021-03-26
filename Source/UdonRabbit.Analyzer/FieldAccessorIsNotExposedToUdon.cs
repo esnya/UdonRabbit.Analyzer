@@ -37,8 +37,8 @@ namespace UdonRabbit.Analyzer
             if (classDeclaration == null)
                 return;
 
-            var declaration = context.SemanticModel.GetDeclaredSymbol(classDeclaration);
-            if (!declaration.BaseType.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default))
+            var classSymbol = context.SemanticModel.GetDeclaredSymbol(classDeclaration);
+            if (!classSymbol.BaseType.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default))
                 return;
 
             if (UdonSymbols.Instance == null)
@@ -46,19 +46,23 @@ namespace UdonRabbit.Analyzer
 
             var isAssignment = memberAccess.Parent is AssignmentExpressionSyntax;
 
+            var t = context.SemanticModel.GetTypeInfo(memberAccess.Expression);
             var fieldSymbol = context.SemanticModel.GetSymbolInfo(memberAccess);
             if (fieldSymbol.Symbol is IFieldSymbol field)
             {
-                if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonVariableName(context.SemanticModel, field, isAssignment))
+                if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonVariableName(context.SemanticModel, t.Type, field, isAssignment))
                     context.ReportDiagnostic(Diagnostic.Create(RuleSet, memberAccess.GetLocation(), field.Name));
                 return;
             }
 
             if (fieldSymbol.Symbol is IPropertySymbol props)
             {
-                if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonVariableName(context.SemanticModel, props, isAssignment))
+                if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonVariableName(context.SemanticModel, t.Type, props, isAssignment))
                     context.ReportDiagnostic(Diagnostic.Create(RuleSet, memberAccess.GetLocation(), props.Name));
+                return;
             }
+
+            Debug.WriteLine("Unknown Field Accessor");
         }
     }
 }
