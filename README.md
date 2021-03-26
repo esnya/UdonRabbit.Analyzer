@@ -20,3 +20,10 @@ See https://docs.mochizuki.moe/udon-rabbit/analayzer/analyzers/
 ## License
 
 MIT by [@6jz](https://twitter.com/6jz)
+
+## Third Party Notices
+
+This project contains some code from the following project.  
+See method comments for details.
+
+* [MerlinVR/UdonSharp](https://github.com/MerlinVR/UdonSharp)
