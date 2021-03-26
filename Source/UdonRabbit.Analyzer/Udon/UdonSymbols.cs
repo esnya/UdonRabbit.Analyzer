@@ -129,7 +129,7 @@ namespace UdonRabbit.Analyzer.Udon
             if (receiver.BaseType.Equals(model.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default))
                 return true; // User-Defined Method, Skip
 
-            var functionNamespace = SanitizeTypeName($"{receiver.ContainingNamespace.Name}{receiver.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var functionNamespace = SanitizeTypeName($"{receiver.ContainingNamespace.ToDisplayString()}{receiver.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             var functionName = $"__{symbol.Name.Trim('_').TrimStart('.')}";
 
             if (functionName == "__VRCInstantiate")
@@ -168,7 +168,7 @@ namespace UdonRabbit.Analyzer.Udon
             if (typeSymbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default))
                 return true; // User-Defined Method, Skip
 
-            var functionNamespace = SanitizeTypeName($"{typeSymbol.ContainingNamespace.Name}{typeSymbol.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var functionNamespace = SanitizeTypeName($"{typeSymbol.ContainingNamespace.ToDisplayString()}{typeSymbol.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             if (AllowList.Contains(functionNamespace))
                 return true;
 
@@ -183,7 +183,7 @@ namespace UdonRabbit.Analyzer.Udon
             if (typeSymbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
                 return true; // User-Defined Method, Skip
 
-            var functionNamespace = SanitizeTypeName($"{typeSymbol.ContainingNamespace.Name}{typeSymbol.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var functionNamespace = SanitizeTypeName($"{typeSymbol.ContainingNamespace.ToDisplayString()}{typeSymbol.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             if (AllowList.Contains(functionNamespace))
                 return true;
 
