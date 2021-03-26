@@ -160,7 +160,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# only support 1 type generics. に類似しているローカライズされた文字列を検索します。
+        ///   U# only supports one type generics. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0003Title {
             get {
