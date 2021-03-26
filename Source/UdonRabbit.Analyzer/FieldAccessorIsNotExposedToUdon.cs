@@ -2,7 +2,10 @@
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+
+using UdonRabbit.Analyzer.Udon;
 
 namespace UdonRabbit.Analyzer
 {
@@ -10,7 +13,7 @@ namespace UdonRabbit.Analyzer
     public class FieldAccessorIsNotExposedToUdon : DiagnosticAnalyzer
     {
         private const string ComponentId = "URA0002";
-        private const string Category = "Udon";
+        private const string Category = UdonConstants.UdonCategory;
         private const string HelpLinkUri = "https://docs.mochizuki.moe/udon-rabbit/packages/analyzer/analyzers/URA0002/";
         private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.URA0002Title), Resources.ResourceManager, typeof(Resources));
         private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.URA0002MessageFormat), Resources.ResourceManager, typeof(Resources));
@@ -23,9 +26,39 @@ namespace UdonRabbit.Analyzer
         {
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-            context.RegisterSyntaxNodeAction(AnalyzeInvocation, SyntaxKind.InvocationExpression);
+            context.RegisterSyntaxNodeAction(AnalyzeMemberAccess, SyntaxKind.SimpleMemberAccessExpression);
         }
 
-        private void AnalyzeInvocation(SyntaxNodeAnalysisContext context) { }
+        private void AnalyzeMemberAccess(SyntaxNodeAnalysisContext context)
+        {
+            var memberAccess = (MemberAccessExpressionSyntax) context.Node;
+
+            var classDeclaration = memberAccess.FirstAncestorOrSelf<ClassDeclarationSyntax>();
+            if (classDeclaration == null)
+                return;
+
+            var declaration = context.SemanticModel.GetDeclaredSymbol(classDeclaration);
+            if (!declaration.BaseType.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default))
+                return;
+
+            if (UdonSymbols.Instance == null)
+                UdonSymbols.Initialize(context.Compilation);
+
+            var isAssignment = memberAccess.Parent is AssignmentExpressionSyntax;
+
+            var fieldSymbol = context.SemanticModel.GetSymbolInfo(memberAccess);
+            if (fieldSymbol.Symbol is IFieldSymbol field)
+            {
+                if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonVariableName(context.SemanticModel, field, isAssignment))
+                    context.ReportDiagnostic(Diagnostic.Create(RuleSet, memberAccess.GetLocation(), field.Name));
+                return;
+            }
+
+            if (fieldSymbol.Symbol is IPropertySymbol props)
+            {
+                if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonVariableName(context.SemanticModel, props, isAssignment))
+                    context.ReportDiagnostic(Diagnostic.Create(RuleSet, memberAccess.GetLocation(), props.Name));
+            }
+        }
     }
 }

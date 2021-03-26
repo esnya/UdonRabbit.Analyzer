@@ -15,9 +15,15 @@ namespace UdonRabbit.Analyzer.Udon
     {
         private static readonly object LockObjForAsmLoad = new();
         private static readonly object LockObjForTypeMap = new();
-        private readonly Dictionary<string, string> _builtinEvents;
 
-        private readonly Dictionary<string, Type> _builtinTypes = new()
+        private static readonly HashSet<string> AllowList = new()
+        {
+            "UdonSharpUdonSyncMode",
+            "UdonSharpBehaviourSyncMode",
+            "UdonSharpUdonSharpBehaviour"
+        };
+
+        private static readonly Dictionary<string, Type> BuiltinTypes = new()
         {
             { "void", typeof(void) },
             { "string", typeof(string) },
@@ -37,6 +43,7 @@ namespace UdonRabbit.Analyzer.Udon
             { "object", typeof(object) }
         };
 
+        private readonly Dictionary<string, string> _builtinEvents;
         private readonly Dictionary<Type, Type> _inheritedTypeMap;
         private readonly HashSet<string> _nodeDefinitions;
         private readonly Dictionary<ITypeSymbol, Type> _symbolToTypeMappings;
@@ -97,10 +104,10 @@ namespace UdonRabbit.Analyzer.Udon
         public bool FindUdonMethodName(SemanticModel model, IMethodSymbol symbol)
         {
             var receiver = symbol.ReceiverType;
-            if (receiver.BaseType.Equals(model.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
+            if (receiver.BaseType.Equals(model.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default))
                 return true; // User-Defined Method, Skip
 
-            var functionNamespace = SanitizeTypeName($"{receiver.ContainingNamespace.Name}{receiver.Name}");
+            var functionNamespace = SanitizeTypeName($"{receiver.ContainingNamespace.Name}{receiver.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             var functionName = $"__{symbol.Name.Trim('_').TrimStart('.')}";
 
             if (functionName == "__VRCInstantiate")
@@ -134,9 +141,36 @@ namespace UdonRabbit.Analyzer.Udon
             return _nodeDefinitions.Contains(signature);
         }
 
-        public bool FindUdonVariableName(IFieldSymbol symbol)
+        public bool FindUdonVariableName(SemanticModel model, IFieldSymbol symbol, bool isSetter)
         {
-            return false;
+            var receiver = symbol.ContainingType;
+            if (receiver.BaseType.Equals(model.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
+                return true; // User-Defined Method, Skip
+
+            var functionNamespace = SanitizeTypeName($"{receiver.ContainingNamespace.Name}{receiver.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            if (AllowList.Contains(functionNamespace))
+                return true;
+
+            var functionName = $"__{(isSetter ? "set" : "get")}_{symbol.Name.Trim('_')}";
+            var param = $"__{GetUdonNamedType(symbol.Type)}";
+            var signature = $"{functionNamespace}.{functionName}{param}";
+            return _nodeDefinitions.Contains(signature);
+        }
+
+        public bool FindUdonVariableName(SemanticModel model, IPropertySymbol symbol, bool isSetter)
+        {
+            var receiver = symbol.ContainingType;
+            if (receiver.BaseType.Equals(model.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
+                return true; // User-Defined Method, Skip
+
+            var functionNamespace = SanitizeTypeName($"{receiver.ContainingNamespace.Name}{receiver.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            if (AllowList.Contains(functionNamespace))
+                return true;
+
+            var functionName = $"__{(isSetter ? "set" : "get")}_{symbol.Name.Trim('_')}";
+            var param = $"__{GetUdonNamedType(symbol.Type)}";
+            var signature = $"{functionNamespace}.{functionName}{param}";
+            return _nodeDefinitions.Contains(signature);
         }
 
         private Type RemapVrcBaseTypes(Type t)
@@ -222,8 +256,8 @@ namespace UdonRabbit.Analyzer.Udon
                 if (_symbolToTypeMappings.ContainsKey(s))
                     return _symbolToTypeMappings[s];
 
-                if (_builtinTypes.ContainsKey(s.ToDisplayString()))
-                    return _builtinTypes[s.ToDisplayString()];
+                if (BuiltinTypes.ContainsKey(s.ToDisplayString()))
+                    return BuiltinTypes[s.ToDisplayString()];
 
                 static IEnumerable<Type> LoadExportedTypes(Assembly asm)
                 {
