@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace UdonRabbit.Analyzer.Udon
 {
-    internal class UdonEditorManager
+    public class UdonEditorManager
     {
         private readonly object _instance;
 
@@ -31,8 +31,8 @@ namespace UdonRabbit.Analyzer.Udon
             return (definitions ?? Array.Empty<object>()).Select(w =>
             {
                 var p = w.GetType().GetField("fullName", BindingFlags.Public | BindingFlags.Instance);
-                return p.GetValue(w) as string;
-            });
+                return p?.GetValue(w) as string;
+            }).Where(w => !string.IsNullOrWhiteSpace(w)).Distinct();
         }
     }
 }
