@@ -48,7 +48,7 @@ namespace UdonRabbit.Analyzer.Udon
                 var fullName = p?.GetValue(w) as string;
 
                 return fullName == "Event_Custom" ? null : fullName?.Substring(6);
-            }).Where(w => !string.IsNullOrWhiteSpace(w)).ToDictionary(w => w, w => $"_{char.ToLowerInvariant(w[0])}{w.Substring(1)}");
+            }).Where(w => !string.IsNullOrWhiteSpace(w)).Distinct().ToDictionary(w => w, w => $"_{char.ToLowerInvariant(w[0])}{w.Substring(1)}");
         }
 
         public Dictionary<Type, Type> GetVrcInheritedTypeMaps()
