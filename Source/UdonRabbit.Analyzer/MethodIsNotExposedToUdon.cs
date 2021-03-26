@@ -43,7 +43,12 @@ namespace UdonRabbit.Analyzer
         {
             var invocation = (InvocationExpressionSyntax) context.Node;
 
-            if (invocation.Expression is not MemberAccessExpressionSyntax member)
+            var classDeclaration = invocation.FirstAncestorOrSelf<ClassDeclarationSyntax>();
+            if (classDeclaration == null)
+                return;
+
+            var declaration = context.SemanticModel.GetDeclaredSymbol(classDeclaration);
+            if (!declaration.BaseType.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
                 return;
 
             if (UdonSymbols.Instance == null)
