@@ -32,12 +32,7 @@ namespace UdonRabbit.Analyzer
         private void AnalyzeInvocation(SyntaxNodeAnalysisContext context)
         {
             var invocation = (InvocationExpressionSyntax) context.Node;
-            var classDeclaration = invocation.FirstAncestorOrSelf<ClassDeclarationSyntax>();
-            if (classDeclaration == null)
-                return;
-
-            var declaration = context.SemanticModel.GetDeclaredSymbol(classDeclaration);
-            if (!declaration.BaseType.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default))
+            if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntax(context.SemanticModel, invocation))
                 return;
 
             var methodSymbol = context.SemanticModel.GetSymbolInfo(invocation);
