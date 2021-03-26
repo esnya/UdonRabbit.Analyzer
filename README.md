@@ -1,7 +1,16 @@
 # UdonRabbit.Analyzer
 
 .NET Roslyn Analyzer for VRChat Udon and UdonSharp.  
-This analyzer accelerates your Udon development with UdonSharp.
+This analyzer accelerates your Udon development with UdonSharp.  
+Check out the [list of analyzers](docs/analyzers/README.md) defined in this project.
+
+## Getting Started
+
+### Microsoft Visual Studio
+
+1. Download VSIX from [GitHub Releases](https://github.com/mika-f/UdonRabbit.Analyzer/releases/latest) and Install to your Visual Studio and restart it
+2. Open your VRChat Udon/UdonSharp project in Visual Studio
+3. Happy Coding!
 
 ## Requirements
 
