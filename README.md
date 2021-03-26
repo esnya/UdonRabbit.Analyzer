@@ -32,6 +32,14 @@ See https://docs.mochizuki.moe/udon-rabbit/analayzer/analyzers/
 
 <img src="https://user-images.githubusercontent.com/10832834/112584755-c8528d00-8e3b-11eb-9204-1c05c0669ffc.PNG" width="500px" />
 
+## Troubleshooting
+
+### Analyzer is not worked on UdonSharpBehaviour
+
+You cannot run multiple UdonRabbit.Analyzer instances in the same Unity workspace.  
+Therefore, if you are running Analyzer in multiple editors, disable one.
+If that doesn't work, we recommend restarting your PC.
+
 ## License
 
 MIT by [@6jz](https://twitter.com/6jz)
