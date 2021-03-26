@@ -16,11 +16,25 @@ namespace UdonRabbit.Analyzer.Udon
         private static readonly object LockObjForAsmLoad = new();
         private static readonly object LockObjForTypeMap = new();
 
-        private static readonly HashSet<string> AllowList = new()
+        private static readonly HashSet<string> AllowClassNameList = new()
         {
             "UdonSharpUdonSyncMode",
             "UdonSharpBehaviourSyncMode",
             "UdonSharpUdonSharpBehaviour"
+        };
+
+        private static readonly HashSet<string> AllowMethodNameList = new()
+        {
+            $"{UdonConstants.UdonSharpBehaviour}.__GetProgramVariable__SystemString__SystemObject",
+            $"{UdonConstants.UdonSharpBehaviour}.__SetProgramVariable__SystemString_SystemObject__SystemVoid",
+            $"{UdonConstants.UdonSharpBehaviour}.__SendCustomEvent__SystemString__SystemObject",
+            $"{UdonConstants.UdonSharpBehaviour}.__SendCustomNetworkEvent__VRCUdonCommonInterfacesNetworkEventTarget_SystemString__SystemVoid",
+            $"{UdonConstants.UdonSharpBehaviour}.__SendCustomEventDelayedSeconds__SystemString__SystemSingle_VRCUdonCommonEnumsEVentTiming__SystemVoid",
+            $"{UdonConstants.UdonSharpBehaviour}.__SendCustomEventDelayedSeconds__SystemString__SystemInt32_VRCUdonCommonEnumsEVentTiming__SystemVoid",
+            $"{UdonConstants.UdonSharpBehaviour}.__VRCInstantiate_UnityEngineGameObject__UnityEngineGameObject",
+            $"{UdonConstants.UdonSharpBehaviour}.__RequestSerialization__SystemVoid"
+
+            // Should I add to UdonSharpBehaviour utility methods to allow list?
         };
 
         private static readonly Dictionary<string, Type> BuiltinTypes = new()
@@ -129,7 +143,7 @@ namespace UdonRabbit.Analyzer.Udon
             if (receiver.BaseType.Equals(model.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default))
                 return true; // User-Defined Method, Skip
 
-            var functionNamespace = SanitizeTypeName($"{receiver.ContainingNamespace.Name}{receiver.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var functionNamespace = SanitizeTypeName($"{receiver.ContainingNamespace.ToDisplayString()}{receiver.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             var functionName = $"__{symbol.Name.Trim('_').TrimStart('.')}";
 
             if (functionName == "__VRCInstantiate")
@@ -160,7 +174,7 @@ namespace UdonRabbit.Analyzer.Udon
                 returnsSb.Append($"__{GetUdonNamedType(symbol.ReturnType, true)}");
 
             var signature = $"{functionNamespace}.{functionName}{paramsSb}{returnsSb}";
-            return _nodeDefinitions.Contains(signature);
+            return AllowMethodNameList.Contains(signature) || _nodeDefinitions.Contains(signature);
         }
 
         public bool FindUdonVariableName(SemanticModel model, ITypeSymbol typeSymbol, IFieldSymbol fieldSymbol, bool isSetter)
@@ -168,9 +182,13 @@ namespace UdonRabbit.Analyzer.Udon
             if (typeSymbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default))
                 return true; // User-Defined Method, Skip
 
-            var functionNamespace = SanitizeTypeName($"{typeSymbol.ContainingNamespace.Name}{typeSymbol.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
-            if (AllowList.Contains(functionNamespace))
+            var functionNamespace = SanitizeTypeName($"{typeSymbol.ContainingNamespace.ToDisplayString()}{typeSymbol.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            if (AllowClassNameList.Contains(functionNamespace))
                 return true;
+
+            // WORKAROUND for Enum Accessors
+            if (typeSymbol.TypeKind == TypeKind.Enum)
+                return _nodeDefinitions.Contains($"Type_{functionNamespace}");
 
             var functionName = $"__{(isSetter ? "set" : "get")}_{fieldSymbol.Name.Trim('_')}";
             var param = $"__{GetUdonNamedType(fieldSymbol.Type)}";
@@ -183,8 +201,8 @@ namespace UdonRabbit.Analyzer.Udon
             if (typeSymbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
                 return true; // User-Defined Method, Skip
 
-            var functionNamespace = SanitizeTypeName($"{typeSymbol.ContainingNamespace.Name}{typeSymbol.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
-            if (AllowList.Contains(functionNamespace))
+            var functionNamespace = SanitizeTypeName($"{typeSymbol.ContainingNamespace.ToDisplayString()}{typeSymbol.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            if (AllowClassNameList.Contains(functionNamespace))
                 return true;
 
             var functionName = $"__{(isSetter ? "set" : "get")}_{symbol.Name.Trim('_')}";
