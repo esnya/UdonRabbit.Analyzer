@@ -18,7 +18,7 @@ namespace UdonRabbit.Analyzer
     public class MethodIsNotExposedToUdon : DiagnosticAnalyzer
     {
         private const string ComponentId = "URA0001";
-        private const string Category = "Udon";
+        private const string Category = UdonConstants.UdonCategory;
         private const string HelpLinkUri = "https://docs.mochizuki.moe/udon-rabbit/packages/analyzer/analyzers/URA0001/";
         private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.URA0001Title), Resources.ResourceManager, typeof(Resources));
         private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.URA0001MessageFormat), Resources.ResourceManager, typeof(Resources));
@@ -43,7 +43,7 @@ namespace UdonRabbit.Analyzer
                 return;
 
             var declaration = context.SemanticModel.GetDeclaredSymbol(classDeclaration);
-            if (!declaration.BaseType.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
+            if (!declaration.BaseType.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default))
                 return;
 
             if (UdonSymbols.Instance == null)
