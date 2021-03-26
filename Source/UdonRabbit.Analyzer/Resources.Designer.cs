@@ -113,5 +113,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0001Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Should not use field accessor that does not exposed to Udon. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0002Description {
+            get {
+                return ResourceManager.GetString("URA0002Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Field Accessor &apos;{0}&apos; is not exposed to Udon. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0002MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0002MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Field Accessor is not exposed to Udon. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0002Title {
+            get {
+                return ResourceManager.GetString("URA0002Title", resourceCulture);
+            }
+        }
     }
 }
