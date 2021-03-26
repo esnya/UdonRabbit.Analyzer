@@ -154,6 +154,6 @@
     <value>UdonSharp only supports 1 type generic methods, but you use {0} type generic method.</value>
   </data>
   <data name="URA0003Title" xml:space="preserve">
-    <value>U# only support 1 type generics.</value>
+    <value>U# only supports one type generics.</value>
   </data>
 </root>
