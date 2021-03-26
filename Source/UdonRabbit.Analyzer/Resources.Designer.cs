@@ -140,5 +140,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0002Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp only supports 1 type generic methods at the moment に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0003Description {
+            get {
+                return ResourceManager.GetString("URA0003Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp only supports 1 type generic methods, but you use {0} type generic method. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0003MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0003MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# only support 1 type generics. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0003Title {
+            get {
+                return ResourceManager.GetString("URA0003Title", resourceCulture);
+            }
+        }
     }
 }

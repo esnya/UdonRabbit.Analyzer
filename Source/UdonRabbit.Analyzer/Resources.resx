@@ -147,4 +147,13 @@
   <data name="URA0002Title" xml:space="preserve">
     <value>Field Accessor is not exposed to Udon.</value>
   </data>
+  <data name="URA0003Description" xml:space="preserve">
+    <value>UdonSharp only supports 1 type generic methods at the moment</value>
+  </data>
+  <data name="URA0003MessageFormat" xml:space="preserve">
+    <value>UdonSharp only supports 1 type generic methods, but you use {0} type generic method.</value>
+  </data>
+  <data name="URA0003Title" xml:space="preserve">
+    <value>U# only support 1 type generics.</value>
+  </data>
 </root>
