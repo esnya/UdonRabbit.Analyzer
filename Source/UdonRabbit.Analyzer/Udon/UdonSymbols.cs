@@ -186,6 +186,10 @@ namespace UdonRabbit.Analyzer.Udon
             if (AllowClassNameList.Contains(functionNamespace))
                 return true;
 
+            // WORKAROUND for Enum Accessors
+            if (typeSymbol.TypeKind == TypeKind.Enum)
+                return _nodeDefinitions.Contains($"Type_{functionNamespace}");
+
             var functionName = $"__{(isSetter ? "set" : "get")}_{fieldSymbol.Name.Trim('_')}";
             var param = $"__{GetUdonNamedType(fieldSymbol.Type)}";
             var signature = $"{functionNamespace}.{functionName}{param}";
