@@ -12,12 +12,14 @@ namespace UdonRabbit.Analyzer.Udon
     {
         private static readonly object LockObj = new();
         private readonly HashSet<string> _exposed;
+        private readonly Dictionary<Type, Type> _inheritedTypeMap;
 
         public static UdonSymbols Instance { get; private set; }
 
         private UdonSymbols(UdonEditorManager manager)
         {
             _exposed = new HashSet<string>(manager?.GetUdonNodeDefinitions() ?? Array.Empty<string>());
+            _inheritedTypeMap = manager?.GetVrcInheritedTypeMaps() ?? new Dictionary<Type, Type>();
         }
 
         public static void Initialize(Compilation compilation)
