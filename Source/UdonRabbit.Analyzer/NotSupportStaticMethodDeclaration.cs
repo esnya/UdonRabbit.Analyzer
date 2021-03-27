@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using System.Diagnostics;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -36,7 +35,7 @@ namespace UdonRabbit.Analyzer
             if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntax(context.SemanticModel, declaration))
                 return;
 
-            if (declaration.Modifiers.ToFullString().Contains("static"))
+            if (declaration.Modifiers.Any(SyntaxKind.StaticKeyword))
                 context.ReportDiagnostic(Diagnostic.Create(RuleSet, declaration.GetLocation(), DiagnosticSeverity.Error));
         }
     }
