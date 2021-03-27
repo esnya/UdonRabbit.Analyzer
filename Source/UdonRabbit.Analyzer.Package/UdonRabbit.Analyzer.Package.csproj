@@ -9,16 +9,15 @@
 
   <PropertyGroup>
     <PackageId>UdonRabbit.Analyzer</PackageId>
-    <PackageVersion>1.0.0.0</PackageVersion>
+    <PackageVersion>0.2.0</PackageVersion>
     <Authors>mikazuki</Authors>
-    <PackageLicenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</PackageLicenseUrl>
-    <PackageProjectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</PackageProjectUrl>
-    <PackageIconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</PackageIconUrl>
-    <RepositoryUrl>http://REPOSITORY_URL_HERE_OR_DELETE_THIS_LINE</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/esnya/UdonRabbit.Analyzer/blob/develop/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/esnya/UdonRabbit.Analyzer</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/esnya/UdonRabbit.Analyzer</RepositoryUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Description>UdonRabbit.Analyzer</Description>
     <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
-    <Copyright>Copyright</Copyright>
+    <Copyright>Copyright 2021 esnya</Copyright>
     <PackageTags>UdonRabbit.Analyzer, analyzers</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
 
