@@ -55,15 +55,9 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 ### How to test
 
 1. Configure the following environment variables in `Source/UdonRabbit.runsettings`
-   - `UDONRABBIT_ANALYZER_TEST_UNITY` : Unity 2018.4.20f1 Editor Location
+   - `UDONRABBIT_ANALYZER_TEST_PROJECT` : Unity 2018.4.20f1 Test Project Location (`.csproj`)
      - Default: `null` (Current Directory)
-   - `UDONRABBIT_ANALYZER_TEST_MONO` : Unity 2018.4.20f1 MonoBleedingEdge .NET 4.7.1 Compat Location
-     - Default: `null` (Current Directory)
-   - `UDONRABBIT_ANALYZER_TEST_UDON` : VRChat Udon SDK Location
-     - Default: `null` (Current Directory)
-   - `UDONRABBIT_ANALYZER_TEST_VRC` : VRChat SDK Location
-     - Default: `null` (Current Directory)
-   - `UDONRABBIT_ANALYZER_TEST_SCRIPTABLE` : Unity Scriptable Assemblies Location
+   - `UDONRABBIT_ANALYZER_TEST_UDON_SHARP` : `UdonSharp.Runtime.dll` Location
      - Default: `null` (Current Directory)
 2. Run `dotnet test`
 
