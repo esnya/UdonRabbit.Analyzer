@@ -1,46 +1,43 @@
 ﻿using System.Threading.Tasks;
 
-using Xunit;
+using UdonRabbit.Analyzer.Test.Infrastructure;
 
-using VerifyCS = UdonRabbit.Analyzer.Test.Infrastructure.DiagnosticVerifier<UdonRabbit.Analyzer.FieldAccessorIsNotExposedToUdon>;
+using Xunit;
 
 namespace UdonRabbit.Analyzer.Test
 {
-    public class FieldAccessorIsNotExposedToUdonTest
+    public class FieldAccessorIsNotExposedToUdonTest : DiagnosticVerifier<FieldAccessorIsNotExposedToUdon>
     {
         [Fact]
-        public async Task AllowedMethodIsNoDiagnosticsReport()
+        public async Task AllowedFieldAccessorIsNoDiagnosticsReport()
         {
-            var source = @"
-using System;
+            const string source = @"
+using TMPro;
 
 using UdonSharp;
-
-using UnityEngine;
 
 namespace UdonRabbit
 {
     public class TestClass : UdonSharpBehaviour
     {
+        public TextMeshProUGUI tm;
+
         private void Update()
         {
-            var str = new string[15];
-            var newStr = string.Join("", "", str);
+            var t = tm.text;
         }
     }
 }
 ";
 
-            await VerifyCS.VerifyAnalyzerAsync(source);
+            await VerifyAnalyzerAsync(source);
         }
 
         [Fact]
         public async Task NoDiagnosticsReport()
         {
-            var source = @"
+            const string source = @"
 using UdonSharp;
-
-using UnityEngine;
 
 namespace UdonRabbit
 {
@@ -53,7 +50,36 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyCS.VerifyAnalyzerAsync(source);
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task NotAllowedFieldAccessorHasDiagnosticsReport()
+        {
+            var diagnostic = ExpectDiagnostic(FieldAccessorIsNotExposedToUdon.ComponentId)
+                             .WithLocation(12, 23)
+                             .WithArguments("font");
+
+            const string source = @"
+using TMPro;
+
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        public TextMeshProUGUI tm;
+
+        private void Update()
+        {
+            var f = tm.font;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source, diagnostic);
         }
     }
 }
