@@ -111,7 +111,14 @@ namespace UdonRabbit.Analyzer.Udon
                     return Path.GetFullPath(Path.Combine(assemblies, asmPath));
                 }
 
-                var path = LoadAssembly($"{args.Name.Split(',').First()}.dll");
+                var name = args.Name.Split(',').First();
+                if (name.EndsWith(".resources"))
+                    return null; // no needed
+
+                var path = LoadAssembly($"{name}.dll");
+                if (!File.Exists(path))
+                    return null; // could not load
+
                 var asm = Assembly.LoadFrom(path);
 
                 loadedAssemblies.Add(path);
