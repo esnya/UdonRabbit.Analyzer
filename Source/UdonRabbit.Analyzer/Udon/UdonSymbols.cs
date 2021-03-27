@@ -57,6 +57,22 @@ namespace UdonRabbit.Analyzer.Udon
             { "object", typeof(object) }
         };
 
+        #region List of Dynamic Link Assemblies to control Exceptions that occur only in the test environment
+
+        // List of assemblies that could not load on test context, missing file on disk system?
+        private static readonly HashSet<string> AllowNotLoadedOnContext = new()
+        {
+            "System.Net.Http.Rtc",
+            "System.Runtime.InteropServices.WindowsRuntime",
+            "System.ServiceModel.Duplex",
+            "System.ServiceModel.Http",
+            "System.ServiceModel.NetTcp",
+            "System.ServiceModel.Primitives",
+            "System.ServiceModel.Security"
+        };
+
+        #endregion
+
         private readonly Dictionary<string, string> _builtinEvents;
         private readonly Dictionary<Type, Type> _inheritedTypeMap;
         private readonly HashSet<string> _nodeDefinitions;
@@ -126,15 +142,8 @@ namespace UdonRabbit.Analyzer.Udon
                     loadedAssemblies.Add(path);
                     return asm;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    if (AllowLoadedOnReflectionOnlyContextAssemblies.Contains(name))
-                    {
-                        var asm = Assembly.ReflectionOnlyLoadFrom(path);
-                        loadedAssemblies.Add(path);
-                        return asm;
-                    }
-
                     if (AllowNotLoadedOnContext.Contains(name))
                     {
                         loadedAssemblies.Add(path);
@@ -161,7 +170,7 @@ namespace UdonRabbit.Analyzer.Udon
                     AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(missingReference));
                     loadedAssemblies.Add(missingReference);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     var name = Path.GetFileNameWithoutExtension(missingReference);
                     if (AllowNotLoadedOnContext.Contains(name))
@@ -364,23 +373,5 @@ namespace UdonRabbit.Analyzer.Udon
                 return t;
             }
         }
-
-        #region List of Dynamic Link Assemblies to control Exceptions that occur only in the test environment
-
-        private static readonly HashSet<string> AllowLoadedOnReflectionOnlyContextAssemblies = new();
-
-        // List of assemblies that could not load on test context, missing file on disk system?
-        private static readonly HashSet<string> AllowNotLoadedOnContext = new()
-        {
-            "System.Net.Http.Rtc",
-            "System.Runtime.InteropServices.WindowsRuntime",
-            "System.ServiceModel.Duplex",
-            "System.ServiceModel.Http",
-            "System.ServiceModel.NetTcp",
-            "System.ServiceModel.Primitives",
-            "System.ServiceModel.Security"
-        };
-
-        #endregion
     }
 }
