@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -7,10 +8,12 @@ using System.Threading.Tasks;
 using System.Xml.XPath;
 
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Testing;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Testing;
-using Microsoft.CodeAnalysis.Testing.Verifiers;
+using Microsoft.CodeAnalysis.Text;
+
+using Xunit;
 
 // ReSharper disable StaticMemberInGenericType
 
@@ -21,8 +24,7 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
         private static readonly HashSet<string> UnityEngineAssemblies = new()
         {
             "UnityEditor",
-            "UnityEngine"
-            /*
+            "UnityEngine",
             "UnityEngine.AIModule",
             "UnityEngine.ARModule",
             "UnityEngine.AccessibilityModule",
@@ -82,8 +84,9 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
             "UnityEngine.VideoModule",
             "UnityEngine.WindModule",
             "UnityEngine.XRModule",
-            "Unity.Locator"
-            */
+            "Unity.Locator",
+            "UnityEngine.UI",
+            "UnityEditor.UI"
         };
 
         private static readonly HashSet<string> MonoBleedingEdgeAssemblies = new()
@@ -224,9 +227,7 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
         private static readonly HashSet<string> ScriptableAssemblies = new()
         {
             "Cinemachine",
-            "UdonSharp.Editor",
             "UdonSharp.Runtime",
-            "Unity.Postprocessing.Editor",
             "Unity.Postprocessing.Runtime",
             "Unity.TextMeshPro",
             "VRC.Udon",
@@ -248,31 +249,35 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
             "VRCSDKBase"
         };
 
-        public static async Task VerifyAnalyzerAsync(string source, params DiagnosticResult[] expected)
+        protected DiagnosticResult ExpectDiagnostic(string diagnosticId)
         {
-            var testProject = new TestProject
-            {
-                TestCode = source
-            };
+            return new(new TAnalyzer().SupportedDiagnostics.Single(w => w.Id == diagnosticId));
+        }
+
+        protected async Task VerifyAnalyzerAsync(string source, params DiagnosticResult[] expected)
+        {
+            var testProject = new TestUnityProject(source);
 
             testProject.ExpectedDiagnostics.AddRange(expected);
 
             await testProject.RunAsync(CancellationToken.None);
         }
 
-        private class TestProject : CSharpAnalyzerTest<TAnalyzer, MSTestVerifier>
+        // Maybe CSharpAnalyzerTest isn't work in Unity Project????
+        private class TestUnityProject
         {
+            private const string TestProjectId = "TestUnityProject";
             private const string EnvUnity = "UDONRABBIT_ANALYZER_TEST_UNITY";
             private const string EnvMono = "UDONRABBIT_ANALYZER_TEST_MONO";
             private const string EnvUdon = "UDONRABBIT_ANALYZER_TEST_UDON";
             private const string EnvScript = "UDONRABBIT_ANALYZER_TEST_SCRIPTABLE";
             private const string EnvSdk = "UDONRABBIT_ANALYZER_TEST_VRC";
 
-            private static readonly string UnityEditorPath = Environment.GetEnvironmentVariable(EnvUnity);
-            private static readonly string MonoPath = Environment.GetEnvironmentVariable(EnvMono);
-            private static readonly string UdonPath = Environment.GetEnvironmentVariable(EnvUdon);
-            private static readonly string SdkPath = Environment.GetEnvironmentVariable(EnvSdk);
-            private static readonly string ScriptablePath = Environment.GetEnvironmentVariable(EnvScript);
+            private static string UnityEditorPath = Environment.GetEnvironmentVariable(EnvUnity);
+            private static string MonoPath = Environment.GetEnvironmentVariable(EnvMono);
+            private static string UdonPath = Environment.GetEnvironmentVariable(EnvUdon);
+            private static string SdkPath = Environment.GetEnvironmentVariable(EnvSdk);
+            private static string ScriptablePath = Environment.GetEnvironmentVariable(EnvScript);
 
             private static HashSet<string> _monoAssembliesPaths;
             private static HashSet<string> _unityAssembliesPaths;
@@ -280,45 +285,133 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
             private static HashSet<string> _scriptableAssembliesPaths;
             private static HashSet<string> _sdkAssembliesPaths;
 
-            static TestProject()
+            private static readonly HashSet<string> AllowedDiagnostics = new()
             {
+                "CS1701" // https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-messages/cs1701
+            };
+
+            private readonly Project _project;
+
+            public readonly List<DiagnosticResult> ExpectedDiagnostics = new();
+
+            public TestUnityProject(string source)
+            {
+                var projectId = ProjectId.CreateNewId(TestProjectId);
+                var solution = new AdhocWorkspace().CurrentSolution.AddProject(projectId, TestProjectId, TestProjectId, LanguageNames.CSharp);
+
                 // Workaround for configuring environment variables in xUnit
-                using var sr = new StreamReader("./UdonRabbit.runsettings");
-                var document = new XPathDocument(sr);
-                var navigator = document.CreateNavigator();
-
-                void ConfigureProcessEnvironmentVariableIfNotExists(string env, ref string variable)
+                using (var sr = new StreamReader("./UdonRabbit.runsettings"))
                 {
-                    if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(env)))
-                        return;
+                    var document = new XPathDocument(sr);
+                    var navigator = document.CreateNavigator();
 
-                    var query = navigator.Compile($"//EnvironmentVariables/{env}");
-                    variable = navigator.SelectSingleNode(query)?.Value;
+                    void ConfigureProcessEnvironmentVariableIfNotExists(string env, ref string variable)
+                    {
+                        if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(env)))
+                            return;
+
+                        var query = navigator.Compile($"//EnvironmentVariables/{env}");
+                        variable = navigator.SelectSingleNode(query)?.Value;
+                    }
+
+                    ConfigureProcessEnvironmentVariableIfNotExists(EnvUnity, ref UnityEditorPath);
+                    ConfigureProcessEnvironmentVariableIfNotExists(EnvMono, ref MonoPath);
+                    ConfigureProcessEnvironmentVariableIfNotExists(EnvUdon, ref UdonPath);
+                    ConfigureProcessEnvironmentVariableIfNotExists(EnvScript, ref ScriptablePath);
+                    ConfigureProcessEnvironmentVariableIfNotExists(EnvSdk, ref SdkPath);
                 }
 
-                ConfigureProcessEnvironmentVariableIfNotExists(EnvUnity, ref UnityEditorPath);
-                ConfigureProcessEnvironmentVariableIfNotExists(EnvMono, ref MonoPath);
-                ConfigureProcessEnvironmentVariableIfNotExists(EnvUdon, ref UdonPath);
-                ConfigureProcessEnvironmentVariableIfNotExists(EnvScript, ref ScriptablePath);
-                ConfigureProcessEnvironmentVariableIfNotExists(EnvSdk, ref SdkPath);
+                solution = UnityEngineAssemblies.Aggregate(solution, (sol, dll) => sol.AddMetadataReference(projectId, MetadataReference.CreateFromFile(FindUnityAssemblies(dll))));
+                solution = MonoBleedingEdgeAssemblies.Aggregate(solution, (sol, dll) => sol.AddMetadataReference(projectId, MetadataReference.CreateFromFile(FindMonoAssemblies(dll))));
+                solution = UdonAssemblies.Aggregate(solution, (sol, dll) => sol.AddMetadataReference(projectId, MetadataReference.CreateFromFile(FindUdonAssemblies(dll))));
+                solution = ScriptableAssemblies.Aggregate(solution, (sol, dll) => sol.AddMetadataReference(projectId, MetadataReference.CreateFromFile(FindScriptableAssemblies(dll))));
+                solution = SdkAssemblies.Aggregate(solution, (sol, dll) => sol.AddMetadataReference(projectId, MetadataReference.CreateFromFile(FindSdkAssemblies(dll))));
+
+                const string filename = "TestBehaviour.cs";
+                var documentId = DocumentId.CreateNewId(projectId, filename);
+                solution = solution.AddDocument(documentId, filename, SourceText.From(source), filePath: $"/{filename}");
+
+                _project = solution.GetProject(projectId);
             }
 
-            public TestProject()
+            public async Task RunAsync(CancellationToken cancellationToken)
             {
-                SolutionTransforms.Add((solution, projectId) =>
+                var analyzer = new TAnalyzer();
+                var diagnostics = new List<Diagnostic>();
+
+                var compilation = await _project.GetCompilationAsync(cancellationToken);
+                Assert.NotNull(compilation);
+
+                var compilationOptions = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, true);
+                var specifiedDiagnosticOptions = compilationOptions.SpecificDiagnosticOptions;
+
+                foreach (var descriptor in analyzer.SupportedDiagnostics)
+                    specifiedDiagnosticOptions = specifiedDiagnosticOptions.SetItem(descriptor.Id, ReportDiagnostic.Info);
+
+                var compilationWithAnalyzers = compilation.WithOptions(compilationOptions.WithSpecificDiagnosticOptions(specifiedDiagnosticOptions))
+                                                          .WithAnalyzers(ImmutableArray.Create<DiagnosticAnalyzer>(analyzer));
+
+                var allDiagnostics = await compilationWithAnalyzers.GetAllDiagnosticsAsync(cancellationToken);
+                var ignores = allDiagnostics.Where(w => AllowedDiagnostics.Contains(w.Id));
+
+                foreach (var diagnostic in allDiagnostics.Except(ignores).Where(w => w.Location.IsInSource).ToList())
+                    if (diagnostic.Location == Location.None || diagnostic.Location.IsInMetadata)
+                    {
+                        diagnostics.Add(diagnostic);
+                    }
+                    else
+                    {
+                        var syntax = await _project.Documents.First().GetSyntaxTreeAsync(cancellationToken);
+                        if (syntax == diagnostic.Location.SourceTree)
+                            diagnostics.Add(diagnostic);
+                    }
+
+                VerifyDiagnosticsResults(diagnostics.ToArray(), analyzer, ExpectedDiagnostics.ToArray());
+            }
+
+            // ref: https://github.com/microsoft/Microsoft.Unity.Analyzers/blob/1.10.0/src/Microsoft.Unity.Analyzers.Tests/Infrastructure/DiagnosticVerifier.cs#L85
+            private void VerifyDiagnosticsResults(Diagnostic[] actualResults, DiagnosticAnalyzer analyzer, params DiagnosticResult[] expectedResults)
+            {
+                if (expectedResults.Length != actualResults.Length)
+                    Assert.True(false, $"Mismatch between number of diagnostics returned, expected {expectedResults.Length} actual {actualResults.Length}.");
+
+                for (var i = 0; i < expectedResults.Length; i++)
                 {
-                    var compilationOptions = solution.GetProject(projectId)?.CompilationOptions;
-                    if (compilationOptions == null)
-                        return solution;
+                    var actual = actualResults[i];
+                    var expected = expectedResults[i];
 
-                    solution = UnityEngineAssemblies.Aggregate(solution, (sol, dll) => sol.AddMetadataReference(projectId, MetadataReference.CreateFromFile(FindUnityAssemblies(dll))));
-                    solution = MonoBleedingEdgeAssemblies.Aggregate(solution, (sol, dll) => sol.AddMetadataReference(projectId, MetadataReference.CreateFromFile(FindMonoAssemblies(dll))));
-                    solution = UdonAssemblies.Aggregate(solution, (sol, dll) => sol.AddMetadataReference(projectId, MetadataReference.CreateFromFile(FindUdonAssemblies(dll))));
-                    solution = ScriptableAssemblies.Aggregate(solution, (sol, dll) => sol.AddMetadataReference(projectId, MetadataReference.CreateFromFile(FindScriptableAssemblies(dll))));
-                    solution = SdkAssemblies.Aggregate(solution, (sol, dll) => sol.AddMetadataReference(projectId, MetadataReference.CreateFromFile(FindSdkAssemblies(dll))));
+                    if (!expected.HasLocation)
+                    {
+                        if (actual.Location != Location.None)
+                            Assert.True(false, "Expected: A project diagnostic with No location; Actual: Has location");
+                    }
+                    else
+                    {
+                        VerifyDiagnosticLocations(analyzer, actual, actual.Location, expected.Spans);
+                    }
 
-                    return solution;
-                });
+                    if (actual.Id != expected.Id)
+                        Assert.True(false, $"Expected diagnostic ID to be {expected.Id}, but was {actual.Id}");
+
+                    if (actual.Severity != expected.Severity)
+                        Assert.True(false, $"Expected diagnostic severity to be {expected.Severity}, but was {actual.Severity}");
+
+                    if (actual.GetMessage() != expected.Message)
+                        Assert.True(false, $"Expected diagnostic message to be {expected.Message}, but was {actual.GetMessage()}");
+                }
+            }
+
+            private static void VerifyDiagnosticLocations(DiagnosticAnalyzer analyzer, Diagnostic diagnostic, Location actual, IEnumerable<DiagnosticLocation> locations)
+            {
+                var actualSpan = actual.GetLineSpan();
+                var expected = locations.First();
+
+                var actualLinePos = actualSpan.StartLinePosition;
+                if (actualLinePos.Line > 0 && actualLinePos.Line != expected.Span.StartLinePosition.Line)
+                    Assert.True(false, $"Expected diagnostic to be on line {expected.Span.StartLinePosition.Line + 1}, but was actually on line {actualLinePos.Line + 1}");
+
+                if (actualLinePos.Character > 0 && actualLinePos.Character != expected.Span.StartLinePosition.Character)
+                    Assert.True(false, $"Expected diagnostic to start at column {expected.Span.StartLinePosition.Character}, but was actually at column {actualLinePos.Character}");
             }
 
             private static string FindUnityAssemblies(string name)
