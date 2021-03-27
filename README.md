@@ -29,11 +29,43 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 - VRCSDK3 that supports Udon
 - UdonSharp
 
-## Development Requirements
+## Development
+
+### Requirements
 
 - .NET 5
 - Visual Studio Version 16.8+ or Visual Studio for Mac 8.8+
 - Unity Project that containing VRCSDK3 and UdonSharp
+
+### How to develop
+
+1. Open `Source/UdonRabbit.Analyzer.sln` in your Visual Studio
+2. Start `UdonRabbit.Analyzer.VSIX` as debug profile
+3. After the Visual Studio Experimental Instance starts, open the Unity project that has VRCSDK3 and UdonSharp installed
+4. Open any source file that inherits from `UdonSharp.UdonSharpBehaviour`
+
+## Testing
+
+### Requirements
+
+- .NET 5
+- Visual Studio Version 16.8+
+- Unity Project that containing VRCSDK3 and UdonSharp
+
+### How to test
+
+1. Configure the following environment variables in `Source/UdonRabbit.runsettings`
+   - `UDONRABBIT_ANALYZER_TEST_UNITY` : Unity 2018.4.20f1 Editor Location
+     - Default: `null` (Current Directory)
+   - `UDONRABBIT_ANALYZER_TEST_MONO` : Unity 2018.4.20f1 MonoBleedingEdge .NET 4.7.1 Compat Location
+     - Default: `null` (Current Directory)
+   - `UDONRABBIT_ANALYZER_TEST_UDON` : VRChat Udon SDK Location
+     - Default: `null` (Current Directory)
+   - `UDONRABBIT_ANALYZER_TEST_VRC` : VRChat SDK Location
+     - Default: `null` (Current Directory)
+   - `UDONRABBIT_ANALYZER_TEST_SCRIPTABLE` : Unity Scriptable Assemblies Location
+     - Default: `null` (Current Directory)
+2. Run `dotnet test`
 
 ## Analyzer Documents
 
@@ -61,3 +93,4 @@ This project contains some code from the following project.
 See method comments for details.
 
 - [MerlinVR/UdonSharp](https://github.com/MerlinVR/UdonSharp)
+- [Microsoft/Microsoft.Unity.Analyzers](https://github.com/microsoft/Microsoft.Unity.Analyzers)
