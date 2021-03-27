@@ -14,10 +14,10 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 2. Open your VRChat Udon/UdonSharp project in Visual Studio
 3. Happy Coding!
 
-### Microsoft Visual Studio Code
+### Microsoft Visual Studio Code (No Support)
 
 1. Download NuGet Package from [GitHub Releases](https://github.com/mika-f/UdonRabbit.Analyzer/releases/latest) and extract it to some location
-2. Open your VRChat Udon/UdonSharp workspace in Visal Studio Code
+2. Open your VRChat Udon/UdonSharp workspace in Visual Studio Code
 3. Create a `omnisharp.json` in root directory
 4. Configure `RoslynExtensionsOptions.EnableAnalyzerSupport` to true and add extract path to `LocationPaths`
 5. Restart OmniSharp
@@ -29,11 +29,37 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 - VRCSDK3 that supports Udon
 - UdonSharp
 
-## Development Requirements
+## Development
+
+### Requirements
 
 - .NET 5
 - Visual Studio Version 16.8+ or Visual Studio for Mac 8.8+
 - Unity Project that containing VRCSDK3 and UdonSharp
+
+### How to develop
+
+1. Open `Source/UdonRabbit.Analyzer.sln` in your Visual Studio
+2. Start `UdonRabbit.Analyzer.VSIX` as debug profile
+3. After the Visual Studio Experimental Instance starts, open the Unity project that has VRCSDK3 and UdonSharp installed
+4. Open any source file that inherits from `UdonSharp.UdonSharpBehaviour`
+
+## Testing
+
+### Requirements
+
+- .NET 5
+- Visual Studio Version 16.8+
+- Unity Project that containing VRCSDK3 and UdonSharp
+
+### How to test
+
+1. Configure the following environment variables in `Source/UdonRabbit.runsettings`
+   - `UDONRABBIT_ANALYZER_TEST_PROJECT` : Unity 2018.4.20f1 Test Project Location (`.csproj`)
+     - Default: `null` (Current Directory)
+   - `UDONRABBIT_ANALYZER_TEST_UDON_SHARP` : `UdonSharp.Runtime.dll` Location
+     - Default: `null` (Current Directory)
+2. Run `dotnet test`
 
 ## Analyzer Documents
 
@@ -61,3 +87,4 @@ This project contains some code from the following project.
 See method comments for details.
 
 - [MerlinVR/UdonSharp](https://github.com/MerlinVR/UdonSharp)
+- [Microsoft/Microsoft.Unity.Analyzers](https://github.com/microsoft/Microsoft.Unity.Analyzers)

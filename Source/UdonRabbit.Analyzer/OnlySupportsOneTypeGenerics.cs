@@ -12,7 +12,7 @@ namespace UdonRabbit.Analyzer
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class OnlySupportsOneTypeGenerics : DiagnosticAnalyzer
     {
-        private const string ComponentId = "URA0003";
+        public const string ComponentId = "URA0003";
         private const string Category = UdonConstants.UdonSharpCategory;
         private const string HelpLinkUri = "https://docs.mochizuki.moe/udon-rabbit/packages/analyzer/analyzers/URA0003/";
         private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.URA0003Title), Resources.ResourceManager, typeof(Resources));

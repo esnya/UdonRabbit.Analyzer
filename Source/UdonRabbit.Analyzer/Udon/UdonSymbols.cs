@@ -57,6 +57,22 @@ namespace UdonRabbit.Analyzer.Udon
             { "object", typeof(object) }
         };
 
+        #region List of Dynamic Link Assemblies to control Exceptions that occur only in the test environment
+
+        // List of assemblies that could not load on test context, missing file on disk system?
+        private static readonly HashSet<string> AllowNotLoadedOnContext = new()
+        {
+            "System.Net.Http.Rtc",
+            "System.Runtime.InteropServices.WindowsRuntime",
+            "System.ServiceModel.Duplex",
+            "System.ServiceModel.Http",
+            "System.ServiceModel.NetTcp",
+            "System.ServiceModel.Primitives",
+            "System.ServiceModel.Security"
+        };
+
+        #endregion
+
         private readonly Dictionary<string, string> _builtinEvents;
         private readonly Dictionary<Type, Type> _inheritedTypeMap;
         private readonly HashSet<string> _nodeDefinitions;
@@ -111,11 +127,31 @@ namespace UdonRabbit.Analyzer.Udon
                     return Path.GetFullPath(Path.Combine(assemblies, asmPath));
                 }
 
-                var path = LoadAssembly($"{args.Name.Split(',').First()}.dll");
-                var asm = Assembly.LoadFrom(path);
+                var name = args.Name.Split(',').First();
+                if (name.EndsWith(".resources"))
+                    return null; // no needed
 
-                loadedAssemblies.Add(path);
-                return asm;
+                var path = LoadAssembly($"{name}.dll");
+                if (!File.Exists(path))
+                    return null; // could not load
+
+                try
+                {
+                    var asm = Assembly.LoadFrom(path);
+
+                    loadedAssemblies.Add(path);
+                    return asm;
+                }
+                catch (Exception)
+                {
+                    if (AllowNotLoadedOnContext.Contains(name))
+                    {
+                        loadedAssemblies.Add(path);
+                        return null;
+                    }
+
+                    throw;
+                }
             }
 
             AppDomain.CurrentDomain.AssemblyResolve += ResolveDynamicLoadingAssemblies;
@@ -129,8 +165,19 @@ namespace UdonRabbit.Analyzer.Udon
                 if (!File.Exists(missingReference))
                     continue;
 
-                AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(missingReference));
-                loadedAssemblies.Add(missingReference);
+                try
+                {
+                    AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(missingReference));
+                    loadedAssemblies.Add(missingReference);
+                }
+                catch (Exception)
+                {
+                    var name = Path.GetFileNameWithoutExtension(missingReference);
+                    if (AllowNotLoadedOnContext.Contains(name))
+                        continue;
+
+                    throw;
+                }
             }
 
             var manager = new UdonEditorManager(assembly);
