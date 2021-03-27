@@ -16,7 +16,7 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 
 ### Microsoft Visual Studio Code
 
-1. Download NuGet Packafe from [GitHub Releases](https://github.com/mika-f/UdonRabbit.Analyzer/releases/latest) and extract it to some location
+1. Download NuGet Package from [GitHub Releases](https://github.com/mika-f/UdonRabbit.Analyzer/releases/latest) and extract it to some location
 2. Open your VRChat Udon/UdonSharp workspace in Visal Studio Code
 3. Create a `omnisharp.json` in root directory
 4. Configure `RoslynExtensionsOptions.EnableAnalyzerSupport` to true and add extract path to `LocationPaths`
