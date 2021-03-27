@@ -178,7 +178,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   UdonSharp does not currently supports static method declarations. Please use instance method. に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not currently supports static method declarations. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0004MessageFormat {
             get {
@@ -192,6 +192,33 @@ namespace UdonRabbit.Analyzer {
         internal static string URA0004Title {
             get {
                 return ResourceManager.GetString("URA0004Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support inheriting from interfaces に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0005Description {
+            get {
+                return ResourceManager.GetString("URA0005Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support inheriting from interfaces に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0005MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0005MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support inheriting from interfaces に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0005Title {
+            get {
+                return ResourceManager.GetString("URA0005Title", resourceCulture);
             }
         }
     }
