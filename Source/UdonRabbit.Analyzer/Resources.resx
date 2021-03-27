@@ -174,4 +174,13 @@
   <data name="URA0005Title" xml:space="preserve">
     <value>U# does not yet support inheriting from interfaces</value>
   </data>
+  <data name="URA0007Description" xml:space="preserve">
+    <value>UdonSharp does not currently support constructors on UdonSharpBehaviours, use the Start()</value>
+  </data>
+  <data name="URA0007MessageFormat" xml:space="preserve">
+    <value>UdonSharp does not currently support constructors on UdonSharpBehaviours, use the Start()</value>
+  </data>
+  <data name="URA0007Title" xml:space="preserve">
+    <value>U# does not currently support constructors on UdonSharpBehaviour</value>
+  </data>
 </root>

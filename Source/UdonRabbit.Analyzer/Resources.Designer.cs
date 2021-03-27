@@ -221,5 +221,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0005Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support constructors on UdonSharpBehaviours, use the Start() に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0007Description {
+            get {
+                return ResourceManager.GetString("URA0007Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support constructors on UdonSharpBehaviours, use the Start() に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0007MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0007MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not currently support constructors on UdonSharpBehaviour に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0007Title {
+            get {
+                return ResourceManager.GetString("URA0007Title", resourceCulture);
+            }
+        }
     }
 }
