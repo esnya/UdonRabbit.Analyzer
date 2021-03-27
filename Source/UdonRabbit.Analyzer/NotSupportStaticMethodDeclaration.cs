@@ -11,9 +11,9 @@ using UdonRabbit.Analyzer.Udon;
 namespace UdonRabbit.Analyzer
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    internal class NotSupportStaticMethodDeclaration : DiagnosticAnalyzer
+    public class NotSupportStaticMethodDeclaration : DiagnosticAnalyzer
     {
-        private const string ComponentId = "URA0004";
+        public const string ComponentId = "URA0004";
         private const string Category = UdonConstants.UdonSharpCategory;
         private const string HelpLinkUri = "https://docs.mochizuki.moe/udon-rabbit/packages/analyzer/analyzers/URA0004/";
         private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.URA0004Title), Resources.ResourceManager, typeof(Resources));
