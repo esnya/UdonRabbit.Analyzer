@@ -13,7 +13,7 @@ namespace UdonRabbit.Analyzer
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class FieldAccessorIsNotExposedToUdon : DiagnosticAnalyzer
     {
-        private const string ComponentId = "URA0002";
+        public const string ComponentId = "URA0002";
         private const string Category = UdonConstants.UdonCategory;
         private const string HelpLinkUri = "https://docs.mochizuki.moe/udon-rabbit/packages/analyzer/analyzers/URA0002/";
         private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.URA0002Title), Resources.ResourceManager, typeof(Resources));

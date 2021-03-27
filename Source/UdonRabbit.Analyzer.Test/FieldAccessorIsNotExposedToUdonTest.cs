@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 
+using Microsoft.CodeAnalysis;
+
 using UdonRabbit.Analyzer.Test.Infrastructure;
 
 using Xunit;
@@ -57,7 +59,8 @@ namespace UdonRabbit
         public async Task NotAllowedFieldAccessorHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(FieldAccessorIsNotExposedToUdon.ComponentId)
-                             .WithLocation(12, 23)
+                             .WithLocation(14, 21)
+                             .WithSeverity(DiagnosticSeverity.Error)
                              .WithArguments("font");
 
             const string source = @"
