@@ -56,7 +56,7 @@ namespace UdonRabbit
         }
 
         [Fact]
-        public async Task NotAllowedFieldAccessorHasDiagnosticsReport()
+        public async Task NotAllowedMethodHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodIsNotExposedToUdon.ComponentId)
                              .WithLocation(14, 21)
