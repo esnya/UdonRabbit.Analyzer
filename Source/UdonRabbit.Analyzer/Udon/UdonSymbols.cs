@@ -102,16 +102,16 @@ namespace UdonRabbit.Analyzer.Udon
 
         private static UdonEditorManager LoadSdkAssemblies(Compilation compilation)
         {
-            var reference = compilation.ExternalReferences.FirstOrDefault(w => w.Display.Contains("VRC.Udon.Common.dll"));
+            var reference = compilation.ExternalReferences.FirstOrDefault(w => w.Display.Contains("VRC.Udon.Common"));
             if (reference == null)
                 return null;
 
-            static string FindUnityAssetsDirectory(string path)
+            static string FindUnityAssetsDirectory(MetadataReference r)
             {
-                return path.Substring(0, path.IndexOf("Assets", StringComparison.InvariantCulture));
+                return r.ToFilePath().Substring(0, r.ToFilePath().IndexOf("Assets", StringComparison.InvariantCulture));
             }
 
-            var assemblies = Path.GetFullPath(Path.Combine(FindUnityAssetsDirectory(reference.Display), "Library", "ScriptAssemblies"));
+            var assemblies = Path.GetFullPath(Path.Combine(FindUnityAssetsDirectory(reference), "Library", "ScriptAssemblies"));
             var editor = Path.Combine(assemblies, "VRC.Udon.Editor.dll");
             if (!File.Exists(editor))
                 return null; // Invalid Path;
@@ -122,8 +122,8 @@ namespace UdonRabbit.Analyzer.Udon
             {
                 string LoadAssembly(string asmPath)
                 {
-                    if (compilation.ExternalReferences.Any(w => w.Display.Contains(asmPath)))
-                        return compilation.ExternalReferences.First(w => w.Display.Contains(asmPath)).Display;
+                    if (compilation.ExternalReferences.Any(w => w.ToFilePath().Contains(asmPath)))
+                        return compilation.ExternalReferences.First(w => w.ToFilePath().Contains(asmPath)).ToFilePath();
                     return Path.GetFullPath(Path.Combine(assemblies, asmPath));
                 }
 
@@ -157,7 +157,7 @@ namespace UdonRabbit.Analyzer.Udon
             AppDomain.CurrentDomain.AssemblyResolve += ResolveDynamicLoadingAssemblies;
             var assembly = Assembly.LoadFrom(editor);
 
-            foreach (var missingReference in compilation.ExternalReferences.Select(w => w.Display))
+            foreach (var missingReference in compilation.ExternalReferences.Select(w => w.ToFilePath()))
             {
                 if (loadedAssemblies.Contains(missingReference))
                     continue;

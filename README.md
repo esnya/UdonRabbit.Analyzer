@@ -14,7 +14,7 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 2. Open your VRChat Udon/UdonSharp project in Visual Studio
 3. Happy Coding!
 
-### Microsoft Visual Studio Code (No Support)
+### Microsoft Visual Studio Code (OmniSharp)
 
 1. Download NuGet Package from [GitHub Releases](https://github.com/mika-f/UdonRabbit.Analyzer/releases/latest) and extract it to some location
 2. Open your VRChat Udon/UdonSharp workspace in Visual Studio Code
@@ -23,7 +23,7 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 5. Restart OmniSharp
 6. Happy Coding!
 
-### JetBrains Rider (No Support)
+### JetBrains Rider
 
 1. Download NuGet Package from [GitHub Releases](https://github.com/mika-f/UdonRabbit.Analyzer/releases/latest) and extract it to some location
 2. Open your VRChat Udon/UdonSharp workspace in Rider
