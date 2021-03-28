@@ -8,31 +8,9 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 
 ## Getting Started
 
-### Microsoft Visual Studio
-
-1. Download VSIX from [GitHub Releases](https://github.com/mika-f/UdonRabbit.Analyzer/releases/latest) and Install to your Visual Studio and restart it
-2. Open your VRChat Udon/UdonSharp project in Visual Studio
-3. Happy Coding!
-
-### Microsoft Visual Studio Code (OmniSharp)
-
-1. Download NuGet Package from [GitHub Releases](https://github.com/mika-f/UdonRabbit.Analyzer/releases/latest) and extract it to some location
-2. Open your VRChat Udon/UdonSharp workspace in Visual Studio Code
-3. Create a `omnisharp.json` in root directory
-4. Configure `RoslynExtensionsOptions.EnableAnalyzerSupport` to true and add extract path to `LocationPaths`
-5. Restart OmniSharp
-6. Happy Coding!
-
-### JetBrains Rider
-
-1. Download NuGet Package from [GitHub Releases](https://github.com/mika-f/UdonRabbit.Analyzer/releases/latest) and extract it to some location
-2. Open your VRChat Udon/UdonSharp workspace in Rider
-3. Enable Roslyn Analyzer from Roslyn Analyzer Configuration Page
-4. Add `UdonRabbit.Analyzer.X.Y.Z/analyzers/dotnet/cs/UdonRabbit.Analyzer.dll` to your `csproj`
-   - I recommended that you add it [automatically](https://docs.microsoft.com/en-us/visualstudio/gamedev/unity/extensibility/customize-project-files-created-by-vstu?view=vs-2019), not manually.
-   - For more information, visit [JetBrains Rider Help](https://www.jetbrains.com/help/rider/Using_NET_Compiler_Analyzers.html).
-5. Reload Project
-6. Happy Coding!
+- [Microsoft Visual Studio 2019](./docs/getting-started/visual-studio.md)
+- [Visual Studio Code (OmniSharp)](./docs/getting-started/omnisharp.md)
+- [JetBrains Rider](./docs/getting-started/rider.md)
 
 ## Requirements
 

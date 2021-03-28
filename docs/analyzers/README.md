@@ -13,4 +13,4 @@
 | URA0007     | [U# does not currently support constructors on UdonSharpBehaviour](./URA0007.md)                    | UdonSharp     | Error     |
 | URA0008     | [User property declarations are not yet supported by U#](./URA0008.md)                              | UdonSharp     | Error     |
 | URA0009     | [Base type calling is not yet supported by U#](./URA0009.md)                                        | UdonSharp     | Error     |
-| URA0010     | [User property declarations are not yet supported by U#](./URA0010.md)                              | UdonSharp     | Error     |
+| URA0010     | [Default expressions are not yet supported by U#](./URA0010.md)                                     | UdonSharp     | Error     |
