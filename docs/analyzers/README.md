@@ -14,3 +14,4 @@
 | URA0008     | [User property declarations are not yet supported by U#](./URA0008.md)                              | UdonSharp     | Error     |
 | URA0009     | [Base type calling is not yet supported by U#](./URA0009.md)                                        | UdonSharp     | Error     |
 | URA0010     | [Default expressions are not yet supported by U#](./URA0010.md)                                     | UdonSharp     | Error     |
+| URA0011     | [Try/Catch/Finally is not supported by U#](./URA0011.md)                                            | Udon          | Error     |
