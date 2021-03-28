@@ -36,7 +36,7 @@ namespace UdonRabbit.Analyzer
                 return;
 
             if (declaration.Modifiers.Any(SyntaxKind.StaticKeyword))
-                context.ReportDiagnostic(Diagnostic.Create(RuleSet, declaration.GetLocation(), DiagnosticSeverity.Error));
+                context.ReportDiagnostic(Diagnostic.Create(RuleSet, declaration.GetLocation()));
         }
     }
 }
