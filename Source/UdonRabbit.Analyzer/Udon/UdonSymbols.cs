@@ -62,13 +62,17 @@ namespace UdonRabbit.Analyzer.Udon
         // List of assemblies that could not load on test context, missing file on disk system?
         private static readonly HashSet<string> AllowNotLoadedOnContext = new()
         {
+            // MonoBleedingEdge,
             "System.Net.Http.Rtc",
             "System.Runtime.InteropServices.WindowsRuntime",
             "System.ServiceModel.Duplex",
             "System.ServiceModel.Http",
             "System.ServiceModel.NetTcp",
             "System.ServiceModel.Primitives",
-            "System.ServiceModel.Security"
+            "System.ServiceModel.Security",
+
+            // JetBrains
+            "JetBrains.Rider.Unity.Editor.Plugin.Repacked"
         };
 
         #endregion

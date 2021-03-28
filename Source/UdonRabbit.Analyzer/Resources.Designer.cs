@@ -302,5 +302,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0009Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Default expressions are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0010Description {
+            get {
+                return ResourceManager.GetString("URA0010Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Default expressions are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0010MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0010MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Default expressions are not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0010Title {
+            get {
+                return ResourceManager.GetString("URA0010Title", resourceCulture);
+            }
+        }
     }
 }
