@@ -16,6 +16,9 @@ assignees: ''
 
 ## Example
 
+<!-- code example for the corresponding report -->
+<!-- example: https://github.com/mika-f/UdonRabbit.Analyzer/issues/46 -->
+
 ```csharp
 using UdonSharp;
 
