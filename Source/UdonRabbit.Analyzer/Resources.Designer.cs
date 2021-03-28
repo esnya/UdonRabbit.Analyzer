@@ -329,5 +329,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0010Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Try/Catch/Finally is not supported by UdonSharp since Udon does not have a way to handle exceptions に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0011Description {
+            get {
+                return ResourceManager.GetString("URA0011Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Try/Catch/Finally is not supported by UdonSharp since Udon does not have a way to handle exceptions に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0011MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0011MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Try/Catch/Finally is not supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0011Title {
+            get {
+                return ResourceManager.GetString("URA0011Title", resourceCulture);
+            }
+        }
     }
 }
