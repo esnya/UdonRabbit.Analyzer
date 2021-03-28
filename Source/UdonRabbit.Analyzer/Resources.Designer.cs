@@ -275,5 +275,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0008Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Base type calling is not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0009Description {
+            get {
+                return ResourceManager.GetString("URA0009Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Base type calling is not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0009MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0009MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Base type calling is not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0009Title {
+            get {
+                return ResourceManager.GetString("URA0009Title", resourceCulture);
+            }
+        }
     }
 }
