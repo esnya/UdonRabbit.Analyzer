@@ -27,6 +27,11 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
             return new(new TAnalyzer().SupportedDiagnostics.Single(w => w.Id == diagnosticId));
         }
 
+        protected DiagnosticResult ExpectDiagnostic(DiagnosticAnalyzer analyzer, string diagnosticId)
+        {
+            return new(analyzer.SupportedDiagnostics.First(w => w.Id == diagnosticId));
+        }
+
         protected async Task VerifyAnalyzerAsync(string source, params DiagnosticResult[] expected)
         {
             var testProject = new TestUnityProject(source, expected.Select(w => w.Id).ToArray());

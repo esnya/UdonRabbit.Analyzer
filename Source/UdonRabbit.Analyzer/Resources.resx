@@ -219,4 +219,13 @@
   <data name="URA0011Title" xml:space="preserve">
     <value>Try/Catch/Finally is not supported by U#</value>
   </data>
+  <data name="URA0012Description" xml:space="preserve">
+    <value>UdonSharp does not support throwing exceptions since Udon does not have support for exception throwing at the moment</value>
+  </data>
+  <data name="URA0012MessageFormat" xml:space="preserve">
+    <value>UdonSharp does not support throwing exceptions since Udon does not have support for exception throwing at the moment</value>
+  </data>
+  <data name="URA0012Title" xml:space="preserve">
+    <value>U# does not support throwing exceptions</value>
+  </data>
 </root>

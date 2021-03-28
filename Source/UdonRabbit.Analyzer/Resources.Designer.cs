@@ -356,5 +356,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0011Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not support throwing exceptions since Udon does not have support for exception throwing at the moment に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0012Description {
+            get {
+                return ResourceManager.GetString("URA0012Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not support throwing exceptions since Udon does not have support for exception throwing at the moment に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0012MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0012MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not support throwing exceptions に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0012Title {
+            get {
+                return ResourceManager.GetString("URA0012Title", resourceCulture);
+            }
+        }
     }
 }
