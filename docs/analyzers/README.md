@@ -1,4 +1,4 @@
-## UdonRabbit.Analyzer Analyzers
+# List of Analyzers in UdonRabbit.Analyzer
 
 | ID          | Title                                                                                               | Category      | Severity  |
 | ----------- | --------------------------------------------------------------------------------------------------- | ------------- | --------- |
