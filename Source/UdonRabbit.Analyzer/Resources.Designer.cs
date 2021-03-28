@@ -248,5 +248,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0007Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   User property declarations are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0008Description {
+            get {
+                return ResourceManager.GetString("URA0008Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   User property declarations are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0008MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0008MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   User property declarations are not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0008Title {
+            get {
+                return ResourceManager.GetString("URA0008Title", resourceCulture);
+            }
+        }
     }
 }
