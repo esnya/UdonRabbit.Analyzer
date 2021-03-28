@@ -183,4 +183,13 @@
   <data name="URA0007Title" xml:space="preserve">
     <value>U# does not currently support constructors on UdonSharpBehaviour</value>
   </data>
+  <data name="URA0008Description" xml:space="preserve">
+    <value>User property declarations are not yet supported by UdonSharp</value>
+  </data>
+  <data name="URA0008MessageFormat" xml:space="preserve">
+    <value>User property declarations are not yet supported by UdonSharp</value>
+  </data>
+  <data name="URA0008Title" xml:space="preserve">
+    <value>User property declarations are not yet supported by U#</value>
+  </data>
 </root>
