@@ -192,4 +192,13 @@
   <data name="URA0008Title" xml:space="preserve">
     <value>User property declarations are not yet supported by U#</value>
   </data>
+  <data name="URA0009Description" xml:space="preserve">
+    <value>Base type calling is not yet supported by UdonSharp</value>
+  </data>
+  <data name="URA0009MessageFormat" xml:space="preserve">
+    <value>Base type calling is not yet supported by UdonSharp</value>
+  </data>
+  <data name="URA0009Title" xml:space="preserve">
+    <value>Base type calling is not yet supported by U#</value>
+  </data>
 </root>
