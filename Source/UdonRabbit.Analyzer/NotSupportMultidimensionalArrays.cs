@@ -10,7 +10,7 @@ using UdonRabbit.Analyzer.Udon;
 namespace UdonRabbit.Analyzer
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class NotSupportMultidimentionalArrays : DiagnosticAnalyzer
+    public class NotSupportMultidimensionalArrays : DiagnosticAnalyzer
     {
         public const string ComponentId = "URA0013";
         private const string Category = UdonConstants.UdonSharpCategory;
