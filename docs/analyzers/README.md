@@ -16,3 +16,4 @@
 | URA0010     | [Default expressions are not yet supported by U#](./URA0010.md)                                     |   UdonSharp   |   Error   |
 | URA0011     | [Try/Catch/Finally is not supported by U#](./URA0011.md)                                            |     Udon      |   Error   |
 | URA0012     | [U# does not support throwing exceptions](./URA0012.md)                                             |     Udon      |   Error   |
+| URA0013     | [U# does not support multidimensional arrays, use jagged arrays](./URA0013.md)                      |   UdonSharp   |   Error   |
