@@ -17,5 +17,5 @@ Install UdonRabbit.Analyzer to JetBrains Rider is the following steps:
 3. Search `UdonRabbit.Analyzer`
 4. Install UdonRabbit.Analyzer to all projects
     * Click this
-    * !<img src="https://user-images.githubusercontent.com/10832834/112909309-1f9e7900-912c-11eb-8709-a69aa591e595.PNG" height="150px" />
+    * <img src="https://user-images.githubusercontent.com/10832834/112909309-1f9e7900-912c-11eb-8709-a69aa591e595.PNG" height="150px" />
 5. Happy Coding!
