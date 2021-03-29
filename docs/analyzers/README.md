@@ -21,3 +21,4 @@
 | URA0015     | [U# does not currently support null conditional operators](./URA0015.md)                            |   UdonSharp   |   Error   |
 | URA0016     | [Udon does not support the 'Awake' event, use 'Start' instead](./URA0016.md)                        |     Udon      |   Error   |
 | URA0017     | [U# does not yet support 'out' parameters on user-defined methods](./URA0017.md)                    |   UdonSharp   |   Error   |
+| URA0018     | [U# does not yet support 'in' parameters on user-defined methods](./URA0018.md)                     |   UdonSharp   |   Error   |
