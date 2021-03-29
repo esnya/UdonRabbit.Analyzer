@@ -410,5 +410,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0013Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not support multidimensional array accesses yet に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0014Description {
+            get {
+                return ResourceManager.GetString("URA0014Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not support multidimensional array accesses yet に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0014MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0014MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not support multidimensional array accesses yet に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0014Title {
+            get {
+                return ResourceManager.GetString("URA0014Title", resourceCulture);
+            }
+        }
     }
 }
