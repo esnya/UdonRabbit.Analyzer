@@ -4,38 +4,18 @@
 
 Install UdonRabbit.Analyzer to JetBrains Rider is the following steps:
 
-1. Download the latest NuGet package from [GitHub Releases](https://github.com/esnya/UdonRabbit.Analyzer/releases/latest)
-1. Move downloaded NuGet package into the suitable directory
-   - This directory worked as the Local NuGet Package Source
-   - If it already exists, move one there
 1. Add the new NuGet feeds to `NuGet.config`
-   - If it does not already exists, create a new one in project root
-1. Install UdonRabbit.Analyzer to all project
-   - or create a `packages.config` in your project root
-1. Happy Coding!
-
-### Example of `NuGet.config`
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <packageSources>
-    <clear />
-    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
-    <add key="dotnet-tools" value="https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-tools/nuget/v3/index.json" />
-    <add key="Local Package Source" value="D:\NuGetPackages" />
-  </packageSources>
-  <disabledPackageSources>
-    <clear />
-  </disabledPackageSources>
-</configuration>
-```
-
-### Example of `packages.config`
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<packages>
-  <package id="UdonRabbit.Analyzer" version="0.3.0" targetFramework="net471" />
-</packages>
-```
+    1. `Tools` > `NuGet` > `Manage NuGet Packages for Solution`
+    2. Open `Sources` tab
+    3. Add a new feed
+       * Name: `esnya@GitHub`
+       * URL: `https://nuget.pkg.github.com/esnya/index.json`
+       * User: Your GitHub ID
+       * Password: Your GitHub Personal Access Token (PAT)
+       * Enabled: ✓
+2. Open `Packages` tab
+3. Search `UdonRabbit.Analyzer`
+4. Install UdonRabbit.Analyzer to all projects
+    * Click this
+    * !<img src="https://user-images.githubusercontent.com/10832834/112909309-1f9e7900-912c-11eb-8709-a69aa591e595.PNG" height="150px" />
+5. Happy Coding!
