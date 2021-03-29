@@ -1,18 +1,20 @@
 ## Getting Started with UdonRabbit.Analyzer in JetBrains Rider
 
+> NOTE: I'm using Visual Studio Tools for Unity, so maybe it's the feature.
+
 Install UdonRabbit.Analyzer to JetBrains Rider is the following steps:
 
 1. Download the latest NuGet package from [GitHub Releases](https://github.com/esnya/UdonRabbit.Analyzer/releases/latest)
 1. Move downloaded NuGet package into the suitable directory
-   1. This directory worked as the Local NuGet Package Source
-   1. If it already exists, move one there
-1. Add the new NuGet feeds to NuGet.config
+   - This directory worked as the Local NuGet Package Source
+   - If it already exists, move one there
+1. Add the new NuGet feeds to `NuGet.config`
+   - If it does not already exists, create a new one in project root
 1. Install UdonRabbit.Analyzer to all project
+   - or create a `packages.config` in your project root
 1. Happy Coding!
 
-> NOTE: Normally, this steps [should be automated](https://docs.microsoft.com/en-us/visualstudio/gamedev/unity/extensibility/customize-project-files-created-by-vstu?view=vs-2019), but I don't know how to do it.
-
-### Example of NuGet.config
+### Example of `NuGet.config`
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -27,5 +29,13 @@ Install UdonRabbit.Analyzer to JetBrains Rider is the following steps:
     <clear />
   </disabledPackageSources>
 </configuration>
+```
 
+### Example of `packages.config`
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="UdonRabbit.Analyzer" version="0.3.0" targetFramework="net471" />
+</packages>
 ```
