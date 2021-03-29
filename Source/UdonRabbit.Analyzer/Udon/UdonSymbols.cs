@@ -214,7 +214,7 @@ namespace UdonRabbit.Analyzer.Udon
             {
                 paramsSb.Append("_");
                 foreach (var parameter in parameters)
-                    paramsSb.Append($"_{GetUdonNamedType(parameter.Type, true)}");
+                    paramsSb.Append($"_{GetUdonNamedType(parameter.Type, parameter.RefKind, true)}");
             }
 
             var returnsSb = new StringBuilder();
@@ -285,6 +285,17 @@ namespace UdonRabbit.Analyzer.Udon
             return t;
         }
 
+        private string GetUdonNamedType(ITypeSymbol symbol, RefKind reference, bool isSkipBaseTypeRemap = false)
+        {
+            var t = ConvertTypeSymbolToType(symbol);
+            if (t == null)
+                return string.Empty;
+
+            if (reference == RefKind.None)
+                return GetUdonNamedType(t, isSkipBaseTypeRemap);
+            return GetUdonNamedType(t.MakeByRefType(), isSkipBaseTypeRemap);
+        }
+
         private string GetUdonNamedType(ITypeSymbol symbol, bool isSkipBaseTypeRemap = false)
         {
             var t = ConvertTypeSymbolToType(symbol);
@@ -298,6 +309,8 @@ namespace UdonRabbit.Analyzer.Udon
         private string GetUdonNamedType(Type t, bool isSkipBaseTypeRemap = false)
         {
             var e = isSkipBaseTypeRemap ? t : RemapVrcBaseTypes(t);
+            var externTypeName = e.GetNameWithoutGenericArity();
+
             while (e!.IsArray || e!.IsByRef)
                 e = e.GetElementType();
 
@@ -316,7 +329,6 @@ namespace UdonRabbit.Analyzer.Udon
                 @namespace += $".{declaringTypeNamespace}";
             }
 
-            var externTypeName = e.GetNameWithoutGenericArity();
             if (externTypeName == "T" || externTypeName == "T[]")
                 @namespace = "";
 
