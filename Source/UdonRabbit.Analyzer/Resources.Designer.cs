@@ -545,5 +545,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0018Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support &apos;ref&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0019Description {
+            get {
+                return ResourceManager.GetString("URA0019Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support &apos;ref&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0019MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0019MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support &apos;ref&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0019Title {
+            get {
+                return ResourceManager.GetString("URA0019Title", resourceCulture);
+            }
+        }
     }
 }
