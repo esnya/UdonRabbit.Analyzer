@@ -437,5 +437,113 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0014Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support null conditional operators に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0015Description {
+            get {
+                return ResourceManager.GetString("URA0015Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support null conditional operators に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0015MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0015MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not currently support null conditional operators に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0015Title {
+            get {
+                return ResourceManager.GetString("URA0015Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support the &apos;Awake&apos; event, use &apos;Start&apos; instead に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0016Description {
+            get {
+                return ResourceManager.GetString("URA0016Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support the &apos;Awake&apos; event, use &apos;Start&apos; instead に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0016MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0016MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support the &apos;Awake&apos; event, use &apos;Start&apos; instead に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0016Title {
+            get {
+                return ResourceManager.GetString("URA0016Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support &apos;out&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0017Description {
+            get {
+                return ResourceManager.GetString("URA0017Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support &apos;out&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0017MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0017MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support &apos;out&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0017Title {
+            get {
+                return ResourceManager.GetString("URA0017Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support &apos;in&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0018Description {
+            get {
+                return ResourceManager.GetString("URA0018Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support &apos;in&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0018MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0018MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support &apos;in&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0018Title {
+            get {
+                return ResourceManager.GetString("URA0018Title", resourceCulture);
+            }
+        }
     }
 }

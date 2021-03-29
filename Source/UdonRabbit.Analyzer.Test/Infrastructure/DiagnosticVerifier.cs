@@ -54,6 +54,7 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
             private static readonly HashSet<string> AllowedDiagnostics = new()
             {
                 "CS0414", // https://docs.microsoft.com/ja-jp/dotnet/csharp/misc/cs0414
+                "CS0649", // https://docs.microsoft.com/ja-jp/dotnet/csharp/misc/cs0649
                 "CS1701" // https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-messages/cs1701
             };
 
