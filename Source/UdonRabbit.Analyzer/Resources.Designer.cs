@@ -302,5 +302,140 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0009Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Default expressions are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0010Description {
+            get {
+                return ResourceManager.GetString("URA0010Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Default expressions are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0010MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0010MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Default expressions are not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0010Title {
+            get {
+                return ResourceManager.GetString("URA0010Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Try/Catch/Finally is not supported by UdonSharp since Udon does not have a way to handle exceptions に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0011Description {
+            get {
+                return ResourceManager.GetString("URA0011Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Try/Catch/Finally is not supported by UdonSharp since Udon does not have a way to handle exceptions に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0011MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0011MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Try/Catch/Finally is not supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0011Title {
+            get {
+                return ResourceManager.GetString("URA0011Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not support throwing exceptions since Udon does not have support for exception throwing at the moment に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0012Description {
+            get {
+                return ResourceManager.GetString("URA0012Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not support throwing exceptions since Udon does not have support for exception throwing at the moment に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0012MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0012MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not support throwing exceptions に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0012Title {
+            get {
+                return ResourceManager.GetString("URA0012Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not support multidimensional arrays at the moment, use jagged arrays instead for now に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0013Description {
+            get {
+                return ResourceManager.GetString("URA0013Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not support multidimensional arrays at the moment, use jagged arrays instead for now に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0013MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0013MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not support multidimensional arrays, use jagged arrays に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0013Title {
+            get {
+                return ResourceManager.GetString("URA0013Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not support multidimensional array accesses yet に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0014Description {
+            get {
+                return ResourceManager.GetString("URA0014Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not support multidimensional array accesses yet に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0014MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0014MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not support multidimensional array accesses yet に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0014Title {
+            get {
+                return ResourceManager.GetString("URA0014Title", resourceCulture);
+            }
+        }
     }
 }

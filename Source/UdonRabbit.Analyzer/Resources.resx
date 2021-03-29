@@ -201,4 +201,49 @@
   <data name="URA0009Title" xml:space="preserve">
     <value>Base type calling is not yet supported by U#</value>
   </data>
+  <data name="URA0010Description" xml:space="preserve">
+    <value>Default expressions are not yet supported by UdonSharp</value>
+  </data>
+  <data name="URA0010MessageFormat" xml:space="preserve">
+    <value>Default expressions are not yet supported by UdonSharp</value>
+  </data>
+  <data name="URA0010Title" xml:space="preserve">
+    <value>Default expressions are not yet supported by U#</value>
+  </data>
+  <data name="URA0011Description" xml:space="preserve">
+    <value>Try/Catch/Finally is not supported by UdonSharp since Udon does not have a way to handle exceptions</value>
+  </data>
+  <data name="URA0011MessageFormat" xml:space="preserve">
+    <value>Try/Catch/Finally is not supported by UdonSharp since Udon does not have a way to handle exceptions</value>
+  </data>
+  <data name="URA0011Title" xml:space="preserve">
+    <value>Try/Catch/Finally is not supported by U#</value>
+  </data>
+  <data name="URA0012Description" xml:space="preserve">
+    <value>UdonSharp does not support throwing exceptions since Udon does not have support for exception throwing at the moment</value>
+  </data>
+  <data name="URA0012MessageFormat" xml:space="preserve">
+    <value>UdonSharp does not support throwing exceptions since Udon does not have support for exception throwing at the moment</value>
+  </data>
+  <data name="URA0012Title" xml:space="preserve">
+    <value>U# does not support throwing exceptions</value>
+  </data>
+  <data name="URA0013Description" xml:space="preserve">
+    <value>UdonSharp does not support multidimensional arrays at the moment, use jagged arrays instead for now</value>
+  </data>
+  <data name="URA0013MessageFormat" xml:space="preserve">
+    <value>UdonSharp does not support multidimensional arrays at the moment, use jagged arrays instead for now</value>
+  </data>
+  <data name="URA0013Title" xml:space="preserve">
+    <value>U# does not support multidimensional arrays, use jagged arrays</value>
+  </data>
+  <data name="URA0014Description" xml:space="preserve">
+    <value>UdonSharp does not support multidimensional array accesses yet</value>
+  </data>
+  <data name="URA0014MessageFormat" xml:space="preserve">
+    <value>UdonSharp does not support multidimensional array accesses yet</value>
+  </data>
+  <data name="URA0014Title" xml:space="preserve">
+    <value>U# does not support multidimensional array accesses yet</value>
+  </data>
 </root>

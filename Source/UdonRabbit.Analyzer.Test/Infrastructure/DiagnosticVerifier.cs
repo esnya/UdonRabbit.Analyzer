@@ -27,6 +27,11 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
             return new(new TAnalyzer().SupportedDiagnostics.Single(w => w.Id == diagnosticId));
         }
 
+        protected DiagnosticResult ExpectDiagnostic(DiagnosticAnalyzer analyzer, string diagnosticId)
+        {
+            return new(analyzer.SupportedDiagnostics.First(w => w.Id == diagnosticId));
+        }
+
         protected async Task VerifyAnalyzerAsync(string source, params DiagnosticResult[] expected)
         {
             var testProject = new TestUnityProject(source, expected.Select(w => w.Id).ToArray());
@@ -48,6 +53,7 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
 
             private static readonly HashSet<string> AllowedDiagnostics = new()
             {
+                "CS0414", // https://docs.microsoft.com/ja-jp/dotnet/csharp/misc/cs0414
                 "CS1701" // https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-messages/cs1701
             };
 
