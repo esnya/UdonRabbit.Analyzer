@@ -1,6 +1,6 @@
 # UdonRabbit.Analyzer
 
-.NET Roslyn Analyzer for VRChat Udon and UdonSharp.  
+Experimental .NET Roslyn Analyzer for VRChat Udon and UdonSharp.  
 This analyzer accelerates your Udon development with UdonSharp.  
 Check out the [list of analyzers](docs/analyzers/README.md) defined in this project.  
 Not enough types of analyzers in UdonRabbit.Analyzer?  
@@ -65,6 +65,11 @@ See https://docs.mochizuki.moe/udon-rabbit/analayzer/analyzers/
 <img src="https://user-images.githubusercontent.com/10832834/112584755-c8528d00-8e3b-11eb-9204-1c05c0669ffc.PNG" width="500px" />
 
 ## Troubleshooting
+
+### I found a bug on VS/VS Code/Rider/Analyzer
+
+If you find a bug, feel free to create a new issue!  
+At the moment, I'm finding stability glitches for JetBrains Rider in my environment.
 
 ### Analyzer is not worked on UdonSharpBehaviour
 
