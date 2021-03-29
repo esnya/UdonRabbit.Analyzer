@@ -17,3 +17,4 @@
 | URA0011     | [Try/Catch/Finally is not supported by U#](./URA0011.md)                                            |     Udon      |   Error   |
 | URA0012     | [U# does not support throwing exceptions](./URA0012.md)                                             |     Udon      |   Error   |
 | URA0013     | [U# does not support multidimensional arrays, use jagged arrays](./URA0013.md)                      |   UdonSharp   |   Error   |
+| URA0014     | [U# does not support multidimensional array accesses yet](./URA0014.md)                             |   UdonSharp   |   Error   |
