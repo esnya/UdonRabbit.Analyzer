@@ -11,7 +11,30 @@ namespace UdonRabbit.Analyzer.Test
     public class MethodIsNotExposedToUdonTest : DiagnosticVerifier<MethodIsNotExposedToUdon>
     {
         [Fact]
-        public async Task AllowedMethodIsNoDiagnosticsReport()
+        public async Task MonoBehaviourInstanceMethodHasNoDiagnosticReport()
+        {
+            const string source = @"
+using UnityEngine;
+
+namespace UdonRabbit
+{
+    public class TestClass : MonoBehaviour
+    {
+        public ParticleSystem ps;
+
+        private void Update()
+        {
+            ps.Play();
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedInstanceMethodHasNoDiagnosticsReport()
         {
             const string source = @"
 using UdonSharp;
@@ -36,7 +59,7 @@ namespace UdonRabbit
         }
 
         [Fact]
-        public async Task NoDiagnosticsReport()
+        public async Task UdonSharpBehaviourAllowedStaticMethodHasNoDiagnosticsReport()
         {
             const string source = @"
 using UdonSharp;
@@ -45,8 +68,12 @@ namespace UdonRabbit
 {
     public class TestClass : UdonSharpBehaviour
     {
-        private void Update()
+        private void Start()
         {
+            var s = ""1"";
+            int i;
+
+            var b = int.TryParse(s, out i);
         }
     }
 }
@@ -56,7 +83,7 @@ namespace UdonRabbit
         }
 
         [Fact]
-        public async Task NotAllowedMethodHasDiagnosticsReport()
+        public async Task UdonSharpBehaviourNotAllowedInstanceMethodHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodIsNotExposedToUdon.ComponentId)
                              .WithLocation(14, 21)
