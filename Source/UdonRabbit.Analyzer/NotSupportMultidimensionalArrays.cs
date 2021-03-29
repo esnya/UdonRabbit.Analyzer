@@ -37,17 +37,14 @@ namespace UdonRabbit.Analyzer
                 return;
 
             foreach (var variable in declaration.Variables)
-            {
-                var s = context.SemanticModel.GetDeclaredSymbol(variable);
-                if (s is IFieldSymbol f && IsDimensionalArrayType(f.Type))
-                    context.ReportDiagnostic(Diagnostic.Create(RuleSet, variable.GetLocation()));
-
-                if (s is ILocalSymbol l && IsDimensionalArrayType(l.Type))
-                    context.ReportDiagnostic(Diagnostic.Create(RuleSet, variable.GetLocation()));
-
-                if (s is IParameterSymbol m && IsDimensionalArrayType(m.Type))
-                    context.ReportDiagnostic(Diagnostic.Create(RuleSet, variable.GetLocation()));
-            }
+                switch (context.SemanticModel.GetDeclaredSymbol(variable))
+                {
+                    case IFieldSymbol f when IsDimensionalArrayType(f.Type):
+                    case ILocalSymbol l when IsDimensionalArrayType(l.Type):
+                    case IParameterSymbol m when IsDimensionalArrayType(m.Type):
+                        context.ReportDiagnostic(Diagnostic.Create(RuleSet, variable.GetLocation()));
+                        break;
+                }
         }
 
         private static void AnalyzeParameter(SyntaxNodeAnalysisContext context)
