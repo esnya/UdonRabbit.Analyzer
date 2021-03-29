@@ -464,5 +464,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0015Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Udon does not support the &apos;Awake&apos; event, use &apos;Start&apos; instead に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0016Description {
+            get {
+                return ResourceManager.GetString("URA0016Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support the &apos;Awake&apos; event, use &apos;Start&apos; instead に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0016MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0016MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support the &apos;Awake&apos; event, use &apos;Start&apos; instead に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0016Title {
+            get {
+                return ResourceManager.GetString("URA0016Title", resourceCulture);
+            }
+        }
     }
 }
