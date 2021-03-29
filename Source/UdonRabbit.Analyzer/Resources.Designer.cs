@@ -437,5 +437,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0014Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support null conditional operators に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0015Description {
+            get {
+                return ResourceManager.GetString("URA0015Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support null conditional operators に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0015MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0015MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not currently support null conditional operators に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0015Title {
+            get {
+                return ResourceManager.GetString("URA0015Title", resourceCulture);
+            }
+        }
     }
 }
