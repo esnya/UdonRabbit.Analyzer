@@ -493,7 +493,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not yet support &apos;out&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not yet support &apos;out&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0017Description {
             get {
@@ -502,7 +502,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not yet support &apos;out&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not yet support &apos;out&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0017MessageFormat {
             get {
@@ -516,6 +516,33 @@ namespace UdonRabbit.Analyzer {
         internal static string URA0017Title {
             get {
                 return ResourceManager.GetString("URA0017Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support &apos;in&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0018Description {
+            get {
+                return ResourceManager.GetString("URA0018Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support &apos;in&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0018MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0018MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support &apos;in&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0018Title {
+            get {
+                return ResourceManager.GetString("URA0018Title", resourceCulture);
             }
         }
     }
