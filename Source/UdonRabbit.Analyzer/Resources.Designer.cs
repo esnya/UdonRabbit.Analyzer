@@ -491,5 +491,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0016Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   U# does not yet support &apos;out&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0017Description {
+            get {
+                return ResourceManager.GetString("URA0017Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support &apos;out&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0017MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0017MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support &apos;out&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0017Title {
+            get {
+                return ResourceManager.GetString("URA0017Title", resourceCulture);
+            }
+        }
     }
 }
