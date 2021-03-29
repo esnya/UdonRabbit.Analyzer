@@ -11,14 +11,14 @@ using UdonRabbit.Analyzer.Udon;
 namespace UdonRabbit.Analyzer
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class NotSupportOutParametersInUserDefinedMethods : DiagnosticAnalyzer
+    public class NotSupportInParametersInUserDefinedMethods : DiagnosticAnalyzer
     {
-        public const string ComponentId = "URA0017";
+        public const string ComponentId = "URA0018";
         private const string Category = UdonConstants.UdonSharpCategory;
-        private const string HelpLinkUri = "https://github.com/esnya/UdonRabbit.Analyzer/blob/master/docs/analyzers/URA0017.md";
-        private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.URA0017Title), Resources.ResourceManager, typeof(Resources));
-        private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.URA0017MessageFormat), Resources.ResourceManager, typeof(Resources));
-        private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.URA0017Description), Resources.ResourceManager, typeof(Resources));
+        private const string HelpLinkUri = "https://github.com/esnya/UdonRabbit.Analyzer/blob/master/docs/analyzers/URA0018.md";
+        private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.URA0018Title), Resources.ResourceManager, typeof(Resources));
+        private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.URA0018MessageFormat), Resources.ResourceManager, typeof(Resources));
+        private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.URA0018Description), Resources.ResourceManager, typeof(Resources));
         private static readonly DiagnosticDescriptor RuleSet = new(ComponentId, Title, MessageFormat, Category, DiagnosticSeverity.Error, true, Description, HelpLinkUri);
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RuleSet);
@@ -36,7 +36,7 @@ namespace UdonRabbit.Analyzer
             if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntax(context.SemanticModel, parameters))
                 return;
 
-            foreach (var parameter in parameters.Parameters.Where(parameter => parameter.Modifiers.Any(SyntaxKind.OutKeyword)))
+            foreach (var parameter in parameters.Parameters.Where(parameter => parameter.Modifiers.Any(SyntaxKind.InKeyword)))
                 context.ReportDiagnostic(Diagnostic.Create(RuleSet, parameter.GetLocation()));
         }
     }

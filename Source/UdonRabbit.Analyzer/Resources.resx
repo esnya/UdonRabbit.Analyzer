@@ -265,12 +265,21 @@
     <value>Udon does not support the 'Awake' event, use 'Start' instead</value>
   </data>
   <data name="URA0017Description" xml:space="preserve">
-    <value>U# does not yet support 'out' parameters on user-defined methods</value>
+    <value>UdonSharp does not yet support 'out' parameters on user-defined methods</value>
   </data>
   <data name="URA0017MessageFormat" xml:space="preserve">
-    <value>U# does not yet support 'out' parameters on user-defined methods</value>
+    <value>UdonSharp does not yet support 'out' parameters on user-defined methods</value>
   </data>
   <data name="URA0017Title" xml:space="preserve">
     <value>U# does not yet support 'out' parameters on user-defined methods</value>
+  </data>
+  <data name="URA0018Description" xml:space="preserve">
+    <value>UdonSharp does not yet support 'in' parameters on user-defined methods</value>
+  </data>
+  <data name="URA0018MessageFormat" xml:space="preserve">
+    <value>UdonSharp does not yet support 'in' parameters on user-defined methods</value>
+  </data>
+  <data name="URA0018Title" xml:space="preserve">
+    <value>U# does not yet support 'in' parameters on user-defined methods</value>
   </data>
 </root>
