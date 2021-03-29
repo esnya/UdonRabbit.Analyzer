@@ -6,6 +6,12 @@ Check out the [list of analyzers](docs/analyzers/README.md) defined in this proj
 Not enough types of analyzers in UdonRabbit.Analyzer?  
 You can check out the [list of missing analyzers](https://github.com/mika-f/UdonRabbit.Analyzer/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement) or create a new issues.
 
+## Features
+
+- It reports the part of the behaviour that doesn't work well on VRChat as an error in editor
+- It reports an error in the editor that about the syntax that cannot be compiled by the UdonSharp
+- etc
+
 ## Getting Started
 
 - [Microsoft Visual Studio 2019](./docs/getting-started/visual-studio.md)
