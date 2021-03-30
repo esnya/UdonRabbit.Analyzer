@@ -31,4 +31,3 @@ Those that are no longer needed due to Udon or UdonSharp updates will be assigne
 | URA0020     | [The 'is' keyword is not yet supported by U#](./URA0020.md)                                         |     Udon      |   Error   |
 | URA0021     | [The 'as' keyword is not yet supported by U#](./URA0021.md)                                         |     Udon      |   Error   |
 | URA0022     | [U# does not currently support type checking with the 'is' keyword](./URA0022.md)                   |     Udon      |   Error   |
-| URA0023     | [Only one class declaration per file is currently supported by U#](./URA0023.md)                    |   UdonSharp   |   Error   |
