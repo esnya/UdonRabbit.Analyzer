@@ -24,3 +24,4 @@
 | URA0018     | [U# does not yet support 'in' parameters on user-defined methods](./URA0018.md)                     |   UdonSharp   |   Error   |
 | URA0019     | [U# does not yet support 'ref' parameters on user-defined methods](./URA0019.md)                    |   UdonSharp   |   Error   |
 | URA0020     | [The 'is' keyword is not yet supported by U#](./URA0020.md)                                         |     Udon      |   Error   |
+| URA0021     | [The 'as' keyword is not yet supported by U#](./URA0021.md)                                         |     Udon      |   Error   |
