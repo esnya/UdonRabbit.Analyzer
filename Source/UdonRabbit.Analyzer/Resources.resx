@@ -300,4 +300,13 @@
   <data name="URA0020Title" xml:space="preserve">
     <value>The 'is' keyword is not yet supported by U#</value>
   </data>
+  <data name="URA0021Description" xml:space="preserve">
+    <value>The 'as' keyword is not yet supported by UdonSharp since Udon does not expose what is necessary</value>
+  </data>
+  <data name="URA0021MessageFormat" xml:space="preserve">
+    <value>The 'as' keyword is not yet supported by UdonSharp since Udon does not expose what is necessary</value>
+  </data>
+  <data name="URA0021Title" xml:space="preserve">
+    <value>The 'as' keyword is not yet supported by U#</value>
+  </data>
 </root>
