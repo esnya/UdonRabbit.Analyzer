@@ -653,32 +653,5 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0022Title", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Only one class declaration per file is currently supported by UdonSharp に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string URA0023Description {
-            get {
-                return ResourceManager.GetString("URA0023Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Only one class declaration per file is currently supported by UdonSharp に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string URA0023MessageFormat {
-            get {
-                return ResourceManager.GetString("URA0023MessageFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Only one class declaration per file is currently supported by U# に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string URA0023Title {
-            get {
-                return ResourceManager.GetString("URA0023Title", resourceCulture);
-            }
-        }
     }
 }
