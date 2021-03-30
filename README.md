@@ -88,3 +88,8 @@ See method comments for details.
 
 - [MerlinVR/UdonSharp](https://github.com/MerlinVR/UdonSharp)
 - [Microsoft/Microsoft.Unity.Analyzers](https://github.com/microsoft/Microsoft.Unity.Analyzers)
+
+## Links
+
+Discord Server : https://discord.gg/h42BzsFtD2  
+Patreon : XXX
