@@ -27,7 +27,6 @@ namespace UdonRabbit.Analyzer
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.RegisterSyntaxNodeAction(AnalyzeIsExpression, SyntaxKind.IsExpression);
-            context.RegisterSyntaxNodeAction(AnalyzeIsPatternExpression, SyntaxKind.IsPatternExpression);
         }
 
         private static void AnalyzeIsExpression(SyntaxNodeAnalysisContext context)
@@ -38,15 +37,6 @@ namespace UdonRabbit.Analyzer
 
             if (expression.Kind() == SyntaxKind.IsExpression)
                 context.ReportDiagnostic(Diagnostic.Create(RuleSet, expression.GetLocation()));
-        }
-
-        private static void AnalyzeIsPatternExpression(SyntaxNodeAnalysisContext context)
-        {
-            var expression = (IsPatternExpressionSyntax) context.Node;
-            if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntax(context.SemanticModel, expression))
-                return;
-
-            context.ReportDiagnostic(Diagnostic.Create(RuleSet, expression.GetLocation()));
         }
     }
 }
