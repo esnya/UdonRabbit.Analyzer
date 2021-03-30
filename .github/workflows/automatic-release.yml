@@ -2,8 +2,8 @@ name: Automatic Release by Tag
 
 on:
   push:
-    branches:
-      - "*"
+    # branches:
+    #   - "*"
     tags:
       - "v**"
 
