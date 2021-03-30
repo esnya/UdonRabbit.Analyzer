@@ -626,5 +626,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0021Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support type checking with the &apos;is&apos; keyword since Udon does not yet expose the proper functionality for type checking. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0022Description {
+            get {
+                return ResourceManager.GetString("URA0022Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support type checking with the &apos;is&apos; keyword since Udon does not yet expose the proper functionality for type checking. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0022MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0022MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not currently support type checking with the &apos;is&apos; keyword に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0022Title {
+            get {
+                return ResourceManager.GetString("URA0022Title", resourceCulture);
+            }
+        }
     }
 }

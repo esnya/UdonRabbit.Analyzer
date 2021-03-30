@@ -8,10 +8,10 @@ using Xunit;
 
 namespace UdonRabbit.Analyzer.Test
 {
-    public class NotSupportIsKeywordInExpressionTest : DiagnosticVerifier<NotSupportIsKeywordInExpression>
+    public class NotSupportIsPatternKeywordInExpressionTest : DiagnosticVerifier<NotSupportIsPatternKeywordInExpression>
     {
         [Fact]
-        public async Task MonoBehaviourIsExpressionHasNoDiagnosticsReport()
+        public async Task MonoBehaviourIsPatternExpressionHasNoDiagnosticsReport()
         {
             const string source = @"
 using UnityEngine;
@@ -25,9 +25,9 @@ namespace UdonRabbit
 
         private void Start()
         {
-            if (_component is Transform)
+            if (_component is Transform t)
             {
-                var t = (Transform) _component;
+                var position = t.position;
             }
         }
     }
@@ -38,9 +38,9 @@ namespace UdonRabbit
         }
 
         [Fact]
-        public async Task UdonSharpBehaviourIsExpressionHasDiagnosticsReport()
+        public async Task UdonSharpBehaviourIsPatternExpressionHasDiagnosticsReport()
         {
-            var diagnostic = ExpectDiagnostic(NotSupportIsKeywordInExpression.ComponentId)
+            var diagnostic = ExpectDiagnostic(NotSupportIsPatternKeywordInExpression.ComponentId)
                              .WithLocation(15, 17)
                              .WithSeverity(DiagnosticSeverity.Error);
 
@@ -58,9 +58,9 @@ namespace UdonRabbit
 
         private void Start()
         {
-            if (_component is Transform)
+            if (_component is Transform t)
             {
-                var t = (Transform) _component;
+                var position = t.position;
             }
         }
     }
