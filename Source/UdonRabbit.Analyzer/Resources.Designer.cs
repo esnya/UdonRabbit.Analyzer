@@ -572,5 +572,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0019Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   The &apos;is&apos; keyword is not yet supported by UdonSharp since Udon does not expose what is necessary に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0020Description {
+            get {
+                return ResourceManager.GetString("URA0020Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The &apos;is&apos; keyword is not yet supported by UdonSharp since Udon does not expose what is necessary に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0020MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0020MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The &apos;is&apos; keyword is not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0020Title {
+            get {
+                return ResourceManager.GetString("URA0020Title", resourceCulture);
+            }
+        }
     }
 }
