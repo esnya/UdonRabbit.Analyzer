@@ -599,5 +599,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0020Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   The &apos;as&apos; keyword is not yet supported by UdonSharp since Udon does not expose what is necessary に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0021Description {
+            get {
+                return ResourceManager.GetString("URA0021Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The &apos;as&apos; keyword is not yet supported by UdonSharp since Udon does not expose what is necessary に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0021MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0021MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The &apos;as&apos; keyword is not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0021Title {
+            get {
+                return ResourceManager.GetString("URA0021Title", resourceCulture);
+            }
+        }
     }
 }
