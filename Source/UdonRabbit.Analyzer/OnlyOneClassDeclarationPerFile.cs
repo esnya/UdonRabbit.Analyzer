@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Linq;
 
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -28,32 +26,26 @@ namespace UdonRabbit.Analyzer
         {
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-            context.RegisterSyntaxNodeAction(AnalyzeClassDeclaration, SyntaxKind.ClassDeclaration);
+            context.RegisterSemanticModelAction(AnalyzeSemanticModel);
         }
 
-        private static void AnalyzeClassDeclaration(SyntaxNodeAnalysisContext context)
+        private static void AnalyzeSemanticModel(SemanticModelAnalysisContext context)
         {
-            var declaration = (ClassDeclarationSyntax) context.Node;
-            if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntax(context.SemanticModel, declaration))
+            var root = context.SemanticModel.SyntaxTree.GetRoot();
+
+            var classes = root.DescendantNodes()
+                              .Where(w => w is MemberDeclarationSyntax)
+                              .OfType<ClassDeclarationSyntax>()
+                              .ToList();
+
+            if (classes.Count <= 1)
                 return;
 
-            var classes = new List<ClassDeclarationSyntax>();
-            foreach (var unit in context.Compilation.SyntaxTrees.Select(w => w.GetCompilationUnitRoot()))
-            {
-                void RecursiveFindClassDeclarations(List<MemberDeclarationSyntax> members)
-                {
-                    classes.AddRange(members.OfType<ClassDeclarationSyntax>());
+            if (classes.All(w => !UdonSharpBehaviourUtility.ShouldAnalyzeSyntaxByClass(context.SemanticModel, w)))
+                return;
 
-                    var i = members.OfType<NamespaceDeclarationSyntax>().SelectMany(w => w.Members).ToList();
-                    if (i.Any())
-                        RecursiveFindClassDeclarations(i);
-                }
-
-                RecursiveFindClassDeclarations(unit.Members.ToList());
-            }
-
-            if (classes.Count > 1 && classes.Skip(1).Any(w => w == declaration))
-                context.ReportDiagnostic(Diagnostic.Create(RuleSet, declaration.GetLocation()));
+            foreach (var @class in classes.Skip(1))
+                context.ReportDiagnostic(Diagnostic.Create(RuleSet, @class.GetLocation()));
         }
     }
 }

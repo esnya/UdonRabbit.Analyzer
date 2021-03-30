@@ -27,6 +27,39 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourOneClassHasNoDiagnosticReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class SomeBehaviour1 : UdonSharpBehaviour {}
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourOneClassWithMethodHasNoDiagnosticReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class SomeBehaviour1 : UdonSharpBehaviour
+    {
+        private void Update() {}
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourTwiceClassHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(OnlyOneClassDeclarationPerFile.ComponentId)

@@ -14,5 +14,11 @@ namespace UdonRabbit.Analyzer.Udon
             var declSymbol = (INamedTypeSymbol) semanticModel.GetDeclaredSymbol(classDecl);
             return declSymbol.BaseType.Equals(semanticModel.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default);
         }
+
+        public static bool ShouldAnalyzeSyntaxByClass(SemanticModel semanticModel, ClassDeclarationSyntax @class)
+        {
+            var decl = (INamedTypeSymbol) semanticModel.GetDeclaredSymbol(@class);
+            return decl.BaseType.Equals(semanticModel.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default);
+        }
     }
 }
