@@ -1,5 +1,10 @@
 # List of Analyzers in UdonRabbit.Analyzer
 
+## About Severity
+
+UdonRabbit.Analyzer reports Error for those that cause compilation errors, Warning for others.  
+Those that are no longer needed due to Udon or UdonSharp updates will be assigned Hidden.
+
 ## Udon / UdonSharp
 
 | ID          | Title                                                                                               |   Category    | Severity  |
