@@ -282,4 +282,40 @@
   <data name="URA0018Title" xml:space="preserve">
     <value>U# does not yet support 'in' parameters on user-defined methods</value>
   </data>
+  <data name="URA0019Description" xml:space="preserve">
+    <value>UdonSharp does not yet support 'ref' parameters on user-defined methods</value>
+  </data>
+  <data name="URA0019MessageFormat" xml:space="preserve">
+    <value>UdonSharp does not yet support 'ref' parameters on user-defined methods</value>
+  </data>
+  <data name="URA0019Title" xml:space="preserve">
+    <value>U# does not yet support 'ref' parameters on user-defined methods</value>
+  </data>
+  <data name="URA0020Description" xml:space="preserve">
+    <value>The 'is' keyword is not yet supported by UdonSharp since Udon does not expose what is necessary</value>
+  </data>
+  <data name="URA0020MessageFormat" xml:space="preserve">
+    <value>The 'is' keyword is not yet supported by UdonSharp since Udon does not expose what is necessary</value>
+  </data>
+  <data name="URA0020Title" xml:space="preserve">
+    <value>The 'is' keyword is not yet supported by U#</value>
+  </data>
+  <data name="URA0021Description" xml:space="preserve">
+    <value>The 'as' keyword is not yet supported by UdonSharp since Udon does not expose what is necessary</value>
+  </data>
+  <data name="URA0021MessageFormat" xml:space="preserve">
+    <value>The 'as' keyword is not yet supported by UdonSharp since Udon does not expose what is necessary</value>
+  </data>
+  <data name="URA0021Title" xml:space="preserve">
+    <value>The 'as' keyword is not yet supported by U#</value>
+  </data>
+  <data name="URA0022Description" xml:space="preserve">
+    <value>UdonSharp does not currently support type checking with the 'is' keyword since Udon does not yet expose the proper functionality for type checking.</value>
+  </data>
+  <data name="URA0022MessageFormat" xml:space="preserve">
+    <value>UdonSharp does not currently support type checking with the 'is' keyword since Udon does not yet expose the proper functionality for type checking.</value>
+  </data>
+  <data name="URA0022Title" xml:space="preserve">
+    <value>U# does not currently support type checking with the 'is' keyword</value>
+  </data>
 </root>

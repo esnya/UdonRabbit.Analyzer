@@ -22,3 +22,7 @@
 | URA0016     | [Udon does not support the 'Awake' event, use 'Start' instead](./URA0016.md)                        |     Udon      |   Error   |
 | URA0017     | [U# does not yet support 'out' parameters on user-defined methods](./URA0017.md)                    |   UdonSharp   |   Error   |
 | URA0018     | [U# does not yet support 'in' parameters on user-defined methods](./URA0018.md)                     |   UdonSharp   |   Error   |
+| URA0019     | [U# does not yet support 'ref' parameters on user-defined methods](./URA0019.md)                    |   UdonSharp   |   Error   |
+| URA0020     | [The 'is' keyword is not yet supported by U#](./URA0020.md)                                         |     Udon      |   Error   |
+| URA0021     | [The 'as' keyword is not yet supported by U#](./URA0021.md)                                         |     Udon      |   Error   |
+| URA0022     | [U# does not currently support type checking with the 'is' keyword](./URA0022.md)                   |     Udon      |   Error   |

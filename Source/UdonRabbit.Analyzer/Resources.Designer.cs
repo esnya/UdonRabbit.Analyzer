@@ -545,5 +545,113 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0018Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support &apos;ref&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0019Description {
+            get {
+                return ResourceManager.GetString("URA0019Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support &apos;ref&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0019MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0019MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support &apos;ref&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0019Title {
+            get {
+                return ResourceManager.GetString("URA0019Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The &apos;is&apos; keyword is not yet supported by UdonSharp since Udon does not expose what is necessary に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0020Description {
+            get {
+                return ResourceManager.GetString("URA0020Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The &apos;is&apos; keyword is not yet supported by UdonSharp since Udon does not expose what is necessary に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0020MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0020MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The &apos;is&apos; keyword is not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0020Title {
+            get {
+                return ResourceManager.GetString("URA0020Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The &apos;as&apos; keyword is not yet supported by UdonSharp since Udon does not expose what is necessary に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0021Description {
+            get {
+                return ResourceManager.GetString("URA0021Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The &apos;as&apos; keyword is not yet supported by UdonSharp since Udon does not expose what is necessary に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0021MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0021MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The &apos;as&apos; keyword is not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0021Title {
+            get {
+                return ResourceManager.GetString("URA0021Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support type checking with the &apos;is&apos; keyword since Udon does not yet expose the proper functionality for type checking. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0022Description {
+            get {
+                return ResourceManager.GetString("URA0022Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support type checking with the &apos;is&apos; keyword since Udon does not yet expose the proper functionality for type checking. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0022MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0022MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not currently support type checking with the &apos;is&apos; keyword に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0022Title {
+            get {
+                return ResourceManager.GetString("URA0022Title", resourceCulture);
+            }
+        }
     }
 }
