@@ -25,3 +25,4 @@
 | URA0019     | [U# does not yet support 'ref' parameters on user-defined methods](./URA0019.md)                    |   UdonSharp   |   Error   |
 | URA0020     | [The 'is' keyword is not yet supported by U#](./URA0020.md)                                         |     Udon      |   Error   |
 | URA0021     | [The 'as' keyword is not yet supported by U#](./URA0021.md)                                         |     Udon      |   Error   |
+| URA0022     | [U# does not currently support type checking with the 'is' keyword](./URA0022.md)                   |     Udon      |   Error   |
