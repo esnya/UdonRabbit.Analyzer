@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
@@ -13,6 +12,15 @@ namespace UdonRabbit.Analyzer.Udon
     public static class UdonAssemblyLoader
     {
         private static readonly object LockObj = new();
+
+        private static readonly HashSet<string> UdonAllowAssemblies = new()
+        {
+            "VRCSDK3",
+            "VRCSDKBase",
+            "Cinemachine",
+            "Unity.Postprocessing.Runtime",
+            "Unity.TextMeshPro"
+        };
 
         public static bool IsAssemblyLoaded { get; private set; }
 
@@ -52,14 +60,13 @@ namespace UdonRabbit.Analyzer.Udon
                         return null;
 
                     if (references.Any(w => w.ToFilePath().EndsWith($"{name}.dll")))
-                        return AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(references.First(w => w.ToFilePath().EndsWith($"{name}.dll")).ToFilePath()));
-                    return AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(resolver.Resolve($"{name}.dll")));
+                        return Assembly.LoadFrom(references.First(w => w.ToFilePath().EndsWith($"{name}.dll")).ToFilePath());
+                    return Assembly.LoadFrom(resolver.Resolve($"{name}.dll"));
                 };
 
-                AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(resolver.Resolve("VRC.Udon.Editor.dll")));
-                AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(resolver.Resolve("Cinemachine.dll")));
-                AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(resolver.Resolve("Unity.Postprocessing.Runtime.dll")));
-                AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(resolver.Resolve("Unity.TextMeshPro.dll")));
+                Assembly.LoadFrom(resolver.Resolve("VRC.Udon.Editor.dll"));
+                foreach (var allowed in UdonAllowAssemblies)
+                    Assembly.LoadFrom(resolver.Resolve($"{allowed}.dll"));
 
                 var assembly = AppDomain.CurrentDomain.GetAssemblies().First(w => w.GetName().Name == "VRC.Udon.Editor");
                 if (assembly.GetType("VRC.Udon.Editor.UdonEditorManager") == null)
