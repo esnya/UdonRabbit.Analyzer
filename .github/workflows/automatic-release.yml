@@ -1,0 +1,76 @@
+name: Automatic Release by Tag
+
+on:
+  push:
+    # branches:
+    #   - "*"
+    tags:
+      - "v**"
+
+jobs:
+  automatic-release-for-nuget:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "5.0.x"
+          source-url: "https://nuget.pkg.github.com/esnya/index.json"
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build the project
+        run: dotnet build --configuration Release Source/UdonRabbit.Analyzer.Package/
+
+      - name: Create the package
+        run: dotnet pack --configuration Release Source/UdonRabbit.Analyzer.Package/
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: UdonRabbit.Analyzer.nupkg
+          path: Source/UdonRabbit.Analyzer.Package/bin/Release/*.nupkg
+
+      - name: Publish the package to GPR
+        if: startsWith(github.ref, 'refs/tags/')
+        run: dotnet nuget push Source/UdonRabbit.Analyzer.Package/bin/Release/*.nupkg
+
+      # - name: Publish the package to Releases
+      #   uses: softprops/action-gh-release@v1
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   with:
+      #     files: Source/UdonRabbit.Analyzer.Package/bin/Release/*.nupkg
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  automatic-release-for-vs:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      - uses: nuget/setup-nuget@v1
+
+      - name: Restore NuGet packages
+        run: nuget restore Source/UdonRabbit.Analyzer.sln
+
+      - uses: microsoft/setup-msbuild@v1.0.2
+
+      - name: Build the project
+        run: MSBuild.exe Source/UdonRabbit.Analyzer.sln -p:Configuration=Release
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: UdonRabbit.Analyzer.Vsix.vsix
+          path: Source/UdonRabbit.Analyzer.Vsix/bin/Release/**/UdonRabbit.Analyzer.Vsix.vsix
+
+      # - name: Publish the package to Releases
+      #   uses: softprops/action-gh-release@v1
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   with:
+      #     files: Source/UdonRabbit.Analyzer.Vsix/bin/Release/**/UdonRabbit.Analyzer.Vsix.vsix
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

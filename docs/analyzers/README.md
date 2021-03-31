@@ -1,5 +1,10 @@
 # List of Analyzers in UdonRabbit.Analyzer
 
+## About Severity
+
+UdonRabbit.Analyzer reports Error for those that cause compilation errors, Warning for others.  
+Those that are no longer needed due to Udon or UdonSharp updates will be assigned Hidden.
+
 ## Udon / UdonSharp
 
 | ID          | Title                                                                                               |   Category    | Severity  |
@@ -26,3 +31,4 @@
 | URA0020     | [The 'is' keyword is not yet supported by U#](./URA0020.md)                                         |     Udon      |   Error   |
 | URA0021     | [The 'as' keyword is not yet supported by U#](./URA0021.md)                                         |     Udon      |   Error   |
 | URA0022     | [U# does not currently support type checking with the 'is' keyword](./URA0022.md)                   |     Udon      |   Error   |
+| URA0023     | [Only one class declaration per file is currently supported by U#](./URA0023.md)                    |   UdonSharp   |   Error   |
