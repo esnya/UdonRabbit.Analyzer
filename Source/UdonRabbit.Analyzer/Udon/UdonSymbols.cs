@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -57,26 +57,6 @@ namespace UdonRabbit.Analyzer.Udon
             { "object", typeof(object) }
         };
 
-        #region List of Dynamic Link Assemblies to control Exceptions that occur only in the test environment
-
-        // List of assemblies that could not load on test context, missing file on disk system?
-        private static readonly HashSet<string> AllowNotLoadedOnContext = new()
-        {
-            // MonoBleedingEdge,
-            "System.Net.Http.Rtc",
-            "System.Runtime.InteropServices.WindowsRuntime",
-            "System.ServiceModel.Duplex",
-            "System.ServiceModel.Http",
-            "System.ServiceModel.NetTcp",
-            "System.ServiceModel.Primitives",
-            "System.ServiceModel.Security",
-
-            // JetBrains
-            "JetBrains.Rider.Unity.Editor.Plugin.Repacked"
-        };
-
-        #endregion
-
         private readonly Dictionary<string, string> _builtinEvents;
         private readonly Dictionary<Type, Type> _inheritedTypeMap;
         private readonly HashSet<string> _nodeDefinitions;
@@ -92,100 +72,16 @@ namespace UdonRabbit.Analyzer.Udon
             _symbolToTypeMappings = new Dictionary<ITypeSymbol, Type>();
         }
 
-        public static void Initialize(Compilation compilation)
+        public static void Initialize()
         {
             lock (LockObjForAsmLoad)
             {
                 if (Instance != null)
                     return;
 
-                var manager = LoadSdkAssemblies(compilation);
+                var manager = new UdonEditorManager(UdonAssemblyLoader.UdonAssembly);
                 Instance = new UdonSymbols(manager);
             }
-        }
-
-        private static UdonEditorManager LoadSdkAssemblies(Compilation compilation)
-        {
-            var reference = compilation.ExternalReferences.FirstOrDefault(w => w.Display.Contains("VRC.Udon.Common"));
-            if (reference == null)
-                return null;
-
-            static string FindUnityAssetsDirectory(MetadataReference r)
-            {
-                return r.ToFilePath().Substring(0, r.ToFilePath().IndexOf("Assets", StringComparison.InvariantCulture));
-            }
-
-            var assemblies = Path.GetFullPath(Path.Combine(FindUnityAssetsDirectory(reference), "Library", "ScriptAssemblies"));
-            var editor = Path.Combine(assemblies, "VRC.Udon.Editor.dll");
-            if (!File.Exists(editor))
-                return null; // Invalid Path;
-
-            var loadedAssemblies = new HashSet<string>();
-
-            Assembly ResolveDynamicLoadingAssemblies(object _, ResolveEventArgs args)
-            {
-                string LoadAssembly(string asmPath)
-                {
-                    if (compilation.ExternalReferences.Any(w => w.ToFilePath().Contains(asmPath)))
-                        return compilation.ExternalReferences.First(w => w.ToFilePath().Contains(asmPath)).ToFilePath();
-                    return Path.GetFullPath(Path.Combine(assemblies, asmPath));
-                }
-
-                var name = args.Name.Split(',').First();
-                if (name.EndsWith(".resources"))
-                    return null; // no needed
-
-                var path = LoadAssembly($"{name}.dll");
-                if (!File.Exists(path))
-                    return null; // could not load
-
-                try
-                {
-                    var asm = Assembly.LoadFrom(path);
-
-                    loadedAssemblies.Add(path);
-                    return asm;
-                }
-                catch (Exception)
-                {
-                    if (AllowNotLoadedOnContext.Contains(name))
-                    {
-                        loadedAssemblies.Add(path);
-                        return null;
-                    }
-
-                    throw;
-                }
-            }
-
-            AppDomain.CurrentDomain.AssemblyResolve += ResolveDynamicLoadingAssemblies;
-            var assembly = Assembly.LoadFrom(editor);
-
-            foreach (var missingReference in compilation.ExternalReferences.Select(w => w.ToFilePath()))
-            {
-                if (loadedAssemblies.Contains(missingReference))
-                    continue;
-
-                if (!File.Exists(missingReference))
-                    continue;
-
-                try
-                {
-                    AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(missingReference));
-                    loadedAssemblies.Add(missingReference);
-                }
-                catch (Exception)
-                {
-                    var name = Path.GetFileNameWithoutExtension(missingReference);
-                    if (AllowNotLoadedOnContext.Contains(name))
-                        continue;
-
-                    throw;
-                }
-            }
-
-            var manager = new UdonEditorManager(assembly);
-            return manager.HasInstance ? manager : null;
         }
 
         public bool FindUdonMethodName(SemanticModel model, IMethodSymbol symbol)
