@@ -734,5 +734,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0025Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Udon does not support return values of this type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0026Description {
+            get {
+                return ResourceManager.GetString("URA0026Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support return values of type &apos;{0}&apos; yet に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0026MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0026MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support return values of this type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0026Title {
+            get {
+                return ResourceManager.GetString("URA0026Title", resourceCulture);
+            }
+        }
     }
 }
