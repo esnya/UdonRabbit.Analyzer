@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Linq;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -30,15 +31,18 @@ namespace UdonRabbit.Analyzer
             context.RegisterSyntaxNodeAction(AnalyzeMemberAccess, SyntaxKind.SimpleMemberAccessExpression);
         }
 
-        private void AnalyzeMemberAccess(SyntaxNodeAnalysisContext context)
+        private static void AnalyzeMemberAccess(SyntaxNodeAnalysisContext context)
         {
             var memberAccess = (MemberAccessExpressionSyntax) context.Node;
 
             if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntax(context.SemanticModel, memberAccess))
                 return;
 
+            if (!UdonAssemblyLoader.IsAssemblyLoaded)
+                UdonAssemblyLoader.LoadUdonAssemblies(context.Compilation.ExternalReferences.ToList());
+
             if (UdonSymbols.Instance == null)
-                UdonSymbols.Initialize(context.Compilation);
+                UdonSymbols.Initialize();
 
             var isAssignment = memberAccess.Parent is AssignmentExpressionSyntax assignment && assignment.Right != memberAccess;
 

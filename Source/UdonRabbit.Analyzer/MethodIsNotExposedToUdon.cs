@@ -4,6 +4,7 @@
  *------------------------------------------------------------------------------------------*/
 
 using System.Collections.Immutable;
+using System.Linq;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -34,14 +35,17 @@ namespace UdonRabbit.Analyzer
             context.RegisterSyntaxNodeAction(AnalyzeInvocation, SyntaxKind.InvocationExpression);
         }
 
-        private void AnalyzeInvocation(SyntaxNodeAnalysisContext context)
+        private static void AnalyzeInvocation(SyntaxNodeAnalysisContext context)
         {
             var invocation = (InvocationExpressionSyntax) context.Node;
             if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntax(context.SemanticModel, invocation))
                 return;
 
+            if (!UdonAssemblyLoader.IsAssemblyLoaded)
+                UdonAssemblyLoader.LoadUdonAssemblies(context.Compilation.ExternalReferences.ToList());
+
             if (UdonSymbols.Instance == null)
-                UdonSymbols.Initialize(context.Compilation);
+                UdonSymbols.Initialize();
 
             var methodSymbol = context.SemanticModel.GetSymbolInfo(invocation);
             if (methodSymbol.Symbol == null)
