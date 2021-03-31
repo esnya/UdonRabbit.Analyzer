@@ -680,5 +680,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0023Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp custom methods currently do not support default arguments or params arguments に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0024Description {
+            get {
+                return ResourceManager.GetString("URA0024Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp custom methods currently do not support default arguments or params arguments に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0024MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0024MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# custom methods currently do not support default arguments or params arguments に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0024Title {
+            get {
+                return ResourceManager.GetString("URA0024Title", resourceCulture);
+            }
+        }
     }
 }
