@@ -11,7 +11,7 @@ namespace UdonRabbit.Analyzer.Test
     public class FieldAccessorIsNotExposedToUdonTest : DiagnosticVerifier<FieldAccessorIsNotExposedToUdon>
     {
         [Fact]
-        public async Task AllowedFieldAccessorIsNoDiagnosticsReport()
+        public async Task UdonSharpBehaviourAllowedFieldAccessorIsNoDiagnosticsReport()
         {
             const string source = @"
 using TMPro;
@@ -36,7 +36,78 @@ namespace UdonRabbit
         }
 
         [Fact]
-        public async Task NoDiagnosticsReport()
+        public async Task UdonSharpBehaviourAllowedStaticFieldAccessorInIfStatementHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            if (Vector3.one == Vector3.zero) { }
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedStaticFieldAccessorIntoLocalVariableIsNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        private Vector3 _initialScale;
+
+        private void Update()
+        {
+            _initialScale = Vector3.one;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedStaticFieldAccessorIsNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            var v = Vector3.one;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourNoDiagnosticsReport()
         {
             const string source = @"
 using UdonSharp;
@@ -56,7 +127,7 @@ namespace UdonRabbit
         }
 
         [Fact]
-        public async Task NotAllowedFieldAccessorHasDiagnosticsReport()
+        public async Task UdonSharpBehaviourNotAllowedFieldAccessorHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(FieldAccessorIsNotExposedToUdon.ComponentId)
                              .WithLocation(14, 21)
