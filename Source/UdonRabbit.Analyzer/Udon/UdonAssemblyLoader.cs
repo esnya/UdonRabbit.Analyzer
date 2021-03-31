@@ -14,11 +14,6 @@ namespace UdonRabbit.Analyzer.Udon
     {
         private static readonly object LockObj = new();
 
-        private static readonly HashSet<string> UnityAssemblies = new()
-        {
-            "UnityEngine.UI"
-        };
-
         private static readonly HashSet<string> UdonAllowAssemblies = new()
         {
             "VRCSDK3",
@@ -37,8 +32,6 @@ namespace UdonRabbit.Analyzer.Udon
         public static bool IsAssemblyLoaded { get; private set; }
 
         public static Assembly UdonAssembly { get; private set; }
-
-        public static HashSet<string> LoadedAssemblies { get; } = new();
 
         private static IEnumerable<string> FindAssetsDirectoryFromPath(string path)
         {
@@ -73,7 +66,6 @@ namespace UdonRabbit.Analyzer.Udon
                     if (name.EndsWith(".resources"))
                         return null;
 
-                    LoadedAssemblies.Add(name);
                     if (references.Any(w => w.ToFilePath().EndsWith($"{name}.dll")))
                         return Assembly.LoadFrom(references.First(w => w.ToFilePath().EndsWith($"{name}.dll")).ToFilePath());
                     return Assembly.LoadFrom(resolver.Resolve($"{name}.dll"));
