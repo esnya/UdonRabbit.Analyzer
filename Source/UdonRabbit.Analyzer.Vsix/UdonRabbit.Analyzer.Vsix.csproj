@@ -45,4 +45,8 @@
     <ProjectReference Update="@(ProjectReference)" Name="%(Filename)" />
   </ItemGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DeployExtension Condition="'$(GITHUB_ACTIONS)' != ''">False</DeployExtension>
+  </PropertyGroup>
+
 </Project>
