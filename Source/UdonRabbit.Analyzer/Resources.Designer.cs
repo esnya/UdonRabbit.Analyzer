@@ -707,5 +707,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0024Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Static fields are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0025Description {
+            get {
+                return ResourceManager.GetString("URA0025Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Static fields are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0025MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0025MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Static fields are not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0025Title {
+            get {
+                return ResourceManager.GetString("URA0025Title", resourceCulture);
+            }
+        }
     }
 }
