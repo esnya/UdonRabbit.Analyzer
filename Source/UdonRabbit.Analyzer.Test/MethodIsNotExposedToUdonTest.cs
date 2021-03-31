@@ -83,6 +83,30 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedVrcMethodHasNoDiagnosticReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using VRC.SDKBase;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            if (!Networking.IsOwner(gameObject))
+                Networking.SetOwner(Networking.LocalPlayer, gameObject);
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourNotAllowedInstanceMethodHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodIsNotExposedToUdon.ComponentId)
