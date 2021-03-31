@@ -40,7 +40,7 @@ namespace UdonRabbit.Analyzer
             if (UdonSymbols.Instance == null)
                 UdonSymbols.Initialize(context.Compilation);
 
-            var isAssignment = memberAccess.Parent is AssignmentExpressionSyntax;
+            var isAssignment = memberAccess.Parent is AssignmentExpressionSyntax assignment && assignment.Right != memberAccess;
 
             var t = context.SemanticModel.GetTypeInfo(memberAccess.Expression);
             var fieldSymbol = context.SemanticModel.GetSymbolInfo(memberAccess);
