@@ -34,6 +34,31 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourUdonAllowedReturnValueInInnerTypeInMethodDeclarationHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using VRC.SDKBase;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private VRCPlayerApi.TrackingDataType _trackingDataType;
+
+        private VRCPlayerApi.TrackingDataType GetTrackingType()
+        {
+            return _trackingDataType;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourUdonAllowedReturnValueInMethodDeclarationHasNoDiagnosticsReports()
         {
             const string source = @"

@@ -165,7 +165,7 @@ namespace UdonRabbit.Analyzer.Udon
             if (IsUserDefinedTypes(model, typeSymbol))
                 return true;
 
-            var @namespace = SanitizeTypeName($"{typeSymbol.ContainingNamespace.ToDisplayString()}{typeSymbol.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var @namespace = SanitizeTypeName(typeSymbol.ToDisplayString()).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             var signatureForType = $"Type_{@namespace}";
             var signatureForVariable = $"Variable_{@namespace}";
             return _nodeDefinitions.Contains(signatureForType) || _nodeDefinitions.Contains(signatureForVariable);

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Linq;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -35,8 +36,11 @@ namespace UdonRabbit.Analyzer
             if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntax(context.SemanticModel, declaration))
                 return;
 
+            if (!UdonAssemblyLoader.IsAssemblyLoaded)
+                UdonAssemblyLoader.LoadUdonAssemblies(context.Compilation.ExternalReferences.ToList());
+
             if (UdonSymbols.Instance == null)
-                UdonSymbols.Initialize(context.Compilation);
+                UdonSymbols.Initialize();
 
             var @return = declaration.ReturnType;
             var typeSymbol = context.SemanticModel.GetTypeInfo(@return);
