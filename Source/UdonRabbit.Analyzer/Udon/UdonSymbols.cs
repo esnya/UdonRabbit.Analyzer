@@ -86,8 +86,8 @@ namespace UdonRabbit.Analyzer.Udon
         public bool FindUdonMethodName(SemanticModel model, IMethodSymbol symbol)
         {
             var receiver = symbol.ReceiverType;
-            if (receiver.BaseType.Equals(model.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default))
-                return true; // User-Defined Method, Skip
+            if (IsUserDefinedTypes(model, receiver))
+                return true;
 
             var functionNamespace = SanitizeTypeName($"{receiver.ContainingNamespace.ToDisplayString()}{receiver.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             var functionName = $"__{symbol.Name.Trim('_').TrimStart('.')}";
@@ -125,8 +125,8 @@ namespace UdonRabbit.Analyzer.Udon
 
         public bool FindUdonVariableName(SemanticModel model, ITypeSymbol typeSymbol, IFieldSymbol fieldSymbol, bool isSetter)
         {
-            if (typeSymbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default))
-                return true; // User-Defined Method, Skip
+            if (IsUserDefinedTypes(model, typeSymbol))
+                return true;
 
             var functionNamespace = SanitizeTypeName(typeSymbol.ToDisplayString()).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             if (AllowClassNameList.Contains(functionNamespace))
@@ -144,8 +144,8 @@ namespace UdonRabbit.Analyzer.Udon
 
         public bool FindUdonVariableName(SemanticModel model, ITypeSymbol typeSymbol, IPropertySymbol symbol, bool isSetter)
         {
-            if (typeSymbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
-                return true; // User-Defined Method, Skip
+            if (IsUserDefinedTypes(model, typeSymbol))
+                return true;
 
             var functionNamespace = SanitizeTypeName(typeSymbol.ToDisplayString()).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             if (AllowClassNameList.Contains(functionNamespace))
@@ -158,6 +158,22 @@ namespace UdonRabbit.Analyzer.Udon
 
             var signature = $"{functionNamespace}.{functionName}{param}";
             return _nodeDefinitions.Contains(signature);
+        }
+
+        public bool FindUdonTypeName(SemanticModel model, ITypeSymbol typeSymbol)
+        {
+            if (IsUserDefinedTypes(model, typeSymbol))
+                return true;
+
+            var @namespace = SanitizeTypeName(typeSymbol.ToDisplayString()).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var signatureForType = $"Type_{@namespace}";
+            var signatureForVariable = $"Variable_{@namespace}";
+            return _nodeDefinitions.Contains(signatureForType) || _nodeDefinitions.Contains(signatureForVariable);
+        }
+
+        private static bool IsUserDefinedTypes(SemanticModel model, ITypeSymbol symbol)
+        {
+            return symbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default);
         }
 
         private Type RemapVrcBaseTypes(Type t)
