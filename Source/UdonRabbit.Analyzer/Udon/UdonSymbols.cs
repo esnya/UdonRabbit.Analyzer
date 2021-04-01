@@ -86,7 +86,7 @@ namespace UdonRabbit.Analyzer.Udon
         public bool FindUdonMethodName(SemanticModel model, IMethodSymbol symbol)
         {
             var receiver = symbol.ReceiverType;
-            if (IsUserDefinedTypes(model, receiver))
+            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, receiver))
                 return true;
 
             var functionNamespace = SanitizeTypeName($"{receiver.ContainingNamespace.ToDisplayString()}{receiver.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
@@ -125,7 +125,7 @@ namespace UdonRabbit.Analyzer.Udon
 
         public bool FindUdonVariableName(SemanticModel model, ITypeSymbol typeSymbol, IFieldSymbol fieldSymbol, bool isSetter)
         {
-            if (IsUserDefinedTypes(model, typeSymbol))
+            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol))
                 return true;
 
             var functionNamespace = SanitizeTypeName(typeSymbol.ToDisplayString()).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
@@ -144,7 +144,7 @@ namespace UdonRabbit.Analyzer.Udon
 
         public bool FindUdonVariableName(SemanticModel model, ITypeSymbol typeSymbol, IPropertySymbol symbol, bool isSetter)
         {
-            if (IsUserDefinedTypes(model, typeSymbol))
+            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol))
                 return true;
 
             var functionNamespace = SanitizeTypeName(typeSymbol.ToDisplayString()).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
@@ -162,9 +162,9 @@ namespace UdonRabbit.Analyzer.Udon
 
         public bool FindUdonTypeName(SemanticModel model, ITypeSymbol typeSymbol)
         {
-            if (IsUserDefinedTypes(model, typeSymbol))
+            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol))
                 return true;
-            if (typeSymbol.TypeKind == TypeKind.Array && IsUserDefinedTypes(model, typeSymbol, TypeKind.Array))
+            if (typeSymbol.TypeKind == TypeKind.Array && UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol, TypeKind.Array))
                 return true;
 
             var @namespace = GetUdonNamedType(typeSymbol);
@@ -174,20 +174,6 @@ namespace UdonRabbit.Analyzer.Udon
                 return true;
 
             return _nodeDefinitions.Contains(signatureForType) || _nodeDefinitions.Contains(signatureForVariable);
-        }
-
-        private static bool IsUserDefinedTypes(SemanticModel model, ITypeSymbol symbol)
-        {
-            return symbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default);
-        }
-
-        private static bool IsUserDefinedTypes(SemanticModel model, ITypeSymbol symbol, TypeKind kind)
-        {
-            return kind switch
-            {
-                TypeKind.Array when symbol is IArrayTypeSymbol a => IsUserDefinedTypes(model, a.ElementType),
-                _ => throw new NotSupportedException(kind.ToString())
-            };
         }
 
         private Type RemapVrcBaseTypes(Type t)

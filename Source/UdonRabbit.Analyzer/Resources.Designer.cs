@@ -788,5 +788,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0027Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support using typeof on user defined types に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0029Description {
+            get {
+                return ResourceManager.GetString("URA0029Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support using typeof on user defined types に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0029MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0029MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not currently support using typeof on user defined types に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0029Title {
+            get {
+                return ResourceManager.GetString("URA0029Title", resourceCulture);
+            }
+        }
     }
 }

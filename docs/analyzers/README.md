@@ -37,3 +37,4 @@ Those that are no longer needed due to Udon or UdonSharp updates will be assigne
 | URA0026     | [Udon does not support return values of this type](./URA0026.md)                                    |     Udon      |   Error   |
 | URA0027     | [Udon does not support method parameters of this type](./URA0027.md)                                |     Udon      |   Error   |
 | ~~URA0028~~ | [~~U# does not yet support user defined enums~~](./URA0028.md)                                      | ~~UdonSharp~~ | ~~Error~~ |
+| URA0029     | [U# does not currently support using typeof on user defined types](./URA0029.md)                    |   UdonSharp   |   Error   |
