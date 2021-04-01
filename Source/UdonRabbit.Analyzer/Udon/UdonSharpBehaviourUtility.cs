@@ -1,4 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System;
+
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace UdonRabbit.Analyzer.Udon
@@ -19,6 +21,21 @@ namespace UdonRabbit.Analyzer.Udon
         {
             var decl = (INamedTypeSymbol) semanticModel.GetDeclaredSymbol(@class);
             return decl.BaseType.Equals(semanticModel.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default);
+        }
+
+        public static bool IsUserDefinedTypes(SemanticModel model, ITypeSymbol symbol)
+        {
+            return symbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default);
+        }
+
+        public static bool IsUserDefinedTypes(SemanticModel model, ITypeSymbol symbol, TypeKind kind)
+        {
+            return kind switch
+            {
+                TypeKind.Array when symbol is IArrayTypeSymbol a => IsUserDefinedTypes(model, a.ElementType),
+                TypeKind.Class => IsUserDefinedTypes(model, symbol),
+                _ => throw new NotSupportedException(kind.ToString())
+            };
         }
     }
 }

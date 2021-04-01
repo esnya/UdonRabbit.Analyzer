@@ -363,4 +363,13 @@
   <data name="URA0027Title" xml:space="preserve">
     <value>Udon does not support method parameters of this type</value>
   </data>
+  <data name="URA0029Description" xml:space="preserve">
+    <value>UdonSharp does not currently support using typeof on user defined types</value>
+  </data>
+  <data name="URA0029MessageFormat" xml:space="preserve">
+    <value>UdonSharp does not currently support using typeof on user defined types</value>
+  </data>
+  <data name="URA0029Title" xml:space="preserve">
+    <value>U# does not currently support using typeof on user defined types</value>
+  </data>
 </root>
