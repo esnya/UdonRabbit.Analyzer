@@ -680,5 +680,86 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0023Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp custom methods currently do not support default arguments or params arguments に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0024Description {
+            get {
+                return ResourceManager.GetString("URA0024Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp custom methods currently do not support default arguments or params arguments に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0024MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0024MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# custom methods currently do not support default arguments or params arguments に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0024Title {
+            get {
+                return ResourceManager.GetString("URA0024Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Static fields are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0025Description {
+            get {
+                return ResourceManager.GetString("URA0025Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Static fields are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0025MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0025MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Static fields are not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0025Title {
+            get {
+                return ResourceManager.GetString("URA0025Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support return values of this type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0026Description {
+            get {
+                return ResourceManager.GetString("URA0026Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support return values of type &apos;{0}&apos; yet に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0026MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0026MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support return values of this type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0026Title {
+            get {
+                return ResourceManager.GetString("URA0026Title", resourceCulture);
+            }
+        }
     }
 }
