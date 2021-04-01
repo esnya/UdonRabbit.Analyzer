@@ -54,6 +54,48 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourReturnArrayTypeInheritFromUdonSharpBehaviourHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private TestBehaviour[] SomeMethod()
+        {
+            return new TestBehaviour[0];
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourReturnTypeInheritFromUdonSharpBehaviourHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private TestBehaviour SomeMethod()
+        {
+            return new TestBehaviour();
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourUdonAllowedPrimitiveReturnValueInMethodDeclarationHasNoDiagnosticsReport()
         {
             const string source = @"
