@@ -761,5 +761,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0026Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Udon does not support method parameters of this type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0027Description {
+            get {
+                return ResourceManager.GetString("URA0027Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support method parameters of type &apos;{0}&apos; yet に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0027MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0027MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support method parameters of this type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0027Title {
+            get {
+                return ResourceManager.GetString("URA0027Title", resourceCulture);
+            }
+        }
     }
 }
