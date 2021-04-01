@@ -59,6 +59,33 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedMethodInInnerClassHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using VRC.SDKBase;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        private VRCPlayerApi.TrackingDataType _trackingTarget;
+        private VRCPlayerApi _player;
+
+        private void Update()
+        {
+            var trackingData = _player.GetTrackingData(_trackingTarget);
+            transform.SetPositionAndRotation(trackingData.position, trackingData.rotation);
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedStaticMethodHasNoDiagnosticsReport()
         {
             const string source = @"

@@ -128,7 +128,7 @@ namespace UdonRabbit.Analyzer.Udon
             if (typeSymbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default))
                 return true; // User-Defined Method, Skip
 
-            var functionNamespace = SanitizeTypeName($"{typeSymbol.ContainingNamespace.ToDisplayString()}{typeSymbol.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var functionNamespace = SanitizeTypeName(typeSymbol.ToDisplayString()).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             if (AllowClassNameList.Contains(functionNamespace))
                 return true;
 
@@ -147,7 +147,7 @@ namespace UdonRabbit.Analyzer.Udon
             if (typeSymbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName("UdonSharp.UdonSharpBehaviour"), SymbolEqualityComparer.Default))
                 return true; // User-Defined Method, Skip
 
-            var functionNamespace = SanitizeTypeName($"{typeSymbol.ContainingNamespace.ToDisplayString()}{typeSymbol.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var functionNamespace = SanitizeTypeName(typeSymbol.ToDisplayString()).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             if (AllowClassNameList.Contains(functionNamespace))
                 return true;
 
@@ -262,7 +262,13 @@ namespace UdonRabbit.Analyzer.Udon
                 {
                     try
                     {
-                        return asm.GetTypes();
+                        var types = new List<Type>();
+                        types.AddRange(asm.GetTypes());
+
+                        foreach (var type in asm.GetTypes())
+                            types.AddRange(type.GetNestedTypes());
+
+                        return types;
                     }
                     catch (ReflectionTypeLoadException e)
                     {
@@ -276,7 +282,7 @@ namespace UdonRabbit.Analyzer.Udon
                 var t = AppDomain.CurrentDomain.GetAssemblies()
                                  .SelectMany(LoadExportedTypes)
                                  .Where(w => !string.IsNullOrWhiteSpace(w?.FullName))
-                                 .FirstOrDefault(w => w.FullName == s.ToDisplayString());
+                                 .FirstOrDefault(w => w.FullName.Replace("+", ".") == s.ToDisplayString());
                 if (t == null)
                     return null;
 

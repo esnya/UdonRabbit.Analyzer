@@ -11,6 +11,33 @@ namespace UdonRabbit.Analyzer.Test
     public class FieldAccessorIsNotExposedToUdonTest : DiagnosticVerifier<FieldAccessorIsNotExposedToUdon>
     {
         [Fact]
+        public async Task UdonSharpBehaviourAllowedFieldAccessorInInnerClassHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using VRC.SDKBase;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        private VRCPlayerApi.TrackingDataType _trackingTarget;
+        private VRCPlayerApi _player;
+
+        private void Update()
+        {
+            var trackingData = _player.GetTrackingData(_trackingTarget);
+            transform.SetPositionAndRotation(trackingData.position, trackingData.rotation);
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedFieldAccessorIsNoDiagnosticsReport()
         {
             const string source = @"
@@ -121,26 +148,6 @@ namespace UdonRabbit
         private void Start()
         {
             var player = Networking.LocalPlayer;
-        }
-    }
-}
-";
-
-            await VerifyAnalyzerAsync(source);
-        }
-
-        [Fact]
-        public async Task UdonSharpBehaviourNoDiagnosticsReport()
-        {
-            const string source = @"
-using UdonSharp;
-
-namespace UdonRabbit
-{
-    public class TestClass : UdonSharpBehaviour
-    {
-        private void Update()
-        {
         }
     }
 }
