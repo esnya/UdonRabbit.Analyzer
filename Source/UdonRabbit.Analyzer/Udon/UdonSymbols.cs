@@ -164,6 +164,8 @@ namespace UdonRabbit.Analyzer.Udon
         {
             if (IsUserDefinedTypes(model, typeSymbol))
                 return true;
+            if (typeSymbol.TypeKind == TypeKind.Array && IsUserDefinedTypes(model, typeSymbol, TypeKind.Array))
+                return true;
 
             var @namespace = GetUdonNamedType(typeSymbol);
             var signatureForType = $"Type_{@namespace}";
@@ -177,6 +179,15 @@ namespace UdonRabbit.Analyzer.Udon
         private static bool IsUserDefinedTypes(SemanticModel model, ITypeSymbol symbol)
         {
             return symbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default);
+        }
+
+        private static bool IsUserDefinedTypes(SemanticModel model, ITypeSymbol symbol, TypeKind kind)
+        {
+            return kind switch
+            {
+                TypeKind.Array when symbol is IArrayTypeSymbol a => IsUserDefinedTypes(model, a.ElementType),
+                _ => throw new NotSupportedException(kind.ToString())
+            };
         }
 
         private Type RemapVrcBaseTypes(Type t)
