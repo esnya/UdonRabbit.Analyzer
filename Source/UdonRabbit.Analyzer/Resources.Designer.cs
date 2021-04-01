@@ -815,5 +815,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0029Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support static using directives に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0030Description {
+            get {
+                return ResourceManager.GetString("URA0030Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support static using directives に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0030MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0030MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support static using directives に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0030Title {
+            get {
+                return ResourceManager.GetString("URA0030Title", resourceCulture);
+            }
+        }
     }
 }
