@@ -35,7 +35,9 @@ jobs:
 
       - name: Publish the package to GPR
         if: startsWith(github.ref, 'refs/tags/')
-        run: dotnet nuget push Source/UdonRabbit.Analyzer.Package/bin/Release/*.nupkg
+        run: |
+          echo ${{ github.ref }} | % { $_ -replace "refs/tags/v", "" } | Set-Item -Path Env:VERSION
+          dotnet nuget push ./Source/UdonRabbit.Analyzer.Package/bin/Release/UdonRabbit.Analyzer.$env:VERSION.nupkg
 
       # - name: Publish the package to Releases
       #   uses: softprops/action-gh-release@v1
