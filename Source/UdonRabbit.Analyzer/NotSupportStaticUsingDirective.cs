@@ -33,17 +33,19 @@ namespace UdonRabbit.Analyzer
         private static void AnalyzeUsingDirective(SyntaxNodeAnalysisContext context)
         {
             var directive = (UsingDirectiveSyntax) context.Node;
-            var declaration = context.Compilation.SyntaxTrees
-                                     .Select(w => w.GetRoot())
-                                     .SelectMany(w => w.DescendantNodes())
-                                     .Where(w => w is MemberDeclarationSyntax)
-                                     .OfType<ClassDeclarationSyntax>()
-                                     .FirstOrDefault();
+            var tree = context.Compilation.SyntaxTrees
+                              .FirstOrDefault(w => w.GetCompilationUnitRoot().DescendantNodes().Contains(directive));
+
+            var declaration = tree?.GetCompilationUnitRoot()
+                                  .DescendantNodes()
+                                  .Where(w => w is MemberDeclarationSyntax)
+                                  .OfType<ClassDeclarationSyntax>()
+                                  .First();
 
             if (declaration == null)
                 return;
 
-            if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntax(context.SemanticModel, declaration))
+            if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntaxByClass(context.Compilation.GetSemanticModel(tree), declaration))
                 return;
 
             if (directive.StaticKeyword != default)
