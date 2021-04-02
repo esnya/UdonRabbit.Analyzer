@@ -761,5 +761,113 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0026Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Udon does not support method parameters of this type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0027Description {
+            get {
+                return ResourceManager.GetString("URA0027Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support method parameters of type &apos;{0}&apos; yet に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0027MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0027MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support method parameters of this type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0027Title {
+            get {
+                return ResourceManager.GetString("URA0027Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support using typeof on user defined types に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0029Description {
+            get {
+                return ResourceManager.GetString("URA0029Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support using typeof on user defined types に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0029MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0029MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not currently support using typeof on user defined types に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0029Title {
+            get {
+                return ResourceManager.GetString("URA0029Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support static using directives に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0030Description {
+            get {
+                return ResourceManager.GetString("URA0030Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support static using directives に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0030MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0030MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support static using directives に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0030Title {
+            get {
+                return ResourceManager.GetString("URA0030Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support namespace alias directives に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0031Description {
+            get {
+                return ResourceManager.GetString("URA0031Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support namespace alias directives に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0031MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0031MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support namespace alias directives に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0031Title {
+            get {
+                return ResourceManager.GetString("URA0031Title", resourceCulture);
+            }
+        }
     }
 }

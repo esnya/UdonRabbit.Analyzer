@@ -354,4 +354,40 @@
   <data name="URA0026Title" xml:space="preserve">
     <value>Udon does not support return values of this type</value>
   </data>
+  <data name="URA0027Description" xml:space="preserve">
+    <value>Udon does not support method parameters of this type</value>
+  </data>
+  <data name="URA0027MessageFormat" xml:space="preserve">
+    <value>Udon does not support method parameters of type '{0}' yet</value>
+  </data>
+  <data name="URA0027Title" xml:space="preserve">
+    <value>Udon does not support method parameters of this type</value>
+  </data>
+  <data name="URA0029Description" xml:space="preserve">
+    <value>UdonSharp does not currently support using typeof on user defined types</value>
+  </data>
+  <data name="URA0029MessageFormat" xml:space="preserve">
+    <value>UdonSharp does not currently support using typeof on user defined types</value>
+  </data>
+  <data name="URA0029Title" xml:space="preserve">
+    <value>U# does not currently support using typeof on user defined types</value>
+  </data>
+  <data name="URA0030Description" xml:space="preserve">
+    <value>UdonSharp does not yet support static using directives</value>
+  </data>
+  <data name="URA0030MessageFormat" xml:space="preserve">
+    <value>UdonSharp does not yet support static using directives</value>
+  </data>
+  <data name="URA0030Title" xml:space="preserve">
+    <value>U# does not yet support static using directives</value>
+  </data>
+  <data name="URA0031Description" xml:space="preserve">
+    <value>UdonSharp does not yet support namespace alias directives</value>
+  </data>
+  <data name="URA0031MessageFormat" xml:space="preserve">
+    <value>UdonSharp does not yet support namespace alias directives</value>
+  </data>
+  <data name="URA0031Title" xml:space="preserve">
+    <value>U# does not yet support namespace alias directives</value>
+  </data>
 </root>

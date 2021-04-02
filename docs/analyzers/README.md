@@ -35,3 +35,8 @@ Those that are no longer needed due to Udon or UdonSharp updates will be assigne
 | URA0024     | [U# custom methods currently do not support default arguments or params arguments](./URA0024.md)    |   UdonSharp   |   Error   |
 | URA0025     | [Static fields are not yet supported by U#](./URA0025.md)                                           |   UdonSharp   |   Error   |
 | URA0026     | [Udon does not support return values of this type](./URA0026.md)                                    |     Udon      |   Error   |
+| URA0027     | [Udon does not support method parameters of this type](./URA0027.md)                                |     Udon      |   Error   |
+| ~~URA0028~~ | [~~U# does not yet support user defined enums~~](./URA0028.md)                                      | ~~UdonSharp~~ | ~~Error~~ |
+| URA0029     | [U# does not currently support using typeof on user defined types](./URA0029.md)                    |   UdonSharp   |   Error   |
+| URA0030     | [U# does not yet support static using directives](./URA0030.md)                                     |   UdonSharp   |   Error   |
+| URA0031     | [U# does not yet support namespace alias directives](./URA0031.md)                                  |   UdonSharp   |   Error   |
