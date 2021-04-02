@@ -381,6 +381,15 @@
   <data name="URA0030Title" xml:space="preserve">
     <value>U# does not yet support static using directives</value>
   </data>
+  <data name="URA0031Description" xml:space="preserve">
+    <value>UdonSharp does not yet support namespace alias directives</value>
+  </data>
+  <data name="URA0031MessageFormat" xml:space="preserve">
+    <value>UdonSharp does not yet support namespace alias directives</value>
+  </data>
+  <data name="URA0031Title" xml:space="preserve">
+    <value>U# does not yet support namespace alias directives</value>
+  </data>
   <data name="URA0032Description" xml:space="preserve">
     <value>Udon does not support variables of this type</value>
   </data>
