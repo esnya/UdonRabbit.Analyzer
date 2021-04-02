@@ -39,3 +39,4 @@ Those that are no longer needed due to Udon or UdonSharp updates will be assigne
 | ~~URA0028~~ | [~~U# does not yet support user defined enums~~](./URA0028.md)                                      | ~~UdonSharp~~ | ~~Error~~ |
 | URA0029     | [U# does not currently support using typeof on user defined types](./URA0029.md)                    |   UdonSharp   |   Error   |
 | URA0030     | [U# does not yet support static using directives](./URA0030.md)                                     |   UdonSharp   |   Error   |
+| URA0032     | [Udon does not support variables of this type](./URA0032.md)                                        |     Udon      |   Error   |
