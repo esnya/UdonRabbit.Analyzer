@@ -844,6 +844,33 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
+        ///   UdonSharp does not yet support namespace alias directives に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0031Description {
+            get {
+                return ResourceManager.GetString("URA0031Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support namespace alias directives に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0031MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0031MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support namespace alias directives に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0031Title {
+            get {
+                return ResourceManager.GetString("URA0031Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Udon does not support variables of this type に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0032Description {
