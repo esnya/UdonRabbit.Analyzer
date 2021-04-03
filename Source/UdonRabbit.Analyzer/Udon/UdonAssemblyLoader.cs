@@ -31,6 +31,8 @@ namespace UdonRabbit.Analyzer.Udon
 
         public static bool IsAssemblyLoaded { get; private set; }
 
+        public static Assembly UdonEditorAssembly { get; private set; }
+
         public static Assembly UdonAssembly { get; private set; }
 
         private static IEnumerable<string> FindAssetsDirectoryFromPath(string path)
@@ -82,7 +84,8 @@ namespace UdonRabbit.Analyzer.Udon
                 foreach (var allowed in UdonAllowAssemblies)
                     AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(resolver.Resolve($"{allowed}.dll")));
 
-                UdonAssembly = assembly;
+                UdonAssembly = AppDomain.CurrentDomain.GetAssemblies().First(w => w.GetName().Name == "VRC.Udon");
+                UdonEditorAssembly = assembly;
                 IsAssemblyLoaded = true;
             }
         }
