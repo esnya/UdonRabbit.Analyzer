@@ -117,9 +117,10 @@ namespace UdonRabbit.Analyzer.Udon
             if (symbol.MethodKind == MethodKind.Constructor)
                 returnsSb.Append($"__{GetUdonNamedType(receiver)}");
             else
-                returnsSb.Append($"__{GetUdonNamedType(symbol.ReturnType, true)}");
+                returnsSb.Append($"__{GetUdonNamedType(symbol.ConstructedFrom.ReturnType, true)}");
 
             var signature = $"{functionNamespace}.{functionName}{paramsSb}{returnsSb}";
+
             return AllowMethodNameList.Contains(signature) || _nodeDefinitions.Contains(signature);
         }
 
@@ -200,6 +201,8 @@ namespace UdonRabbit.Analyzer.Udon
         private string GetUdonNamedType(ITypeSymbol symbol, RefKind reference, bool isSkipBaseTypeRemap = false)
         {
             var t = ConvertTypeSymbolToType(symbol);
+            if (t == null && symbol is ITypeParameterSymbol s)
+                return s.Name;
             if (t == null)
                 return string.Empty;
 
@@ -211,6 +214,8 @@ namespace UdonRabbit.Analyzer.Udon
         private string GetUdonNamedType(ITypeSymbol symbol, bool isSkipBaseTypeRemap = false)
         {
             var t = ConvertTypeSymbolToType(symbol);
+            if (t == null && symbol is ITypeParameterSymbol s)
+                return s.Name;
             if (t == null)
                 return string.Empty;
 
