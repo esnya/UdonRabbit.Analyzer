@@ -110,6 +110,33 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedUnityMethodHasNoDiagnosticReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private GameObject _go;
+
+        private void Update()
+        {
+            var t1 = GetComponent<Transform>();
+            var t2 = _go.GetComponent<Transform>();
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedVrcMethodHasNoDiagnosticReport()
         {
             const string source = @"
