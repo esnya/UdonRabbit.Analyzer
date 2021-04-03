@@ -49,7 +49,7 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 
 ### How to test
 
-1. Configure the following environment variables in `Source/UdonRabbit.runsettings`
+1. Configure the following environment variables in `Source/UdonRabbit.Analyzer.Test/bin/Debug/net5.0/UdonRabbit.runsettings`
    - `UDONRABBIT_ANALYZER_TEST_PROJECT` : Unity 2018.4.20f1 Test Project Location (`.csproj`)
      - Default: `null` (Current Directory)
    - `UDONRABBIT_ANALYZER_TEST_UDON_SHARP` : `UdonSharp.Runtime.dll` Location
@@ -68,8 +68,7 @@ See https://docs.mochizuki.moe/udon-rabbit/analayzer/analyzers/
 
 ### I found a bug on VS/VS Code/Rider/Analyzer
 
-If you find a bug, feel free to create a new issue!  
-At the moment, I'm finding stability glitches for JetBrains Rider in my environment.
+If you find a bug, feel free to create a new issue!
 
 ### Analyzer is not worked on UdonSharpBehaviour
 
