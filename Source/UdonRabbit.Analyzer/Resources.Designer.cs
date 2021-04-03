@@ -896,5 +896,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0032Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Udon does not currently support syncing of the this type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0033Description {
+            get {
+                return ResourceManager.GetString("URA0033Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not currently support syncing of the type &apos;{0}&apos; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0033MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0033MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not currently support syncing of the this type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0033Title {
+            get {
+                return ResourceManager.GetString("URA0033Title", resourceCulture);
+            }
+        }
     }
 }
