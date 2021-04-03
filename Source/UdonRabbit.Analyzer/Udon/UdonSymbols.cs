@@ -117,9 +117,10 @@ namespace UdonRabbit.Analyzer.Udon
             if (symbol.MethodKind == MethodKind.Constructor)
                 returnsSb.Append($"__{GetUdonNamedType(receiver)}");
             else
-                returnsSb.Append($"__{GetUdonNamedType(symbol.ReturnType, true)}");
+                returnsSb.Append($"__{GetUdonNamedType(symbol.ConstructedFrom.ReturnType, true)}");
 
             var signature = $"{functionNamespace}.{functionName}{paramsSb}{returnsSb}";
+
             return AllowMethodNameList.Contains(signature) || _nodeDefinitions.Contains(signature);
         }
 
@@ -179,17 +180,18 @@ namespace UdonRabbit.Analyzer.Udon
         private Type RemapVrcBaseTypes(Type t)
         {
             var depth = 0;
+            var current = t;
 
-            while (t!.IsArray)
+            while (current!.IsArray)
             {
-                t = t.GetElementType();
+                current = current.GetElementType();
                 depth++;
             }
 
-            if (!_inheritedTypeMap.ContainsKey(t))
+            if (!_inheritedTypeMap.ContainsKey(current))
                 return t;
 
-            t = _inheritedTypeMap[t];
+            t = _inheritedTypeMap[current];
             while (depth-- > 0)
                 t = t.MakeArrayType();
 
@@ -199,6 +201,8 @@ namespace UdonRabbit.Analyzer.Udon
         private string GetUdonNamedType(ITypeSymbol symbol, RefKind reference, bool isSkipBaseTypeRemap = false)
         {
             var t = ConvertTypeSymbolToType(symbol);
+            if (t == null && symbol is ITypeParameterSymbol s)
+                return s.Name;
             if (t == null)
                 return string.Empty;
 
@@ -210,6 +214,8 @@ namespace UdonRabbit.Analyzer.Udon
         private string GetUdonNamedType(ITypeSymbol symbol, bool isSkipBaseTypeRemap = false)
         {
             var t = ConvertTypeSymbolToType(symbol);
+            if (t == null && symbol is ITypeParameterSymbol s)
+                return s.Name;
             if (t == null)
                 return string.Empty;
 
@@ -266,13 +272,40 @@ namespace UdonRabbit.Analyzer.Udon
 
         private Type ConvertTypeSymbolToType(ITypeSymbol s)
         {
+            var p = s switch
+            {
+                IArrayTypeSymbol a when s.TypeKind == TypeKind.Array => a.ElementType,
+                _ => s
+            };
+
+            Type ConvertToTypeInternal(Type t)
+            {
+                static Type ConvertArrayType(IArrayTypeSymbol a1, Type t1)
+                {
+                    var current = (ITypeSymbol) a1;
+                    while (current.TypeKind == TypeKind.Array)
+                    {
+                        t1 = t1.MakeArrayType();
+                        current = ((IArrayTypeSymbol) current).ElementType;
+                    }
+
+                    return t1;
+                }
+
+                return s switch
+                {
+                    IArrayTypeSymbol a when s.TypeKind == TypeKind.Array => ConvertArrayType(a, t),
+                    _ => t
+                };
+            }
+
             lock (LockObjForTypeMap)
             {
-                if (_symbolToTypeMappings.ContainsKey(s))
-                    return _symbolToTypeMappings[s];
+                if (_symbolToTypeMappings.ContainsKey(p))
+                    return ConvertToTypeInternal(_symbolToTypeMappings[p]);
 
                 if (BuiltinTypes.ContainsKey(s.ToDisplayString()))
-                    return BuiltinTypes[s.ToDisplayString()];
+                    return ConvertToTypeInternal(BuiltinTypes[p.ToDisplayString()]);
 
                 static IEnumerable<Type> LoadExportedTypes(Assembly asm)
                 {
@@ -292,18 +325,18 @@ namespace UdonRabbit.Analyzer.Udon
                     }
                 }
 
-                if (_symbolToTypeMappings.ContainsKey(s))
-                    return _symbolToTypeMappings[s];
+                if (_symbolToTypeMappings.ContainsKey(p))
+                    return _symbolToTypeMappings[p];
 
                 var t = AppDomain.CurrentDomain.GetAssemblies()
                                  .SelectMany(LoadExportedTypes)
                                  .Where(w => !string.IsNullOrWhiteSpace(w?.FullName))
-                                 .FirstOrDefault(w => w.FullName.Replace("+", ".") == s.ToDisplayString());
+                                 .FirstOrDefault(w => w.FullName.Replace("+", ".") == p.ToDisplayString());
                 if (t == null)
                     return null;
 
-                _symbolToTypeMappings.Add(s, t);
-                return t;
+                _symbolToTypeMappings.Add(p, t);
+                return ConvertToTypeInternal(t);
             }
         }
     }
