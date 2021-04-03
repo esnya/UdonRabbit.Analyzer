@@ -5,7 +5,7 @@ using System.Reflection;
 
 using UdonRabbit.Analyzer.Extensions;
 
-namespace UdonRabbit.Analyzer.Udon
+namespace UdonRabbit.Analyzer.Udon.Reflection
 {
     public class UdonEditorManager
     {
