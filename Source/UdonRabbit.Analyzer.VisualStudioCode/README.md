@@ -2,7 +2,7 @@
 
 Experimental .NET Roslyn Analyzer for VRChat Udon and UdonSharp.  
 This analyzer accelerates your Udon development with UdonSharp.  
-Check out the [list of analyzers](/docs/analyzers/README.md) defined in this project.  
+Check out the [list of analyzers](https://github.com/mika-f/UdonRabbit.Analyzer/tree/master/docs/analyzers) defined in this project.  
 Not enough types of analyzers in UdonRabbit.Analyzer?  
 You can check out the [list of missing analyzers](https://github.com/mika-f/UdonRabbit.Analyzer/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement) or create a new issues.
 

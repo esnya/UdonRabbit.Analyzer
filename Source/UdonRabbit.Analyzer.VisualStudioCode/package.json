@@ -1,6 +1,7 @@
 {
   "name": "udonrabbit-analyzer",
-  "displayName": "UdonRabbit.Analyzer.VSCode",
+  "publisher": "natsuneko",
+  "displayName": "UdonRabbit Analyzer",
   "description": "The Roslyn Analyzer for VRChat Udon and UdonSharp.",
   "version": "0.9.1",
   "engines": {
@@ -10,16 +11,30 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:udonrabbit-analyzer.helloWorld"
+    "*"
   ],
   "main": "./out/extension.js",
+  "files": [
+    "out",
+    "externals"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/mika-f/UdonRabbit.Analyzer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mika-f/UdonRabbit.Analyzer.git"
+  },
   "contributes": {
-    "commands": [
-      {
-        "command": "udonrabbit-analyzer.helloWorld",
-        "title": "Hello World"
+    "configuration": {
+      "title": "UdonRabbit Analyzer",
+      "properties": {
+        "udonrabbit-analyzer.rewriteOmniSharpJson": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically rewrite omnisharp.json file in workspace or global."
+        }
       }
-    ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "yarn run compile",
@@ -43,5 +58,8 @@
     "prettier": "^2.2.1",
     "typescript": "^4.1.3",
     "vscode-test": "^1.5.0"
+  },
+  "dependencies": {
+    "json5": "^2.2.0"
   }
 }
