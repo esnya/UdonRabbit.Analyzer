@@ -1,4 +1,4 @@
-## Getting Started with UdonRabbit.Analyzer in JetBrains Rider
+# Getting Started with UdonRabbit.Analyzer in JetBrains Rider
 
 Install UdonRabbit.Analyzer to JetBrains Rider is the following steps:
 
@@ -19,7 +19,7 @@ Install UdonRabbit.Analyzer to JetBrains Rider is the following steps:
 5. Add `OnGeneratedCSProject` hook to your project (see below example)
 6. Happy Coding!
 
-### Example of `SolutionHook.cs`
+## Example of `SolutionHook.cs`
 
 ```csharp
 // This code is licensed under the Public Domain
