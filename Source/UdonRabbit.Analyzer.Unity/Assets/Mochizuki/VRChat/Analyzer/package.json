@@ -1,0 +1,13 @@
+{
+  "name": "moe.mochizuki.vrchat.analyzer",
+  "description": "Roslyn Analyzer for VRChat Udon and UdonSharp",
+  "license": "MIT",
+  "version": "0.9.1",
+  "scripts": {
+    "prepublishOnly": "cp -r ../../../../../UdonRabbit.Analyzer.Package/bin/Release/netstandard2.0/UdonRabbit.Analyzer.dll"
+  },
+  "dependencies": {},
+  "keywords": [],
+  "displayName": "UdonRabbit.Analyzer for Unity",
+  "unity": "2018.4"
+}
