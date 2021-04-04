@@ -1,70 +1,56 @@
-# udonrabbit-analyzer README
+# UdonRabbit.Analyzer for Visual Studio Code
 
-This is the README for your extension "udonrabbit-analyzer". After writing up a brief description, we recommend including the following sections.
+Experimental .NET Roslyn Analyzer for VRChat Udon and UdonSharp.  
+This analyzer accelerates your Udon development with UdonSharp.  
+Check out the [list of analyzers](/docs/analyzers/README.md) defined in this project.  
+Not enough types of analyzers in UdonRabbit.Analyzer?  
+You can check out the [list of missing analyzers](https://github.com/mika-f/UdonRabbit.Analyzer/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement) or create a new issues.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+- It reports the part of the behaviour that doesn't work well on VRChat as an error in editor
+- It reports an error in the editor that about the syntax that cannot be compiled by the UdonSharp
+- etc
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- Microsoft Visual Studio 2019 or IDE that supports Roslyn Analyzer
+- VRCSDK3 that supports Udon
+- UdonSharp
 
-## Extension Settings
+## Analyzer Documents
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+See https://docs.mochizuki.moe/udon-rabbit/analayzer/analyzers/
 
-For example:
+## ScreenShots
 
-This extension contributes the following settings:
+<img src="https://user-images.githubusercontent.com/10832834/112584755-c8528d00-8e3b-11eb-9204-1c05c0669ffc.PNG" width="500px" />
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+## Troubleshooting
 
-## Known Issues
+### I found a bug on VS/VS Code/Rider/Analyzer
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+If you find a bug, feel free to create a new issue!
 
-## Release Notes
+### Analyzer is not worked on UdonSharpBehaviour
 
-Users appreciate release notes as you update your extension.
+You cannot run multiple UdonRabbit.Analyzer instances in the same Unity workspace.  
+Therefore, if you are running Analyzer in multiple editors, disable one.  
+If that doesn't work, we recommend restarting your PC.
 
-### 1.0.0
+## License
 
-Initial release of ...
+MIT by [@6jz](https://twitter.com/6jz)
 
-### 1.0.1
+## Third Party Notices
 
-Fixed issue #.
+This project contains some code from the following project.  
+See method comments for details.
 
-### 1.1.0
+- [MerlinVR/UdonSharp](https://github.com/MerlinVR/UdonSharp)
+- [Microsoft/Microsoft.Unity.Analyzers](https://github.com/microsoft/Microsoft.Unity.Analyzers)
 
-Added features X, Y, and Z.
+## Links
 
------------------------------------------------------------------------------------------------------------
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Discord Server : https://discord.gg/h42BzsFtD2  
+Patreon : XXX
