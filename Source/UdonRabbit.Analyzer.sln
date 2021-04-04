@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdonRabbit.Analyzer.Package
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdonRabbit.Analyzer.Test", "UdonRabbit.Analyzer.Test\UdonRabbit.Analyzer.Test.csproj", "{1A41CC8A-49CC-4D02-A050-490133790275}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdonRabbit.Analyzer.Vsix", "UdonRabbit.Analyzer.Vsix\UdonRabbit.Analyzer.Vsix.csproj", "{3A1EA4F6-25DD-4C9E-92C0-EC4F00CCD21B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdonRabbit.Analyzer.VisualStudio", "UdonRabbit.Analyzer.VisualStudio\UdonRabbit.Analyzer.VisualStudio.csproj", "{3A1EA4F6-25DD-4C9E-92C0-EC4F00CCD21B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
