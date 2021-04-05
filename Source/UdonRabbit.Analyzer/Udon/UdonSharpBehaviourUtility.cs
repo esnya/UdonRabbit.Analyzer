@@ -49,6 +49,26 @@ namespace UdonRabbit.Analyzer.Udon
             return attrs.Any(w => PrettyTypeName(w) == "UdonSharp.UdonSyncedAttribute");
         }
 
+        public static bool IsUdonSyncMode(SemanticModel model, SyntaxList<AttributeListSyntax> attributes, string mode)
+        {
+            var attr = attributes.SelectMany(w => w.Attributes)
+                                 .Select(w => (Attribute: w, SymbolInfo: model.GetSymbolInfo(w)))
+                                 .Where(w => w.SymbolInfo.Symbol is IMethodSymbol)
+                                 .FirstOrDefault(w => PrettyTypeName(w.SymbolInfo.Symbol) == "UdonSharp.UdonSyncedAttribute");
+
+            if (attr.Equals(default))
+                return false;
+
+            return attr.Attribute.ArgumentList.Arguments.Select(w => w.Expression)
+                       .Any(w =>
+                       {
+                           var info = model.GetSymbolInfo(w);
+                           if (info.Symbol is not IFieldSymbol field)
+                               return false;
+                           return field.Type.ToDisplayString() == "UdonSharp.UdonSyncMode" && field.Name == mode;
+                       });
+        }
+
         public static string PrettyTypeName(ISymbol symbol)
         {
             return symbol switch
