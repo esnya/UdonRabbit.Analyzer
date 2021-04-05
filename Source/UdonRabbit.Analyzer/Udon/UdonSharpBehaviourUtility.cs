@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -35,6 +36,26 @@ namespace UdonRabbit.Analyzer.Udon
                 TypeKind.Array when symbol is IArrayTypeSymbol a => IsUserDefinedTypes(model, a.ElementType),
                 TypeKind.Class => IsUserDefinedTypes(model, symbol),
                 _ => throw new NotSupportedException(kind.ToString())
+            };
+        }
+
+        public static bool HasUdonSyncedAttribute(SemanticModel model, SyntaxList<AttributeListSyntax> attributes)
+        {
+            var attrs = attributes.SelectMany(w => w.Attributes)
+                                  .Select(w => model.GetSymbolInfo(w))
+                                  .Select(w => w.Symbol)
+                                  .OfType<IMethodSymbol>();
+
+            return attrs.Any(w => PrettyTypeName(w) == "UdonSharp.UdonSyncedAttribute");
+        }
+
+        public static string PrettyTypeName(ISymbol symbol)
+        {
+            return symbol switch
+            {
+                IMethodSymbol m => $"{m.ContainingType.ToDisplayString()}",
+                INamedTypeSymbol t => $"{t.ToDisplayString()}",
+                _ => string.Empty
             };
         }
     }
