@@ -354,7 +354,7 @@ namespace UdonRabbit.Analyzer.Udon
                 if (_symbolToTypeMappings.ContainsKey(p))
                     return ConvertToTypeInternal(_symbolToTypeMappings[p]);
 
-                if (BuiltinTypes.ContainsKey(s.ToDisplayString()))
+                if (BuiltinTypes.ContainsKey(p.ToDisplayString()))
                     return ConvertToTypeInternal(BuiltinTypes[p.ToDisplayString()]);
 
                 static IEnumerable<Type> LoadExportedTypes(Assembly asm)
