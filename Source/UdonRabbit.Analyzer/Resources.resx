@@ -364,4 +364,13 @@
   <data name="URA0035Title" xml:space="preserve">
     <value>Udon does not support variable tweening when the behaviour is in Manual sync mode</value>
   </data>
+  <data name="URA0036Description" xml:space="preserve">
+    <value>Syncing of array type is only supported in manual sync mode</value>
+  </data>
+  <data name="URA0036MessageFormat" xml:space="preserve">
+    <value>Syncing of array type '{0}[]' is only supported in manual sync mode</value>
+  </data>
+  <data name="URA0036Title" xml:space="preserve">
+    <value>Syncing of array type is only supported in manual sync mode</value>
+  </data>
 </root>

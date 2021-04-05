@@ -977,5 +977,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0035Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Syncing of array type is only supported in manual sync mode に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0036Description {
+            get {
+                return ResourceManager.GetString("URA0036Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Syncing of array type &apos;{0}[]&apos; is only supported in manual sync mode に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0036MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0036MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Syncing of array type is only supported in manual sync mode に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0036Title {
+            get {
+                return ResourceManager.GetString("URA0036Title", resourceCulture);
+            }
+        }
     }
 }
