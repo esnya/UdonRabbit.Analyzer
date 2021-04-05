@@ -1085,5 +1085,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0039Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Nullable types are not currently supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0040Description {
+            get {
+                return ResourceManager.GetString("URA0040Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Nullable types are not currently supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0040MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0040MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Nullable types are not currently supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0040Title {
+            get {
+                return ResourceManager.GetString("URA0040Title", resourceCulture);
+            }
+        }
     }
 }
