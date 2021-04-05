@@ -8,9 +8,9 @@ using Xunit;
 
 namespace UdonRabbit.Analyzer.Test
 {
-    public class NotSupportLinearInterpolationOfSyncedTypeTest : DiagnosticVerifier<NotSupportLinearInterpolationOfSyncedType>
+    public class NotSupportVariableTweeningWhenBehaviourIsManualSyncModeTest : DiagnosticVerifier<NotSupportVariableTweeningWhenBehaviourIsManualSyncMode>
     {
-        public NotSupportLinearInterpolationOfSyncedTypeTest()
+        public NotSupportVariableTweeningWhenBehaviourIsManualSyncModeTest()
         {
             // Udon Networking Beta has validator of linear interpolation sync type, but other SDKs not worked correctly
             _hasSupportUdonNetworkingTypes = false;
@@ -19,7 +19,7 @@ namespace UdonRabbit.Analyzer.Test
         private readonly bool _hasSupportUdonNetworkingTypes;
 
         [Fact]
-        public async Task MonoBehaviourNotSupportLinearInterpolationSyncTypeHasNoDiagnosticsReport()
+        public async Task MonoBehaviourNoSupportTweeningPatternHasNoDiagnosticsReport()
         {
             const string source = @"
 using UdonSharp;
@@ -28,22 +28,24 @@ using UnityEngine;
 
 namespace UdonRabbit
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class TestBehaviour : MonoBehaviour
     {
         [UdonSynced(UdonSyncMode.Linear)]
-        private bool _b;
+        private int _data;
     }
 }
 ";
 
-            await VerifyAnalyzerAsync(source);
+            if (_hasSupportUdonNetworkingTypes)
+                await VerifyAnalyzerAsync(source);
         }
 
         [Fact]
-        public async Task UdonSharpBehaviourNotSupportLinearInterpolationSyncTypeHasDiagnosticsReport()
+        public async Task UdonSharpBehaviourNoSupportTweeningPatternHasDiagnosticsReport()
         {
-            var diagnostic = ExpectDiagnostic(NotSupportLinearInterpolationOfSyncedType.ComponentId)
-                             .WithLocation(8, 9)
+            var diagnostic = ExpectDiagnostic(NotSupportVariableTweeningWhenBehaviourIsManualSyncMode.ComponentId)
+                             .WithLocation(9, 9)
                              .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
@@ -51,10 +53,11 @@ using UdonSharp;
 
 namespace UdonRabbit
 {
-    public class TestBehaviour : UdonSharpBehaviour
+    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
+    public class TestBehaviour : MonoBehaviour
     {
         [UdonSynced(UdonSyncMode.Linear)]
-        private bool _b;
+        private int _data;
     }
 }
 ";
@@ -64,22 +67,26 @@ namespace UdonRabbit
         }
 
         [Fact]
-        public async Task UdonSharpBehaviourSupportLinearInterpolationSyncTypeHasNoDiagnosticsReport()
+        public async Task UdonSharpBehaviourSupportTweeningPatternHasNoDiagnosticsReport()
         {
             const string source = @"
 using UdonSharp;
 
+using UnityEngine;
+
 namespace UdonRabbit
 {
-    public class TestBehaviour : UdonSharpBehaviour
+    [UdonBehaviourSyncMode]
+    public class TestBehaviour : MonoBehaviour
     {
         [UdonSynced(UdonSyncMode.Linear)]
-        private int _b;
+        private int _data;
     }
 }
 ";
 
-            await VerifyAnalyzerAsync(source);
+            if (_hasSupportUdonNetworkingTypes)
+                await VerifyAnalyzerAsync(source);
         }
     }
 }
