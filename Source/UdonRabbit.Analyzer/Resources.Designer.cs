@@ -950,5 +950,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0034Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Udon does not support variable tweening when the behaviour is in Manual sync mode に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0035Description {
+            get {
+                return ResourceManager.GetString("URA0035Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support variable tweening when the behaviour is in Manual sync mode に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0035MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0035MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support variable tweening when the behaviour is in Manual sync mode に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0035Title {
+            get {
+                return ResourceManager.GetString("URA0035Title", resourceCulture);
+            }
+        }
     }
 }
