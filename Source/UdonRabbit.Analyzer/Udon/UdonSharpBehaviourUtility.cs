@@ -117,6 +117,7 @@ namespace UdonRabbit.Analyzer.Udon
         {
             return symbol switch
             {
+                IArrayTypeSymbol a => $"{a.ToDisplayString()}",
                 IMethodSymbol m => $"{m.ContainingType.ToDisplayString()}",
                 INamedTypeSymbol t => $"{t.ToDisplayString()}",
                 _ => string.Empty
