@@ -1058,5 +1058,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0038Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Object initializers are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0039Description {
+            get {
+                return ResourceManager.GetString("URA0039Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Object initializers are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0039MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0039MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Object initializers are not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0039Title {
+            get {
+                return ResourceManager.GetString("URA0039Title", resourceCulture);
+            }
+        }
     }
 }
