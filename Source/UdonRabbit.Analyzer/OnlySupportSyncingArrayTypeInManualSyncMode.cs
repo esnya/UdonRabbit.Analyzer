@@ -51,7 +51,7 @@ namespace UdonRabbit.Analyzer
             if (info.Symbol is not IArrayTypeSymbol symbol)
                 return;
 
-            context.ReportDiagnostic(Diagnostic.Create(RuleSet, declaration.GetLocation(), UdonSharpBehaviourUtility.PrettyTypeName(symbol)));
+            context.ReportDiagnostic(Diagnostic.Create(RuleSet, declaration.GetLocation(), UdonSharpBehaviourUtility.PrettyTypeName(symbol.ElementType)));
         }
     }
 }
