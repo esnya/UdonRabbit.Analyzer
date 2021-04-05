@@ -1004,5 +1004,113 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0036Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support goto に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0037Description {
+            get {
+                return ResourceManager.GetString("URA0037Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support goto に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0037MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0037MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support goto に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0037Title {
+            get {
+                return ResourceManager.GetString("URA0037Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support labeled statements に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0038Description {
+            get {
+                return ResourceManager.GetString("URA0038Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support labeled statements に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0038MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0038MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support labeled statements に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0038Title {
+            get {
+                return ResourceManager.GetString("URA0038Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Object initializers are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0039Description {
+            get {
+                return ResourceManager.GetString("URA0039Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Object initializers are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0039MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0039MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Object initializers are not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0039Title {
+            get {
+                return ResourceManager.GetString("URA0039Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Nullable types are not currently supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0040Description {
+            get {
+                return ResourceManager.GetString("URA0040Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Nullable types are not currently supported by UdonSharp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0040MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0040MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Nullable types are not currently supported by U# に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0040Title {
+            get {
+                return ResourceManager.GetString("URA0040Title", resourceCulture);
+            }
+        }
     }
 }
