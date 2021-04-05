@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.CodeAnalysis;
 
 using UdonRabbit.Analyzer.Extensions;
+using UdonRabbit.Analyzer.Udon.Reflection;
 
 namespace UdonRabbit.Analyzer.Udon
 {
@@ -56,19 +57,50 @@ namespace UdonRabbit.Analyzer.Udon
             { "object", typeof(object) }
         };
 
+        private static readonly HashSet<Type> UdonSyncTypes = new()
+        {
+            typeof(bool),
+            typeof(char),
+            typeof(byte),
+            typeof(sbyte),
+            typeof(int),
+            typeof(uint),
+            typeof(long),
+            typeof(ulong),
+            typeof(float),
+            typeof(double),
+            typeof(short),
+            typeof(ushort),
+            typeof(string)
+        };
+
+        private static readonly HashSet<string> UdonSyncTypeFullName = new()
+        {
+            "UnityEngine.Vector2",
+            "UnityEngine.Vector3",
+            "UnityEngine.Vector4",
+            "UnityEngine.Quaternion",
+            "UnityEngine.Color32",
+            "UnityEngine.Color",
+            "VRC.SDKBase.VRCUrl"
+        };
+
         private readonly Dictionary<string, string> _builtinEvents;
         private readonly Dictionary<Type, Type> _inheritedTypeMap;
         private readonly HashSet<string> _nodeDefinitions;
         private readonly Dictionary<ITypeSymbol, Type> _symbolToTypeMappings;
+        private readonly UdonNetworkTypes _udonNetworkTypes;
 
         public static UdonSymbols Instance { get; private set; }
 
-        private UdonSymbols(UdonEditorManager manager)
+        private UdonSymbols()
         {
-            _builtinEvents = manager?.GetBuiltinEvents() ?? new Dictionary<string, string>();
-            _inheritedTypeMap = manager?.GetVrcInheritedTypeMaps() ?? new Dictionary<Type, Type>();
-            _nodeDefinitions = new HashSet<string>(manager?.GetUdonNodeDefinitions() ?? Array.Empty<string>());
+            var manager = new UdonEditorManager(UdonAssemblyLoader.UdonEditorAssembly);
+            _builtinEvents = manager.GetBuiltinEvents();
+            _inheritedTypeMap = manager.GetVrcInheritedTypeMaps();
+            _nodeDefinitions = new HashSet<string>(manager.GetUdonNodeDefinitions());
             _symbolToTypeMappings = new Dictionary<ITypeSymbol, Type>();
+            _udonNetworkTypes = new UdonNetworkTypes(UdonAssemblyLoader.UdonAssembly);
         }
 
         public static void Initialize()
@@ -78,8 +110,7 @@ namespace UdonRabbit.Analyzer.Udon
                 if (Instance != null)
                     return;
 
-                var manager = new UdonEditorManager(UdonAssemblyLoader.UdonAssembly);
-                Instance = new UdonSymbols(manager);
+                Instance = new UdonSymbols();
             }
         }
 
@@ -175,6 +206,25 @@ namespace UdonRabbit.Analyzer.Udon
                 return true;
 
             return _nodeDefinitions.Contains(signatureForType) || _nodeDefinitions.Contains(signatureForVariable);
+        }
+
+        public bool FindUdonSyncType(ITypeSymbol symbol, string syncMode)
+        {
+            var t = ConvertTypeSymbolToType(symbol);
+            if (t == null)
+                return false;
+
+            if (_udonNetworkTypes.IsSupported)
+                return syncMode switch
+                {
+                    "NotSynced" => true,
+                    "Linear" => _udonNetworkTypes.CanSync(t) && _udonNetworkTypes.CanSyncLinear(t),
+                    "Smooth" => _udonNetworkTypes.CanSync(t) && _udonNetworkTypes.CanSyncSmooth(t),
+                    "None" => true,
+                    _ => throw new ArgumentException(nameof(syncMode))
+                };
+
+            return UdonSyncTypes.Contains(t) || UdonSyncTypeFullName.Contains(t.FullName);
         }
 
         private Type RemapVrcBaseTypes(Type t)
