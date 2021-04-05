@@ -24,7 +24,7 @@ namespace UdonRabbit.Analyzer.Udon.Reflection
 
         public bool CanSync(Type t)
         {
-            _delegateOfCanSync ??= t.GetMethod("CanSync", BindingFlags.Public | BindingFlags.Static);
+            _delegateOfCanSync ??= _instance.GetMethod("CanSync", BindingFlags.Public | BindingFlags.Static);
             if (_delegateOfCanSync == null)
                 return false;
 
@@ -33,7 +33,7 @@ namespace UdonRabbit.Analyzer.Udon.Reflection
 
         public bool CanSyncLinear(Type t)
         {
-            _delegateOfCanSyncLinear ??= t.GetMethod("CanSyncLinear", BindingFlags.Public | BindingFlags.Static);
+            _delegateOfCanSyncLinear ??= _instance.GetMethod("CanSyncLinear", BindingFlags.Public | BindingFlags.Static);
             if (_delegateOfCanSyncLinear == null)
                 return false;
 
@@ -42,7 +42,7 @@ namespace UdonRabbit.Analyzer.Udon.Reflection
 
         public bool CanSyncSmooth(Type t)
         {
-            _delegateOfCanSyncSmooth ??= t.GetMethod("CanSyncSmooth", BindingFlags.Public | BindingFlags.Static);
+            _delegateOfCanSyncSmooth ??= _instance.GetMethod("CanSyncSmooth", BindingFlags.Public | BindingFlags.Static);
             if (_delegateOfCanSyncSmooth == null)
                 return false;
 
