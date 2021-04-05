@@ -47,3 +47,4 @@ Those that are no longer needed due to Udon or UdonSharp updates will be assigne
 | URA0036     | [Syncing of array type is only supported in manual sync mode](./URA0036.md)                         |     Udon      |   Error   |
 | URA0037     | [U# does not yet support goto](./URA0037.md)                                                        |   UdonSharp   |   Error   |
 | URA0038     | [U# does not yet support labeled statements](./URA0038.md)                                          |   UdonSharp   |   Error   |
+| URA0039     | [Object initializers are not yet supported by U#](./URA0039.md)                                     |   UdonSharp   |   Error   |
