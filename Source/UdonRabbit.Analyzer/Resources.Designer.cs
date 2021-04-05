@@ -1004,5 +1004,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0036Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support goto に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0037Description {
+            get {
+                return ResourceManager.GetString("URA0037Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support goto に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0037MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0037MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support goto に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0037Title {
+            get {
+                return ResourceManager.GetString("URA0037Title", resourceCulture);
+            }
+        }
     }
 }
