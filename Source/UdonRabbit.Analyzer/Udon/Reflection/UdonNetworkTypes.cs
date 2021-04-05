@@ -15,7 +15,7 @@ namespace UdonRabbit.Analyzer.Udon.Reflection
         public UdonNetworkTypes(Assembly asm)
         {
             var t = asm.GetType("VRC.Udon.UdonNetworkTypes");
-            var m = t.GetMethod("CanSync", BindingFlags.Public | BindingFlags.Static);
+            var m = t?.GetMethod("CanSync", BindingFlags.Public | BindingFlags.Static);
             if (m == null)
                 return;
 

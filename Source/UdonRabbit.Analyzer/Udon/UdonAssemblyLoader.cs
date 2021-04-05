@@ -16,6 +16,7 @@ namespace UdonRabbit.Analyzer.Udon
 
         private static readonly HashSet<string> UdonAllowAssemblies = new()
         {
+            "VRC.Udon",
             "VRCSDK3",
             "VRCSDKBase",
             "Cinemachine",
