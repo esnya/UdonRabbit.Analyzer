@@ -62,10 +62,10 @@ namespace UdonRabbit.Analyzer.CodeGen
             sr.Close();
 
             var link = $"| [{title}](./URA{id:0000}.md)";
-            var newLine = $"| URA{id:0000}     | {link.PadRight(99, ' ')} | {category} | {severity} |";
+            var newLine = $"| URA{id:0000}     {link.PadRight(99, ' ')} | {category} | {severity} |";
 
             await using var sw = new StreamWriter(index);
-            await sw.WriteLineAsync($"{markdown}{Environment.NewLine}{newLine}{Environment.NewLine}");
+            await sw.WriteLineAsync($"{markdown}{newLine}{Environment.NewLine}");
         }
 
         private static async Task CreateAnalyzerDocument(string path, int id, string title, string description)

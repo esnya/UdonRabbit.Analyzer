@@ -42,3 +42,4 @@ Those that are no longer needed due to Udon or UdonSharp updates will be assigne
 | URA0031     | [U# does not yet support namespace alias directives](./URA0031.md)                                  |   UdonSharp   |   Error   |
 | URA0032     | [Udon does not support variables of this type](./URA0032.md)                                        |     Udon      |   Error   |
 | URA0033     | [Udon does not currently support syncing of the this type](./URA0033.md)                            |     Udon      |   Error   |
+| URA0034     | [Udon does not support linear interpolation of the synced type](./URA0034.md)                       |     Udon      |   Error   |
