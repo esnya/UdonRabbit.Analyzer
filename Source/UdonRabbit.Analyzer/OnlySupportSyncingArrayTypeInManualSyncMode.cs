@@ -28,8 +28,6 @@ namespace UdonRabbit.Analyzer
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.RegisterSyntaxNodeAction(AnalyzeFieldDeclaration, SyntaxKind.FieldDeclaration);
-
-            Debugger.Launch();
         }
 
         private static void AnalyzeFieldDeclaration(SyntaxNodeAnalysisContext context)
