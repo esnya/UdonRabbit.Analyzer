@@ -355,4 +355,13 @@
   <data name="URA0034Title" xml:space="preserve">
     <value>Udon does not support linear interpolation of the synced type</value>
   </data>
+  <data name="URA0035Description" xml:space="preserve">
+    <value>Udon does not support variable tweening when the behaviour is in Manual sync mode</value>
+  </data>
+  <data name="URA0035MessageFormat" xml:space="preserve">
+    <value>Udon does not support variable tweening when the behaviour is in Manual sync mode</value>
+  </data>
+  <data name="URA0035Title" xml:space="preserve">
+    <value>Udon does not support variable tweening when the behaviour is in Manual sync mode</value>
+  </data>
 </root>

@@ -64,8 +64,46 @@ namespace UdonRabbit.Analyzer.Udon
                        {
                            var info = model.GetSymbolInfo(w);
                            if (info.Symbol is not IFieldSymbol field)
-                               return false;
+                               return mode == "None";
                            return field.Type.ToDisplayString() == "UdonSharp.UdonSyncMode" && field.Name == mode;
+                       });
+        }
+
+        public static bool HasUdonBehaviourSyncModeAttribute(SemanticModel model, SyntaxNode node)
+        {
+            var classDecl = node.FirstAncestorOrSelf<ClassDeclarationSyntax>();
+            if (classDecl == null)
+                return false;
+
+            var attrs = classDecl.AttributeLists.SelectMany(w => w.Attributes)
+                                 .Select(w => model.GetSymbolInfo(w))
+                                 .Select(w => w.Symbol)
+                                 .OfType<IMethodSymbol>();
+
+            return attrs.Any(w => PrettyTypeName(w) == "UdonSharp.UdonBehaviourSyncModeAttribute");
+        }
+
+        public static bool IsUdonBehaviourSyncMode(SemanticModel model, SyntaxNode node, string mode)
+        {
+            var classDecl = node.FirstAncestorOrSelf<ClassDeclarationSyntax>();
+            if (classDecl == null)
+                return false;
+
+            var attr = classDecl.AttributeLists.SelectMany(w => w.Attributes)
+                                .Select(w => (Attribute: w, SymbolInfo: model.GetSymbolInfo(w)))
+                                .Where(w => w.SymbolInfo.Symbol is IMethodSymbol)
+                                .FirstOrDefault(w => PrettyTypeName(w.SymbolInfo.Symbol) == "UdonSharp.UdonBehaviourSyncModeAttribute");
+
+            if (attr.Equals(default))
+                return false;
+
+            return attr.Attribute.ArgumentList.Arguments.Select(w => w.Expression)
+                       .Any(w =>
+                       {
+                           var info = model.GetSymbolInfo(w);
+                           if (info.Symbol is not IFieldSymbol field)
+                               return mode == "Any";
+                           return field.Type.ToDisplayString() == "UdonSharp.BehaviourSyncMode" && field.Name == mode;
                        });
         }
 
