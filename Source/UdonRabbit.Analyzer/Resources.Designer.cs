@@ -1031,5 +1031,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0037Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support labeled statements に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0038Description {
+            get {
+                return ResourceManager.GetString("URA0038Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not yet support labeled statements に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0038MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0038MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   U# does not yet support labeled statements に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0038Title {
+            get {
+                return ResourceManager.GetString("URA0038Title", resourceCulture);
+            }
+        }
     }
 }
