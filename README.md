@@ -39,6 +39,14 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 3. After the Visual Studio Experimental Instance starts, open the Unity project that has VRCSDK3 and UdonSharp installed
 4. Open any source file that inherits from `UdonSharp.UdonSharpBehaviour`
 
+### Create a new analyzer
+
+1. Open `Source/UdonRabbit.Analyzer.sln` in your Visual Studio or other IDE
+2. Build `UdonRabbit.Analyzer.CodeGen`
+3. Run `dotnet ./UdonRabbit.Analyzer.CodeGen.dll -i IDENTIFIER -l "CLASS_NAME" -t "TITLE" -d "DESCRIPTION" -m "MESSAGE_FORMAT" -c CATEGORY -s SEVERITY -w ../` in `ROOT/bin`
+4. Rebuild ResX in Visual Studio or run `ResGen.exe`
+5. Start Coding!
+
 ## Testing
 
 ### Requirements
