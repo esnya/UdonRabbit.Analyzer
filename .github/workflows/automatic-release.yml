@@ -76,3 +76,51 @@ jobs:
       #     files: Source/UdonRabbit.Analyzer.VisualStudio/bin/Release/**/UdonRabbit.Analyzer.VisualStudio.vsix
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  automatic-release-for-vsc:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "5.0.x"
+          source-url: "https://nuget.pkg.github.com/esnya/index.json"
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Build the project (VS)
+        run: dotnet build --configuration Release Source/UdonRabbit.Analyzer.Package/
+
+      - name: Build the project (TSC)
+        working-directory: Source/UdonRabbit.Analyzer.VisualStudioCode
+        run: |
+          yarn install
+          yarn run compile
+          cp ../UdonRabbit.Analyzer.Package/bin/Release/netstandard2.0/UdonRabbit.Analyzer.CodeFixes.dll ./externals/UdonRabbit.Analyzer.CodeFixes.dll
+          cp ../UdonRabbit.Analyzer.Package/bin/Release/netstandard2.0/UdonRabbit.Analyzer.dll ./externals/UdonRabbit.Analyzer.dll
+
+      - name: Packaging for VS Code
+        working-directory: Source/UdonRabbit.Analyzer.VisualStudio
+        run: |
+          yarn global add vsce
+          vsce package
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: UdonRabbit.Analyzer.VSCode.nupkg
+          path: Source/UdonRabbit.Analyzer.VisualStudioCode/*.vsix
+
+      # - name: Publish the package to Releases
+      #   uses: softprops/action-gh-release@v1
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   with:
+      #     files: Source/UdonRabbit.Analyzer.Package/bin/Release/*.nupkg
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
