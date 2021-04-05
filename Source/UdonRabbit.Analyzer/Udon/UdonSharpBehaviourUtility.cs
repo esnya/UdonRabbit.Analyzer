@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -35,6 +36,91 @@ namespace UdonRabbit.Analyzer.Udon
                 TypeKind.Array when symbol is IArrayTypeSymbol a => IsUserDefinedTypes(model, a.ElementType),
                 TypeKind.Class => IsUserDefinedTypes(model, symbol),
                 _ => throw new NotSupportedException(kind.ToString())
+            };
+        }
+
+        public static bool HasUdonSyncedAttribute(SemanticModel model, SyntaxList<AttributeListSyntax> attributes)
+        {
+            var attrs = attributes.SelectMany(w => w.Attributes)
+                                  .Select(w => model.GetSymbolInfo(w))
+                                  .Select(w => w.Symbol)
+                                  .OfType<IMethodSymbol>();
+
+            return attrs.Any(w => PrettyTypeName(w) == "UdonSharp.UdonSyncedAttribute");
+        }
+
+        public static bool IsUdonSyncMode(SemanticModel model, SyntaxList<AttributeListSyntax> attributes, string mode)
+        {
+            var attr = attributes.SelectMany(w => w.Attributes)
+                                 .Select(w => (Attribute: w, SymbolInfo: model.GetSymbolInfo(w)))
+                                 .Where(w => w.SymbolInfo.Symbol is IMethodSymbol)
+                                 .FirstOrDefault(w => PrettyTypeName(w.SymbolInfo.Symbol) == "UdonSharp.UdonSyncedAttribute");
+
+            if (attr.Equals(default))
+                return false;
+
+            if (attr.Attribute.ArgumentList == null)
+                return mode == "None";
+
+            return attr.Attribute.ArgumentList.Arguments.Select(w => w.Expression)
+                       .Any(w =>
+                       {
+                           var info = model.GetSymbolInfo(w);
+                           if (info.Symbol is not IFieldSymbol field)
+                               return mode == "None";
+                           return field.Type.ToDisplayString() == "UdonSharp.UdonSyncMode" && field.Name == mode;
+                       });
+        }
+
+        public static bool HasUdonBehaviourSyncModeAttribute(SemanticModel model, SyntaxNode node)
+        {
+            var classDecl = node.FirstAncestorOrSelf<ClassDeclarationSyntax>();
+            if (classDecl == null)
+                return false;
+
+            var attrs = classDecl.AttributeLists.SelectMany(w => w.Attributes)
+                                 .Select(w => model.GetSymbolInfo(w))
+                                 .Select(w => w.Symbol)
+                                 .OfType<IMethodSymbol>();
+
+            return attrs.Any(w => PrettyTypeName(w) == "UdonSharp.UdonBehaviourSyncModeAttribute");
+        }
+
+        public static bool IsUdonBehaviourSyncMode(SemanticModel model, SyntaxNode node, string mode)
+        {
+            var classDecl = node.FirstAncestorOrSelf<ClassDeclarationSyntax>();
+            if (classDecl == null)
+                return false;
+
+            var attr = classDecl.AttributeLists.SelectMany(w => w.Attributes)
+                                .Select(w => (Attribute: w, SymbolInfo: model.GetSymbolInfo(w)))
+                                .Where(w => w.SymbolInfo.Symbol is IMethodSymbol)
+                                .FirstOrDefault(w => PrettyTypeName(w.SymbolInfo.Symbol) == "UdonSharp.UdonBehaviourSyncModeAttribute");
+
+            if (attr.Equals(default))
+                return false;
+
+            if (attr.Attribute.ArgumentList == null)
+                return mode == "Any";
+
+            return attr.Attribute.ArgumentList.Arguments.Select(w => w.Expression)
+                       .Any(w =>
+                       {
+                           var info = model.GetSymbolInfo(w);
+                           if (info.Symbol is not IFieldSymbol field)
+                               return mode == "Any";
+                           return field.Type.ToDisplayString() == "UdonSharp.BehaviourSyncMode" && field.Name == mode;
+                       });
+        }
+
+        public static string PrettyTypeName(ISymbol symbol)
+        {
+            return symbol switch
+            {
+                IArrayTypeSymbol a => $"{a.ToDisplayString()}",
+                IMethodSymbol m => $"{m.ContainingType.ToDisplayString()}",
+                INamedTypeSymbol t => $"{t.ToDisplayString()}",
+                _ => string.Empty
             };
         }
     }

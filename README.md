@@ -39,6 +39,14 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 3. After the Visual Studio Experimental Instance starts, open the Unity project that has VRCSDK3 and UdonSharp installed
 4. Open any source file that inherits from `UdonSharp.UdonSharpBehaviour`
 
+### Create a new analyzer
+
+1. Open `Source/UdonRabbit.Analyzer.sln` in your Visual Studio or other IDE
+2. Build `UdonRabbit.Analyzer.CodeGen`
+3. Run `dotnet ./UdonRabbit.Analyzer.CodeGen.dll -i IDENTIFIER -l "CLASS_NAME" -t "TITLE" -d "DESCRIPTION" -m "MESSAGE_FORMAT" -c CATEGORY -s SEVERITY -w ../` in `ROOT/bin`
+4. Rebuild ResX in Visual Studio or run `ResGen.exe`
+5. Start Coding!
+
 ## Testing
 
 ### Requirements
@@ -52,6 +60,10 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 1. Configure the following environment variables in `Source/UdonRabbit.Analyzer.Test/bin/Debug/net5.0/UdonRabbit.runsettings`
    - `UDONRABBIT_ANALYZER_TEST_PROJECT` : Unity 2018.4.20f1 Test Project Location (`.csproj`)
      - Default: `null` (Current Directory)
+     - I recommended to reference to `Assembly-CSharp.csproj` because it has all references to DLLs.
+     - If you are not want to reference to `Assembly-CSharp.csproj`, add the following external references:
+       - `TextMeshPro`
+       - `UdonSharp.Runtime`
    - `UDONRABBIT_ANALYZER_TEST_UDON_SHARP` : `UdonSharp.Runtime.dll` Location
      - Default: `null` (Current Directory)
 2. Run `dotnet test`
