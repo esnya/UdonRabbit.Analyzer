@@ -46,6 +46,11 @@ const enableOnWorkspace = (path: string): void => {
 
   const analyzers = join(extensionPath, "externals").replace(/\\/g, "/");
 
+  if (configuration.RoslynExtensionsOptions.LocationPaths.includes("natsuneko.udonrabbit-analyzer")) {
+    const paths = configuration.RoslynExtensionsOptions.LocationPaths.filter((w) => !w.includes("natsuneko.udonrabbit-analyzer"));
+    configuration.RoslynExtensionsOptions.LocationPaths = paths;
+  }
+
   if (!configuration.RoslynExtensionsOptions.LocationPaths.includes(analyzers)) {
     configuration.RoslynExtensionsOptions.LocationPaths.push(analyzers);
     isUpdated = true;
