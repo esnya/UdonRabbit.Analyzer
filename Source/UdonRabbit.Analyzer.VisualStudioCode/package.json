@@ -3,7 +3,7 @@
   "publisher": "esnya",
   "displayName": "UdonRabbit Analyzer",
   "description": "The Roslyn Analyzer for VRChat Udon and UdonSharp.",
-  "version": "0.9.1",
+  "version": "0.10.1",
   "engines": {
     "vscode": "^1.55.0"
   },
