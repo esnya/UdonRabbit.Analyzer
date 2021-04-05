@@ -64,7 +64,7 @@ namespace UdonRabbit.Analyzer.Udon
                        {
                            var info = model.GetSymbolInfo(w);
                            if (info.Symbol is not IFieldSymbol field)
-                               return false;
+                               return mode == "None";
                            return field.Type.ToDisplayString() == "UdonSharp.UdonSyncMode" && field.Name == mode;
                        });
         }
