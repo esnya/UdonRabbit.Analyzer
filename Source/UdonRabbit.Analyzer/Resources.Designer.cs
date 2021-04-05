@@ -923,5 +923,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0033Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Udon does not support linear interpolation of the synced type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0034Description {
+            get {
+                return ResourceManager.GetString("URA0034Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support linear interpolation of the synced type &apos;{0}&apos; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0034MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0034MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support linear interpolation of the synced type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0034Title {
+            get {
+                return ResourceManager.GetString("URA0034Title", resourceCulture);
+            }
+        }
     }
 }
