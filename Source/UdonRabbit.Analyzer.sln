@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdonRabbit.Analyzer", "UdonRabbit.Analyzer\UdonRabbit.Analyzer.csproj", "{8AAEE78B-E0E6-4F37-9446-6173C0747F28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdonRabbit.Analyzer", "UdonRabbit.Analyzer\UdonRabbit.Analyzer.csproj", "{8AAEE78B-E0E6-4F37-9446-6173C0747F28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdonRabbit.Analyzer.CodeFixes", "UdonRabbit.Analyzer.CodeFixes\UdonRabbit.Analyzer.CodeFixes.csproj", "{2615BB0C-E51B-4A43-BB03-889F569B73F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdonRabbit.Analyzer.CodeFixes", "UdonRabbit.Analyzer.CodeFixes\UdonRabbit.Analyzer.CodeFixes.csproj", "{2615BB0C-E51B-4A43-BB03-889F569B73F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdonRabbit.Analyzer.Package", "UdonRabbit.Analyzer.Package\UdonRabbit.Analyzer.Package.csproj", "{FD420000-8DE5-4F13-ABE3-6633DADEBB03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdonRabbit.Analyzer.Package", "UdonRabbit.Analyzer.Package\UdonRabbit.Analyzer.Package.csproj", "{FD420000-8DE5-4F13-ABE3-6633DADEBB03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdonRabbit.Analyzer.Test", "UdonRabbit.Analyzer.Test\UdonRabbit.Analyzer.Test.csproj", "{1A41CC8A-49CC-4D02-A050-490133790275}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdonRabbit.Analyzer.Test", "UdonRabbit.Analyzer.Test\UdonRabbit.Analyzer.Test.csproj", "{1A41CC8A-49CC-4D02-A050-490133790275}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdonRabbit.Analyzer.VisualStudio", "UdonRabbit.Analyzer.VisualStudio\UdonRabbit.Analyzer.VisualStudio.csproj", "{3A1EA4F6-25DD-4C9E-92C0-EC4F00CCD21B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdonRabbit.Analyzer.CodeGen", "UdonRabbit.Analyzer.CodeGen\UdonRabbit.Analyzer.CodeGen.csproj", "{BC70B317-5F25-4B39-9CF7-2D950B7E5C24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{3A1EA4F6-25DD-4C9E-92C0-EC4F00CCD21B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A1EA4F6-25DD-4C9E-92C0-EC4F00CCD21B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A1EA4F6-25DD-4C9E-92C0-EC4F00CCD21B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC70B317-5F25-4B39-9CF7-2D950B7E5C24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC70B317-5F25-4B39-9CF7-2D950B7E5C24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC70B317-5F25-4B39-9CF7-2D950B7E5C24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC70B317-5F25-4B39-9CF7-2D950B7E5C24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

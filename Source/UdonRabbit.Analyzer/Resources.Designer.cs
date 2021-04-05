@@ -896,5 +896,113 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0032Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Udon does not currently support syncing of the this type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0033Description {
+            get {
+                return ResourceManager.GetString("URA0033Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not currently support syncing of the type &apos;{0}&apos; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0033MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0033MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not currently support syncing of the this type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0033Title {
+            get {
+                return ResourceManager.GetString("URA0033Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support linear interpolation of the synced type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0034Description {
+            get {
+                return ResourceManager.GetString("URA0034Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support linear interpolation of the synced type &apos;{0}&apos; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0034MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0034MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support linear interpolation of the synced type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0034Title {
+            get {
+                return ResourceManager.GetString("URA0034Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support variable tweening when the behaviour is in Manual sync mode に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0035Description {
+            get {
+                return ResourceManager.GetString("URA0035Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support variable tweening when the behaviour is in Manual sync mode に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0035MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0035MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support variable tweening when the behaviour is in Manual sync mode に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0035Title {
+            get {
+                return ResourceManager.GetString("URA0035Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Syncing of array type is only supported in manual sync mode に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0036Description {
+            get {
+                return ResourceManager.GetString("URA0036Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Syncing of array type &apos;{0}[]&apos; is only supported in manual sync mode に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0036MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0036MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Syncing of array type is only supported in manual sync mode に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0036Title {
+            get {
+                return ResourceManager.GetString("URA0036Title", resourceCulture);
+            }
+        }
     }
 }
