@@ -46,7 +46,7 @@ const enableOnWorkspace = (path: string): void => {
 
   const analyzers = join(extensionPath, "externals").replace(/\\/g, "/");
 
-  if (configuration.RoslynExtensionsOptions.LocationPaths.includes("esnya.udonrabbit-analyzer")) {
+  if (configuration.RoslynExtensionsOptions.LocationPaths.find((w) => w.includes("esnya.udonrabbit-analyzer"))) {
     const paths = configuration.RoslynExtensionsOptions.LocationPaths.filter((w) => !w.includes("esnya.udonrabbit-analyzer"));
     configuration.RoslynExtensionsOptions.LocationPaths = paths;
   }
