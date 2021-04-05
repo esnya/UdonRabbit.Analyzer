@@ -46,3 +46,4 @@ Those that are no longer needed due to Udon or UdonSharp updates will be assigne
 | URA0035     | [Udon does not support variable tweening when the behaviour is in Manual sync mode](./URA0035.md)   |     Udon      |   Error   |
 | URA0036     | [Syncing of array type is only supported in manual sync mode](./URA0036.md)                         |     Udon      |   Error   |
 | URA0037     | [U# does not yet support goto](./URA0037.md)                                                        |   UdonSharp   |   Error   |
+| URA0038     | [U# does not yet support labeled statements](./URA0038.md)                                          |   UdonSharp   |   Error   |
