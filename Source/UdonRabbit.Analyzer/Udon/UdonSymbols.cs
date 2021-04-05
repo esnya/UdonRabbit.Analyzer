@@ -220,6 +220,7 @@ namespace UdonRabbit.Analyzer.Udon
                     "NotSynced" => true,
                     "Linear" => _udonNetworkTypes.CanSync(t) && _udonNetworkTypes.CanSyncLinear(t),
                     "Smooth" => _udonNetworkTypes.CanSync(t) && _udonNetworkTypes.CanSyncSmooth(t),
+                    "None" => true,
                     _ => throw new ArgumentException(nameof(syncMode))
                 };
 
