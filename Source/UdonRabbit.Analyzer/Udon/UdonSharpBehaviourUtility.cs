@@ -59,6 +59,9 @@ namespace UdonRabbit.Analyzer.Udon
             if (attr.Equals(default))
                 return false;
 
+            if (attr.Attribute.ArgumentList == null)
+                return mode == "None";
+
             return attr.Attribute.ArgumentList.Arguments.Select(w => w.Expression)
                        .Any(w =>
                        {
@@ -97,6 +100,9 @@ namespace UdonRabbit.Analyzer.Udon
             if (attr.Equals(default))
                 return false;
 
+            if (attr.Attribute.ArgumentList == null)
+                return mode == "Any";
+
             return attr.Attribute.ArgumentList.Arguments.Select(w => w.Expression)
                        .Any(w =>
                        {
@@ -111,6 +117,7 @@ namespace UdonRabbit.Analyzer.Udon
         {
             return symbol switch
             {
+                IArrayTypeSymbol a => $"{a.ToDisplayString()}",
                 IMethodSymbol m => $"{m.ContainingType.ToDisplayString()}",
                 INamedTypeSymbol t => $"{t.ToDisplayString()}",
                 _ => string.Empty
