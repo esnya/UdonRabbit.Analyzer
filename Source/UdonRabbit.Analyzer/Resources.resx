@@ -382,4 +382,13 @@
   <data name="URA0037Title" xml:space="preserve">
     <value>U# does not yet support goto</value>
   </data>
+  <data name="URA0038Description" xml:space="preserve">
+    <value>UdonSharp does not yet support labeled statements</value>
+  </data>
+  <data name="URA0038MessageFormat" xml:space="preserve">
+    <value>UdonSharp does not yet support labeled statements</value>
+  </data>
+  <data name="URA0038Title" xml:space="preserve">
+    <value>U# does not yet support labeled statements</value>
+  </data>
 </root>
