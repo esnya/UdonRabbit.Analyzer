@@ -52,6 +52,10 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 1. Configure the following environment variables in `Source/UdonRabbit.runsettings`
    - `UDONRABBIT_ANALYZER_TEST_PROJECT` : Unity 2018.4.20f1 Test Project Location (`.csproj`)
      - Default: `null` (Current Directory)
+     - I recommended to reference to `Assembly-CSharp.csproj` because it has all references to DLLs.
+     - If you are not want to reference to `Assembly-CSharp.csproj`, add the following external references:
+       - `TextMeshPro`
+       - `UdonSharp.Runtime`
    - `UDONRABBIT_ANALYZER_TEST_UDON_SHARP` : `UdonSharp.Runtime.dll` Location
      - Default: `null` (Current Directory)
 2. Run `dotnet test`
