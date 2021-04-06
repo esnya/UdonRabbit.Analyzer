@@ -284,7 +284,7 @@ namespace UdonRabbit.Analyzer.Udon
             while (e!.IsArray || e!.IsByRef)
                 e = e.GetElementType();
 
-            var @namespace = t.Namespace;
+            var @namespace = e.Namespace;
             if (e.DeclaringType != null)
             {
                 var declaringTypeNamespace = "";
