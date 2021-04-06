@@ -55,25 +55,11 @@ namespace UdonRabbit.Analyzer.Udon.Reflection
 
         public Dictionary<Type, Type> GetVrcInheritedTypeMaps()
         {
-            var dict = new Dictionary<Type, Type>();
             var implAssembly = AppDomain.CurrentDomain.GetAssemblies().First(w => w.GetName().Name == "VRCSDK3");
-            var baseAssembly = AppDomain.CurrentDomain.GetAssemblies().First(w => w.GetName().Name == "VRCSDKBase");
+            var mappingTypes = implAssembly.GetTypes().Where(w => w.Namespace != null && w.Namespace.StartsWith("VRC.SDK3.Components"));
+            var dict = mappingTypes.Where(t => t.BaseType != null && t.BaseType.Namespace != null && t.BaseType.Namespace.StartsWith("VRC.SDKBase"))
+                                   .ToDictionary(t => t.BaseType);
 
-            // Why manually added? -> because throw exceptions on GetTypes(), GetExportedTypes() and get_Namespace().
-
-            dict.AddIfValid(implAssembly.GetType("VRC.SDK3.Components.AbstractUdonBehaviour"), baseAssembly.GetType("VRC.SDKBase.INetworkID"));
-            dict.AddIfValid(implAssembly.GetType("VRC.SDK3.Components.IVRCDestructible"), baseAssembly.GetType("VRC.SDKBase.IVRC_Destructible"));
-            dict.AddIfValid(implAssembly.GetType("VRC.SDK3.Components.VRCAvatarPedestal"), baseAssembly.GetType("VRC.SDKBase.VRC_AvatarPedestal"));
-            dict.AddIfValid(implAssembly.GetType("VRC.SDK3.Components.VRCInteractable"), baseAssembly.GetType("VRC.SDKBase.VRC_Interactable"));
-            dict.AddIfValid(implAssembly.GetType("VRC.SDK3.Components.VRCMirrorReflection"), baseAssembly.GetType("VRC.SDKBase.VRC_MirrorReflection"));
-            dict.AddIfValid(implAssembly.GetType("VRC.SDK3.Components.VRCObjectSync"), baseAssembly.GetType("VRC.SDKBase.INetworkID"));
-            dict.AddIfValid(implAssembly.GetType("VRC.SDK3.Components.VRCPickup"), baseAssembly.GetType("VRC.SDKBase.VRC_Pickup"));
-            dict.AddIfValid(implAssembly.GetType("VRC.SDK3.Components.VRCPortalMarker"), baseAssembly.GetType("VRC.SDKBase.VRC_PortalMarker"));
-            dict.AddIfValid(implAssembly.GetType("VRC.SDK3.Components.VRCSceneDescriptor"), baseAssembly.GetType("VRC.SDKBase.VRC_SceneDescriptor"));
-            dict.AddIfValid(implAssembly.GetType("VRC.SDK3.Components.VRCSpatialAudioSource"), baseAssembly.GetType("VRC.SDKBase.VRC_SpatialAudioSource"));
-            dict.AddIfValid(implAssembly.GetType("VRC.SDK3.Components.VRCStation"), baseAssembly.GetType("VRC.SDKBase.VRCStation"));
-            dict.AddIfValid(implAssembly.GetType("VRC.SDK3.Components.VRCUiShape"), baseAssembly.GetType("VRC.SDKBase.VRC_UiShape"));
-            dict.AddIfValid(implAssembly.GetType("VRC.SDK3.Components.VRCVisualDamage"), baseAssembly.GetType("VRC.SDKBase.VRC_VisualDamage"));
             dict.AddIfValid(implAssembly.GetType("VRC.SDK3.Video.Components.VRCUnityVideoPlayer"), implAssembly.GetType("VRC.SDK3.Video.Components.Base.BaseVRCVideoPlayer"));
             dict.AddIfValid(implAssembly.GetType("VRC.SDK3.Video.Components.AVPro.VRCAVProVideoPlayer"), implAssembly.GetType("VRC.SDK3.Video.Components.Base.BaseVRCVideoPlayer"));
 
