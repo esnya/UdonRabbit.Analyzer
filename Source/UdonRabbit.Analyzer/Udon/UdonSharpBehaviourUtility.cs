@@ -24,6 +24,11 @@ namespace UdonRabbit.Analyzer.Udon
             return decl.BaseType.Equals(semanticModel.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default);
         }
 
+        public static bool IsUdonSharpBehaviour(SemanticModel model, ITypeSymbol symbol)
+        {
+            return symbol.Equals(model.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default);
+        }
+
         public static bool IsUserDefinedTypes(SemanticModel model, ITypeSymbol symbol)
         {
             return symbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default);

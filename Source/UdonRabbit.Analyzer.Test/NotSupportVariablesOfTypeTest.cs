@@ -57,6 +57,26 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAnotherUdonSharpBehaviourVariableHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Start()
+        {
+            UdonSharpBehaviour behaviour;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourNotAllowedJaggedArrayHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportVariablesOfType.ComponentId)
@@ -100,6 +120,29 @@ namespace UdonRabbit
     {
         [SerializeField]
         private VRC_Pickup _pickup;
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourUdonBehaviourVariableHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using VRC.Udon;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Start()
+        {
+            UdonBehaviour behaviour;
+        }
     }
 }
 ";
@@ -221,6 +264,27 @@ namespace UdonRabbit
 ";
 
             await VerifyAnalyzerAsync(source, diagnostic);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourUdonSharpBehaviourVariableHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Start()
+        {
+            UdonSharpBehaviour behaviour;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
         }
     }
 }
