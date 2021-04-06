@@ -59,6 +59,32 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedInstanceMethodReturnsArrayTHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private Transform _transform;
+
+        private void Start()
+        {
+            var components = _transform.GetComponentsInChildren<Transform>();
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedMethodInInnerClassHasNoDiagnosticsReport()
         {
             const string source = @"
@@ -110,6 +136,34 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedUdonInstanceMethodHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+using VRC.Udon;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private UdonBehaviour _behaviour;
+
+        private void Update()
+        {
+            _behaviour.SetProgramVariable(""variable"", 1);
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedUnityMethodHasNoDiagnosticReport()
         {
             const string source = @"
@@ -137,7 +191,35 @@ namespace UdonRabbit
         }
 
         [Fact]
-        public async Task UdonSharpBehaviourAllowedVrcMethodHasNoDiagnosticReport()
+        public async Task UdonSharpBehaviourAllowedVrcInstanceMethodHasNoDiagnosticReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+using VRC.SDKBase;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private VRC_Pickup _pickup;
+
+        private void Update()
+        {
+            _pickup.Drop();
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedVrcStaticMethodHasNoDiagnosticReport()
         {
             const string source = @"
 using UdonSharp;
