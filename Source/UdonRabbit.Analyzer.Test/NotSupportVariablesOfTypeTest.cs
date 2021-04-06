@@ -34,6 +34,57 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedJaggedArraysHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UnityEngine;
+
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Start()
+        {
+            Transform[][] t;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourNotAllowedJaggedArrayHasDiagnosticsReport()
+        {
+            var diagnostic = ExpectDiagnostic(NotSupportVariablesOfType.ComponentId)
+                             .WithLocation(12, 13)
+                             .WithSeverity(DiagnosticSeverity.Error)
+                             .WithArguments("System.IntPtr[][]");
+
+            const string source = @"
+using System;
+
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Start()
+        {
+            IntPtr[][] ptr;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source, diagnostic);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourUdonAllowedVrcTypesHasNoDiagnosticsReport()
         {
             const string source = @"
