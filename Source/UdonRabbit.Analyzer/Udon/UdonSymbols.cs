@@ -251,8 +251,8 @@ namespace UdonRabbit.Analyzer.Udon
         private string GetUdonNamedType(ITypeSymbol symbol, RefKind reference, bool isSkipBaseTypeRemap = false)
         {
             var t = ConvertTypeSymbolToType(symbol);
-            if (t == null && symbol is ITypeParameterSymbol s)
-                return s.Name;
+            if (t == null && HasTypeParameter(symbol))
+                return ToTypeParameterString(symbol, isSkipBaseTypeRemap);
             if (t == null)
                 return string.Empty;
 
@@ -264,8 +264,8 @@ namespace UdonRabbit.Analyzer.Udon
         private string GetUdonNamedType(ITypeSymbol symbol, bool isSkipBaseTypeRemap = false)
         {
             var t = ConvertTypeSymbolToType(symbol);
-            if (t == null && symbol is ITypeParameterSymbol s)
-                return s.Name;
+            if (t == null && HasTypeParameter(symbol))
+                return ToTypeParameterString(symbol, isSkipBaseTypeRemap);
             if (t == null)
                 return string.Empty;
 
@@ -318,6 +318,27 @@ namespace UdonRabbit.Analyzer.Udon
                        .Replace("[]", "Array")
                        .Replace("&", "Ref")
                        .Replace("+", "");
+        }
+
+        private static bool HasTypeParameter(ITypeSymbol symbol)
+        {
+            return symbol switch
+            {
+                ITypeParameterSymbol => true,
+                IArrayTypeSymbol { ElementType: IArrayTypeSymbol } a => HasTypeParameter(a.ElementType),
+                IArrayTypeSymbol { ElementType: ITypeParameterSymbol } => true,
+                _ => false
+            };
+        }
+
+        private string ToTypeParameterString(ITypeSymbol symbol, bool isSkipBaseTypeRemap = false)
+        {
+            return symbol switch
+            {
+                ITypeParameterSymbol => symbol.Name,
+                IArrayTypeSymbol a when a.ElementType is IArrayTypeSymbol || a.ElementType is ITypeParameterSymbol => $"{ToTypeParameterString(a.ElementType, isSkipBaseTypeRemap)}Array",
+                _ => GetUdonNamedType(ConvertTypeSymbolToType(symbol), isSkipBaseTypeRemap)
+            };
         }
 
         private Type ConvertTypeSymbolToType(ITypeSymbol s)
