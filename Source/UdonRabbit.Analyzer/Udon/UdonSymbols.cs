@@ -204,7 +204,7 @@ namespace UdonRabbit.Analyzer.Udon
 
         public bool FindUdonTypeName(SemanticModel model, ITypeSymbol typeSymbol)
         {
-            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol))
+            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol) || UdonSharpBehaviourUtility.IsUdonSharpBehaviour(model, typeSymbol))
                 return true;
             if (typeSymbol.TypeKind == TypeKind.Array && UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol, TypeKind.Array))
                 return true;
