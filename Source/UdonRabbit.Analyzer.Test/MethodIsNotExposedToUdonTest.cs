@@ -137,7 +137,35 @@ namespace UdonRabbit
         }
 
         [Fact]
-        public async Task UdonSharpBehaviourAllowedVrcMethodHasNoDiagnosticReport()
+        public async Task UdonSharpBehaviourAllowedVrcInstanceMethodHasNoDiagnosticReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+using VRC.SDKBase;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private VRC_Pickup _pickup;
+
+        private void Update()
+        {
+            _pickup.Drop();
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedVrcStaticMethodHasNoDiagnosticReport()
         {
             const string source = @"
 using UdonSharp;
