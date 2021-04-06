@@ -41,6 +41,34 @@ using UdonSharp;
 
 using UnityEngine;
 
+using VRC.Udon;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private UdonBehaviour _behaviour;
+
+        private void Update()
+        {
+            _behaviour.SetProgramVariable(""variable"", 1);
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedInstanceMethodReturnsArrayTHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
 namespace UdonRabbit
 {
     public class TestClass : UdonSharpBehaviour

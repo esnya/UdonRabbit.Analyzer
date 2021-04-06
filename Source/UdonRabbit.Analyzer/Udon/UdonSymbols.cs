@@ -32,9 +32,16 @@ namespace UdonRabbit.Analyzer.Udon
             $"{UdonConstants.UdonSharpBehaviour}.__SendCustomEventDelayedSeconds__SystemString_SystemSingle_VRCUdonCommonEnumsEventTiming__SystemVoid",
             $"{UdonConstants.UdonSharpBehaviour}.__SendCustomEventDelayedFrames__SystemString_SystemInt32_VRCUdonCommonEnumsEventTiming__SystemVoid",
             $"{UdonConstants.UdonSharpBehaviour}.__VRCInstantiate_UnityEngineGameObject__UnityEngineGameObject",
-            $"{UdonConstants.UdonSharpBehaviour}.__RequestSerialization__SystemVoid"
+            $"{UdonConstants.UdonSharpBehaviour}.__RequestSerialization__SystemVoid",
 
-            // Should I add to UdonSharpBehaviour utility methods to allow list?
+            $"{UdonConstants.UdonSharpBehaviour}.__GetUdonTypeID__SystemInt64",
+            $"{UdonConstants.UdonSharpBehaviour}.__GetUdonTypeID__T__SystemInt64",
+            $"{UdonConstants.UdonSharpBehaviour}.__GetUdonTypeName__SystemString",
+            $"{UdonConstants.UdonSharpBehaviour}.__GetUdonTypeName__T__SystemString",
+
+            // why?
+            $"{UdonConstants.UdonCommonInterfacesReceiver}.__GetProgramVariable__SystemString__T",
+            $"{UdonConstants.UdonCommonInterfacesReceiver}.__SetProgramVariable__SystemString_T__SystemVoid"
         };
 
         private static readonly Dictionary<string, Type> BuiltinTypes = new()
@@ -131,7 +138,7 @@ namespace UdonRabbit.Analyzer.Udon
             }
 
             var paramsSb = new StringBuilder();
-            var parameters = symbol.Parameters;
+            var parameters = symbol.ConstructedFrom.Parameters;
 
             if (symbol.MethodKind == MethodKind.Constructor)
             {
