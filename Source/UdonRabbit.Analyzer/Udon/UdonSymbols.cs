@@ -160,7 +160,8 @@ namespace UdonRabbit.Analyzer.Udon
             if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol))
                 return true;
 
-            var functionNamespace = SanitizeTypeName(typeSymbol.ToDisplayString()).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(typeSymbol));
+            var functionNamespace = SanitizeTypeName(t.FullName).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             if (AllowClassNameList.Contains(functionNamespace))
                 return true;
 
@@ -179,7 +180,8 @@ namespace UdonRabbit.Analyzer.Udon
             if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol))
                 return true;
 
-            var functionNamespace = SanitizeTypeName(typeSymbol.ToDisplayString()).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(typeSymbol));
+            var functionNamespace = SanitizeTypeName(t.FullName).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             if (AllowClassNameList.Contains(functionNamespace))
                 return true;
 
