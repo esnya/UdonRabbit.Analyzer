@@ -32,9 +32,16 @@ namespace UdonRabbit.Analyzer.Udon
             $"{UdonConstants.UdonSharpBehaviour}.__SendCustomEventDelayedSeconds__SystemString_SystemSingle_VRCUdonCommonEnumsEventTiming__SystemVoid",
             $"{UdonConstants.UdonSharpBehaviour}.__SendCustomEventDelayedFrames__SystemString_SystemInt32_VRCUdonCommonEnumsEventTiming__SystemVoid",
             $"{UdonConstants.UdonSharpBehaviour}.__VRCInstantiate_UnityEngineGameObject__UnityEngineGameObject",
-            $"{UdonConstants.UdonSharpBehaviour}.__RequestSerialization__SystemVoid"
+            $"{UdonConstants.UdonSharpBehaviour}.__RequestSerialization__SystemVoid",
 
-            // Should I add to UdonSharpBehaviour utility methods to allow list?
+            $"{UdonConstants.UdonSharpBehaviour}.__GetUdonTypeID__SystemInt64",
+            $"{UdonConstants.UdonSharpBehaviour}.__GetUdonTypeID__T__SystemInt64",
+            $"{UdonConstants.UdonSharpBehaviour}.__GetUdonTypeName__SystemString",
+            $"{UdonConstants.UdonSharpBehaviour}.__GetUdonTypeName__T__SystemString",
+
+            // why?
+            $"{UdonConstants.UdonCommonInterfacesReceiver}.__GetProgramVariable__SystemString__T",
+            $"{UdonConstants.UdonCommonInterfacesReceiver}.__SetProgramVariable__SystemString_T__SystemVoid"
         };
 
         private static readonly Dictionary<string, Type> BuiltinTypes = new()
@@ -120,7 +127,8 @@ namespace UdonRabbit.Analyzer.Udon
             if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, receiver))
                 return true;
 
-            var functionNamespace = SanitizeTypeName($"{receiver.ContainingNamespace.ToDisplayString()}{receiver.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(receiver));
+            var functionNamespace = SanitizeTypeName(t.FullName).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             var functionName = $"__{symbol.Name.Trim('_').TrimStart('.')}";
 
             if (functionName == "__VRCInstantiate")
@@ -130,7 +138,7 @@ namespace UdonRabbit.Analyzer.Udon
             }
 
             var paramsSb = new StringBuilder();
-            var parameters = symbol.Parameters;
+            var parameters = symbol.ConstructedFrom.Parameters;
 
             if (symbol.MethodKind == MethodKind.Constructor)
             {
@@ -160,7 +168,8 @@ namespace UdonRabbit.Analyzer.Udon
             if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol))
                 return true;
 
-            var functionNamespace = SanitizeTypeName(typeSymbol.ToDisplayString()).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(typeSymbol));
+            var functionNamespace = SanitizeTypeName(t.FullName).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             if (AllowClassNameList.Contains(functionNamespace))
                 return true;
 
@@ -179,7 +188,8 @@ namespace UdonRabbit.Analyzer.Udon
             if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol))
                 return true;
 
-            var functionNamespace = SanitizeTypeName(typeSymbol.ToDisplayString()).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(typeSymbol));
+            var functionNamespace = SanitizeTypeName(t.FullName).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             if (AllowClassNameList.Contains(functionNamespace))
                 return true;
 
@@ -251,8 +261,8 @@ namespace UdonRabbit.Analyzer.Udon
         private string GetUdonNamedType(ITypeSymbol symbol, RefKind reference, bool isSkipBaseTypeRemap = false)
         {
             var t = ConvertTypeSymbolToType(symbol);
-            if (t == null && symbol is ITypeParameterSymbol s)
-                return s.Name;
+            if (t == null && HasTypeParameter(symbol))
+                return ToTypeParameterString(symbol, isSkipBaseTypeRemap);
             if (t == null)
                 return string.Empty;
 
@@ -264,8 +274,8 @@ namespace UdonRabbit.Analyzer.Udon
         private string GetUdonNamedType(ITypeSymbol symbol, bool isSkipBaseTypeRemap = false)
         {
             var t = ConvertTypeSymbolToType(symbol);
-            if (t == null && symbol is ITypeParameterSymbol s)
-                return s.Name;
+            if (t == null && HasTypeParameter(symbol))
+                return ToTypeParameterString(symbol, isSkipBaseTypeRemap);
             if (t == null)
                 return string.Empty;
 
@@ -281,7 +291,7 @@ namespace UdonRabbit.Analyzer.Udon
             while (e!.IsArray || e!.IsByRef)
                 e = e.GetElementType();
 
-            var @namespace = t.Namespace;
+            var @namespace = e.Namespace;
             if (e.DeclaringType != null)
             {
                 var declaringTypeNamespace = "";
@@ -318,6 +328,27 @@ namespace UdonRabbit.Analyzer.Udon
                        .Replace("[]", "Array")
                        .Replace("&", "Ref")
                        .Replace("+", "");
+        }
+
+        private static bool HasTypeParameter(ITypeSymbol symbol)
+        {
+            return symbol switch
+            {
+                ITypeParameterSymbol => true,
+                IArrayTypeSymbol { ElementType: IArrayTypeSymbol } a => HasTypeParameter(a.ElementType),
+                IArrayTypeSymbol { ElementType: ITypeParameterSymbol } => true,
+                _ => false
+            };
+        }
+
+        private string ToTypeParameterString(ITypeSymbol symbol, bool isSkipBaseTypeRemap = false)
+        {
+            return symbol switch
+            {
+                ITypeParameterSymbol => symbol.Name,
+                IArrayTypeSymbol a when a.ElementType is IArrayTypeSymbol || a.ElementType is ITypeParameterSymbol => $"{ToTypeParameterString(a.ElementType, isSkipBaseTypeRemap)}Array",
+                _ => GetUdonNamedType(ConvertTypeSymbolToType(symbol), isSkipBaseTypeRemap)
+            };
         }
 
         private Type ConvertTypeSymbolToType(ITypeSymbol s)
