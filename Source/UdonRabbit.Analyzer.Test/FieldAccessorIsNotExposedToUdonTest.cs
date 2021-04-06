@@ -63,6 +63,29 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedPrimitivePropertyAccessorHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private readonly string str = ""Hello, World"";
+
+        private void Start()
+        {
+            var len = str.Length;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedStaticFieldAccessorInIfStatementHasNoDiagnosticsReport()
         {
             const string source = @"
