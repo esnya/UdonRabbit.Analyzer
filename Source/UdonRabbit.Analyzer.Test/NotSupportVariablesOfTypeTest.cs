@@ -105,6 +105,32 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourUdonAllowedCollectionsHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using System.Collections.Generic;
+using System.Linq;
+
+using UnityEngine;
+
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Start()
+        {
+            IEnumerable<Transform> collection = GetComponentsInChildren<Transform>().ToList();
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourUdonAllowedVrcTypesHasNoDiagnosticsReport()
         {
             const string source = @"
