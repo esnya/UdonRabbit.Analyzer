@@ -18,7 +18,11 @@ namespace UdonRabbit.Analyzer.Udon
         {
             "VRC.Udon",
             "VRCSDK3",
-            "VRCSDKBase",
+            "VRCSDKBase"
+        };
+
+        private static readonly HashSet<string> UdonAllowedOptionalAssemblies = new()
+        {
             "Cinemachine",
             "Unity.Postprocessing.Runtime",
             "Unity.TextMeshPro"
@@ -26,6 +30,7 @@ namespace UdonRabbit.Analyzer.Udon
 
         private static readonly HashSet<string> UdonExternalAssemblies = new()
         {
+            "UdonSharp.Runtime",
             "VRC.Udon.VRCGraphModules",
             "VRC.Udon.VRCTypeResolverModules"
         };
@@ -83,6 +88,8 @@ namespace UdonRabbit.Analyzer.Udon
                 foreach (var external in UdonExternalAssemblies)
                     AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(resolver.Resolve($"{external}.dll")));
                 foreach (var allowed in UdonAllowAssemblies)
+                    AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(resolver.Resolve($"{allowed}.dll")));
+                foreach (var allowed in UdonAllowedOptionalAssemblies.Where(w => !string.IsNullOrWhiteSpace(resolver.Resolve($"{w}.dll"))))
                     AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(resolver.Resolve($"{allowed}.dll")));
 
                 UdonAssembly = AppDomain.CurrentDomain.GetAssemblies().First(w => w.GetName().Name == "VRC.Udon");
