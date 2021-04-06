@@ -120,7 +120,8 @@ namespace UdonRabbit.Analyzer.Udon
             if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, receiver))
                 return true;
 
-            var functionNamespace = SanitizeTypeName($"{receiver.ContainingNamespace.ToDisplayString()}{receiver.Name}").Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(receiver));
+            var functionNamespace = SanitizeTypeName(t.FullName).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             var functionName = $"__{symbol.Name.Trim('_').TrimStart('.')}";
 
             if (functionName == "__VRCInstantiate")
@@ -160,7 +161,8 @@ namespace UdonRabbit.Analyzer.Udon
             if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol))
                 return true;
 
-            var functionNamespace = SanitizeTypeName(typeSymbol.ToDisplayString()).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(typeSymbol));
+            var functionNamespace = SanitizeTypeName(t.FullName).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             if (AllowClassNameList.Contains(functionNamespace))
                 return true;
 
@@ -179,7 +181,8 @@ namespace UdonRabbit.Analyzer.Udon
             if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol))
                 return true;
 
-            var functionNamespace = SanitizeTypeName(typeSymbol.ToDisplayString()).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(typeSymbol));
+            var functionNamespace = SanitizeTypeName(t.FullName).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
             if (AllowClassNameList.Contains(functionNamespace))
                 return true;
 
@@ -281,7 +284,7 @@ namespace UdonRabbit.Analyzer.Udon
             while (e!.IsArray || e!.IsByRef)
                 e = e.GetElementType();
 
-            var @namespace = t.Namespace;
+            var @namespace = e.Namespace;
             if (e.DeclaringType != null)
             {
                 var declaringTypeNamespace = "";

@@ -63,6 +63,29 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedPrimitivePropertyAccessorHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private readonly string str = ""Hello, World"";
+
+        private void Start()
+        {
+            var len = str.Length;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedStaticFieldAccessorInIfStatementHasNoDiagnosticsReport()
         {
             const string source = @"
@@ -134,7 +157,36 @@ namespace UdonRabbit
         }
 
         [Fact]
-        public async Task UdonSharpBehaviourAllowedVrcFieldAccessorHasNoDiagnosticsReport()
+        public async Task UdonSharpBehaviourAllowedVrcInstanceFieldHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+using VRC.SDKBase;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private VRC_Pickup _pickup;
+
+        private void Start()
+        {
+            var text = _pickup.InteractionText;
+            _pickup.InteractionText = text;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedVrcStaticFieldAccessorHasNoDiagnosticsReport()
         {
             const string source = @"
 using UdonSharp;
