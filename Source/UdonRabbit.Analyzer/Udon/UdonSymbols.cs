@@ -29,8 +29,8 @@ namespace UdonRabbit.Analyzer.Udon
             $"{UdonConstants.UdonSharpBehaviour}.__SetProgramVariable__SystemString_SystemObject__SystemVoid",
             $"{UdonConstants.UdonSharpBehaviour}.__SendCustomEvent__SystemString__SystemVoid",
             $"{UdonConstants.UdonSharpBehaviour}.__SendCustomNetworkEvent__VRCUdonCommonInterfacesNetworkEventTarget_SystemString__SystemVoid",
-            $"{UdonConstants.UdonSharpBehaviour}.__SendCustomEventDelayedSeconds__SystemString__SystemSingle_VRCUdonCommonEnumsEventTiming__SystemVoid",
-            $"{UdonConstants.UdonSharpBehaviour}.__SendCustomEventDelayedFrames__SystemString__SystemInt32_VRCUdonCommonEnumsEventTiming__SystemVoid",
+            $"{UdonConstants.UdonSharpBehaviour}.__SendCustomEventDelayedSeconds__SystemString_SystemSingle_VRCUdonCommonEnumsEventTiming__SystemVoid",
+            $"{UdonConstants.UdonSharpBehaviour}.__SendCustomEventDelayedFrames__SystemString_SystemInt32_VRCUdonCommonEnumsEventTiming__SystemVoid",
             $"{UdonConstants.UdonSharpBehaviour}.__VRCInstantiate_UnityEngineGameObject__UnityEngineGameObject",
             $"{UdonConstants.UdonSharpBehaviour}.__RequestSerialization__SystemVoid"
 
