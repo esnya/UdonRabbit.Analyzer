@@ -210,6 +210,9 @@ namespace UdonRabbit.Analyzer.Udon
                 return true;
 
             var @namespace = GetUdonNamedType(typeSymbol);
+            if (@namespace.CountOf("Array") >= 2)
+                @namespace = @namespace.Substring(0, @namespace.IndexOf("Array", StringComparison.InvariantCulture) + "Array".Length); // fix for jagged array
+
             var signatureForType = $"Type_{@namespace}";
             var signatureForVariable = $"Variable_{@namespace}";
             if (signatureForType == "Type_SystemVoid")
@@ -351,13 +354,16 @@ namespace UdonRabbit.Analyzer.Udon
             };
         }
 
+        private ITypeSymbol GetArrayElementTypeSymbol(ITypeSymbol t)
+        {
+            if (t is not IArrayTypeSymbol a)
+                return t;
+            return GetArrayElementTypeSymbol(a.ElementType);
+        }
+
         private Type ConvertTypeSymbolToType(ITypeSymbol s)
         {
-            var p = s switch
-            {
-                IArrayTypeSymbol a when s.TypeKind == TypeKind.Array => a.ElementType,
-                _ => s
-            };
+            var p = GetArrayElementTypeSymbol(s);
 
             Type ConvertToTypeInternal(Type t)
             {
