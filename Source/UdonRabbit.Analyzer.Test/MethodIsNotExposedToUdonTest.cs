@@ -59,6 +59,32 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedInstanceMethodReturnsArrayTHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private Transform _transform;
+
+        private void Start()
+        {
+            var components = _transform.GetComponentsInChildren<Transform>();
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedMethodInInnerClassHasNoDiagnosticsReport()
         {
             const string source = @"
