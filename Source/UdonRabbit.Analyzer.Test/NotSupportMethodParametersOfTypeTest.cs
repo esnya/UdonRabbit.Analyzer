@@ -115,6 +115,28 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourUdonBehaviourMethodParameterTypeHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using VRC.Udon;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void TestMethod(UdonBehaviour t)
+        {
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourUdonNotAllowedMethodParameterTypeHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportMethodParametersOfType.ComponentId)
@@ -139,6 +161,26 @@ namespace UdonRabbit
 ";
 
             await VerifyAnalyzerAsync(source, diagnostic);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourUdonSharpBehaviourMethodParameterTypeHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void TestMethod(UdonSharpBehaviour t)
+        {
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
         }
     }
 }
