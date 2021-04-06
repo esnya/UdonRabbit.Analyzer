@@ -34,6 +34,8 @@ namespace UdonRabbit.Analyzer.Udon
 
         public static bool IsUserDefinedTypes(SemanticModel model, ITypeSymbol symbol)
         {
+            if (symbol.BaseType == null)
+                return false;
             return symbol.BaseType.Equals(model.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpBehaviourFullName), SymbolEqualityComparer.Default);
         }
 
