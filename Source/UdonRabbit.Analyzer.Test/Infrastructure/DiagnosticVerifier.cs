@@ -207,6 +207,7 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
             private static IEnumerable<string> EmulateUnityProjectReferences()
             {
                 yield return UdonSharpPath;
+                yield return Path.Combine(Path.GetDirectoryName(UdonSharpPath), "VRC.Udon.dll");
             }
         }
     }
