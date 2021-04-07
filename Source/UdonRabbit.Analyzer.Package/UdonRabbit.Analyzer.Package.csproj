@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <PackageId>UdonRabbit.Analyzer</PackageId>
-    <PackageVersion>0.11.2</PackageVersion>
+    <PackageVersion>0.11.3</PackageVersion>
     <Authors>esnya</Authors>
     <PackageLicenseUrl>https://github.com/esnya/UdonRabbit.Analyzer/blob/develop/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/esnya/UdonRabbit.Analyzer</PackageProjectUrl>
