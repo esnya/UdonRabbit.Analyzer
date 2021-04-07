@@ -70,7 +70,7 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 
 ## Analyzer Documents
 
-See https://docs.mochizuki.moe/udon-rabbit/analayzer/analyzers/
+See https://docs.mochizuki.moe/udon-rabbit/packages/analyzer/ (ja-JP)
 
 ## ScreenShots
 
