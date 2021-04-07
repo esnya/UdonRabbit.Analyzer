@@ -165,7 +165,7 @@ namespace UdonRabbit.Analyzer.Udon
 
         public bool FindUdonVariableName(SemanticModel model, ITypeSymbol typeSymbol, IFieldSymbol fieldSymbol, bool isSetter)
         {
-            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol))
+            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol))
                 return true;
 
             var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(typeSymbol));
@@ -185,7 +185,7 @@ namespace UdonRabbit.Analyzer.Udon
 
         public bool FindUdonVariableName(SemanticModel model, ITypeSymbol typeSymbol, IPropertySymbol symbol, bool isSetter)
         {
-            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol))
+            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol))
                 return true;
 
             var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(typeSymbol));
@@ -204,12 +204,15 @@ namespace UdonRabbit.Analyzer.Udon
 
         public bool FindUdonTypeName(SemanticModel model, ITypeSymbol typeSymbol)
         {
-            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol))
+            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol))
                 return true;
             if (typeSymbol.TypeKind == TypeKind.Array && UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol, TypeKind.Array))
                 return true;
 
             var @namespace = GetUdonNamedType(typeSymbol);
+            if (@namespace.CountOf("Array") >= 2)
+                @namespace = @namespace.Substring(0, @namespace.IndexOf("Array", StringComparison.InvariantCulture) + "Array".Length); // fix for jagged array
+
             var signatureForType = $"Type_{@namespace}";
             var signatureForVariable = $"Variable_{@namespace}";
             if (signatureForType == "Type_SystemVoid")
@@ -313,9 +316,9 @@ namespace UdonRabbit.Analyzer.Udon
             foreach (var g in e.GetGenericArguments())
                 signature += GetUdonNamedType(g);
 
-            if (signature == "System.Collection.Generic.ListT".Replace(".", ""))
+            if (signature == "System.Collections.Generic.ListT".Replace(".", ""))
                 signature = "ListT";
-            else if (signature == "System.Collection.Generic.IEnumerableT".Replace(".", ""))
+            else if (signature == "System.Collections.Generic.IEnumerableT".Replace(".", ""))
                 signature = "IEnumerableT";
 
             return signature.Replace("VRCUdonUdonBehaviour", "VRCUdonCommonInterfacesIUdonEventReceiver");
@@ -351,13 +354,25 @@ namespace UdonRabbit.Analyzer.Udon
             };
         }
 
+        private ITypeSymbol GetArrayElementTypeSymbol(ITypeSymbol t)
+        {
+            if (t is not IArrayTypeSymbol a)
+                return t;
+            return GetArrayElementTypeSymbol(a.ElementType);
+        }
+
         private Type ConvertTypeSymbolToType(ITypeSymbol s)
         {
             var p = s switch
             {
-                IArrayTypeSymbol a when s.TypeKind == TypeKind.Array => a.ElementType,
+                INamedTypeSymbol n => n.ConstructedFrom,
+                IArrayTypeSymbol a => GetArrayElementTypeSymbol(a),
+                ITypeParameterSymbol => null,
                 _ => s
             };
+
+            if (p == null)
+                return null;
 
             Type ConvertToTypeInternal(Type t)
             {
@@ -412,7 +427,7 @@ namespace UdonRabbit.Analyzer.Udon
                 var t = AppDomain.CurrentDomain.GetAssemblies()
                                  .SelectMany(LoadExportedTypes)
                                  .Where(w => !string.IsNullOrWhiteSpace(w?.FullName))
-                                 .FirstOrDefault(w => w.FullName.Replace("+", ".") == p.ToDisplayString());
+                                 .FirstOrDefault(w => w.FullName.Replace("+", ".") == p.ToClassString());
                 if (t == null)
                     return null;
 
