@@ -34,6 +34,32 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourArrayOfUdonSharpBehaviourReturnValueInMethodDeclarationHasNoDiagnosticsReports()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private UdonSharpBehaviour[] _behaviour;
+
+        private UdonSharpBehaviour[] GetTypeOf()
+        {
+            return _behaviour;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourNoReturnValueInMethodDeclarationHasNoDiagnosticsReport()
         {
             const string source = @"
