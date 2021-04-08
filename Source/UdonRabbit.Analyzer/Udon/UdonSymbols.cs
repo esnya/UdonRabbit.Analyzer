@@ -206,7 +206,7 @@ namespace UdonRabbit.Analyzer.Udon
         {
             if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol))
                 return true;
-            if (typeSymbol.TypeKind == TypeKind.Array && UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol, TypeKind.Array))
+            if (typeSymbol.TypeKind == TypeKind.Array && (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol, TypeKind.Array) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol, TypeKind.Array)))
                 return true;
 
             var @namespace = GetUdonNamedType(typeSymbol);
