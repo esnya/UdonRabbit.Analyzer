@@ -121,9 +121,9 @@ namespace UdonRabbit.Analyzer.Udon
             }
         }
 
-        public bool FindUdonMethodName(SemanticModel model, IMethodSymbol symbol)
+        public bool FindUdonMethodName(SemanticModel model, IMethodSymbol symbol, ITypeSymbol providedReceiver = null)
         {
-            var receiver = symbol.ReceiverType;
+            var receiver = providedReceiver ?? symbol.ReceiverType;
             if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, receiver))
                 return true;
 
@@ -179,14 +179,10 @@ namespace UdonRabbit.Analyzer.Udon
             if (AllowClassNameList.Contains(functionNamespace))
                 return true;
 
-            // WORKAROUND for Enum Accessors
-            if (typeSymbol.TypeKind == TypeKind.Enum)
-                return _nodeDefinitions.Contains($"Type_{functionNamespace}");
-
             var functionName = $"__{(isSetter ? "set" : "get")}_{fieldSymbol.Name.Trim('_')}";
             var param = $"__{GetUdonNamedType(fieldSymbol.Type)}";
             var signature = $"{functionNamespace}.{functionName}{param}";
-            return _nodeDefinitions.Contains(signature);
+            return _nodeDefinitions.Contains(signature) || typeSymbol.TypeKind == TypeKind.Enum && _nodeDefinitions.Contains($"Type_{functionNamespace}");
         }
 
         public bool FindUdonVariableName(SemanticModel model, ITypeSymbol typeSymbol, IPropertySymbol symbol, bool isSetter)
