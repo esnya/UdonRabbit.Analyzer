@@ -11,6 +11,52 @@ namespace UdonRabbit.Analyzer.Test
     public class FieldAccessorIsNotExposedToUdonTest : DiagnosticVerifier<FieldAccessorIsNotExposedToUdon>
     {
         [Fact]
+        public async Task UdonSharpBehaviourAllowedEnumField1HasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using VRC.SDK3.Components.Video;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            var s = VideoError.Unknown;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedEnumField2HasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using VRC.Udon.Common.Interfaces;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            SendCustomNetworkEvent(NetworkEventTarget.All, ""Emit"");
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedFieldAccessorInInnerClassHasNoDiagnosticsReport()
         {
             const string source = @"
@@ -54,6 +100,80 @@ namespace UdonRabbit
         private void Update()
         {
             var t = tm.text;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedInstancePropertyOfJaggedArraysHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private int[][] _array;
+
+        private void Start()
+        {
+            _array = new int[4][];
+            var i = _array.Length;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedInstancePropertyOfJaggedArraysOfUdonBehaviourHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using VRC.Udon;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private UdonBehaviour[][] _array;
+
+        private void Start()
+        {
+            _array = new UdonBehaviour[4][];
+            var i = _array.Length;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedInstancePropertyOfJaggedArraysOfUdonSharpBehaviourHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private UdonSharpBehaviour[][] _array;
+
+        private void Start()
+        {
+            _array = new UdonSharpBehaviour[4][];
+            var i = _array.Length;
         }
     }
 }
