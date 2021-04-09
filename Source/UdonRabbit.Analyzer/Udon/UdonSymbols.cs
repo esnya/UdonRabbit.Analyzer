@@ -129,6 +129,9 @@ namespace UdonRabbit.Analyzer.Udon
 
             var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(receiver));
             var functionNamespace = SanitizeTypeName(t.FullName).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            if (functionNamespace.CountOf("Array") >= 2)
+                functionNamespace = functionNamespace.Substring(0, functionNamespace.IndexOf("Array", StringComparison.InvariantCulture) + "Array".Length); // fix for jagged array
+
             var functionName = $"__{symbol.Name.Trim('_').TrimStart('.')}";
 
             if (functionName == "__VRCInstantiate")
@@ -170,6 +173,9 @@ namespace UdonRabbit.Analyzer.Udon
 
             var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(typeSymbol));
             var functionNamespace = SanitizeTypeName(t.FullName).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            if (functionNamespace.CountOf("Array") >= 2)
+                functionNamespace = functionNamespace.Substring(0, functionNamespace.IndexOf("Array", StringComparison.InvariantCulture) + "Array".Length); // fix for jagged array
+
             if (AllowClassNameList.Contains(functionNamespace))
                 return true;
 
@@ -190,6 +196,9 @@ namespace UdonRabbit.Analyzer.Udon
 
             var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(typeSymbol));
             var functionNamespace = SanitizeTypeName(t.FullName).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            if (functionNamespace.CountOf("Array") >= 2)
+                functionNamespace = functionNamespace.Substring(0, functionNamespace.IndexOf("Array", StringComparison.InvariantCulture) + "Array".Length); // fix for jagged array
+
             if (AllowClassNameList.Contains(functionNamespace))
                 return true;
 
@@ -206,7 +215,7 @@ namespace UdonRabbit.Analyzer.Udon
         {
             if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol))
                 return true;
-            if (typeSymbol.TypeKind == TypeKind.Array && UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol, TypeKind.Array))
+            if (typeSymbol.TypeKind == TypeKind.Array && (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol, TypeKind.Array) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol, TypeKind.Array)))
                 return true;
 
             var @namespace = GetUdonNamedType(typeSymbol);
