@@ -198,6 +198,9 @@ namespace UdonRabbit.Analyzer.Udon
             if (AllowClassNameList.Contains(functionNamespace))
                 return true;
 
+            if (functionNamespace.Contains(UdonConstants.UdonSharpBehaviour))
+                functionNamespace = functionNamespace.Replace(UdonConstants.UdonSharpBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+
             var functionName = $"__{(isSetter ? "set" : "get")}_{symbol.Name.Trim('_')}";
             var param = $"__{GetUdonNamedType(symbol.Type)}";
             if (isSetter)

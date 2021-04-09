@@ -133,6 +133,56 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedInstancePropertyOfJaggedArraysOfUdonBehaviourHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using VRC.Udon;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private UdonBehaviour[][] _array;
+
+        private void Start()
+        {
+            _array = new UdonBehaviour[4][];
+            var i = _array.Length;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedInstancePropertyOfJaggedArraysOfUdonSharpBehaviourHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private UdonSharpBehaviour[][] _array;
+
+        private void Start()
+        {
+            _array = new UdonSharpBehaviour[4][];
+            var i = _array.Length;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedPrimitivePropertyAccessorHasNoDiagnosticsReport()
         {
             const string source = @"
