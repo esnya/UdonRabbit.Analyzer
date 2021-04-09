@@ -121,9 +121,9 @@ namespace UdonRabbit.Analyzer.Udon
             }
         }
 
-        public bool FindUdonMethodName(SemanticModel model, IMethodSymbol symbol)
+        public bool FindUdonMethodName(SemanticModel model, IMethodSymbol symbol, ITypeSymbol providedReceiver = null)
         {
-            var receiver = symbol.ReceiverType;
+            var receiver = providedReceiver ?? symbol.ReceiverType;
             if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, receiver))
                 return true;
 

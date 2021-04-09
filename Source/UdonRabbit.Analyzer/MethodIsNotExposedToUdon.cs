@@ -54,6 +54,20 @@ namespace UdonRabbit.Analyzer
             if (methodSymbol.Symbol is not IMethodSymbol method)
                 return;
 
+            // Workaround for Enum Methods
+            if (invocation.Expression is MemberAccessExpressionSyntax expr)
+            {
+                var receiver = expr.Expression;
+                var info = context.SemanticModel.GetSymbolInfo(receiver);
+                if (info.Symbol?.ContainingType != null && SymbolEqualityComparer.Default.Equals(info.Symbol.ContainingType.BaseType, context.SemanticModel.Compilation.GetTypeByMetadataName("System.Enum")))
+                {
+                    // receiver is enum properties
+                    if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonMethodName(context.SemanticModel, method, info.Symbol.ContainingType))
+                        context.ReportDiagnostic(Diagnostic.Create(RuleSet, invocation.GetLocation(), method.Name));
+                    return;
+                }
+            }
+
             if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonMethodName(context.SemanticModel, method))
                 context.ReportDiagnostic(Diagnostic.Create(RuleSet, invocation.GetLocation(), method.Name));
         }
