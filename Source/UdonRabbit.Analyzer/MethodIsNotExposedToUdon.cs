@@ -58,11 +58,23 @@ namespace UdonRabbit.Analyzer
             if (invocation.Expression is MemberAccessExpressionSyntax expr)
             {
                 var receiver = expr.Expression;
-                var info = context.SemanticModel.GetSymbolInfo(receiver);
-                if (info.Symbol?.ContainingType != null && SymbolEqualityComparer.Default.Equals(info.Symbol.ContainingType.BaseType, context.SemanticModel.Compilation.GetTypeByMetadataName("System.Enum")))
+                var symbolInfo = context.SemanticModel.GetSymbolInfo(receiver);
+
+                // direct access to enum
+                if (symbolInfo.Symbol?.ContainingType != null && SymbolEqualityComparer.Default.Equals(symbolInfo.Symbol.ContainingType.BaseType, context.SemanticModel.Compilation.GetTypeByMetadataName("System.Enum")))
                 {
                     // receiver is enum properties
-                    if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonMethodName(context.SemanticModel, method, info.Symbol.ContainingType))
+                    if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonMethodName(context.SemanticModel, method, symbolInfo.Symbol.ContainingType))
+                        context.ReportDiagnostic(Diagnostic.Create(RuleSet, invocation.GetLocation(), method.Name));
+                    return;
+                }
+
+                // field access to enum
+                var typeInfo = context.SemanticModel.GetTypeInfo(receiver);
+                if (typeInfo.Type.BaseType.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName("System.Enum"), SymbolEqualityComparer.Default))
+                {
+                    // receiver is enum properties
+                    if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonMethodName(context.SemanticModel, method, typeInfo.Type))
                         context.ReportDiagnostic(Diagnostic.Create(RuleSet, invocation.GetLocation(), method.Name));
                     return;
                 }
