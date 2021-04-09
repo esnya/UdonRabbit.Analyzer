@@ -42,7 +42,13 @@ namespace UdonRabbit.Analyzer.Udon
             };
         }
 
+        [Obsolete]
         public static bool IsUserDefinedTypes(SemanticModel model, ITypeSymbol symbol)
+        {
+            return IsUserDefinedTypesInternal(model, symbol);
+        }
+
+        private static bool IsUserDefinedTypesInternal(SemanticModel model, ITypeSymbol symbol)
         {
             if (symbol.BaseType == null)
                 return false;
@@ -54,7 +60,7 @@ namespace UdonRabbit.Analyzer.Udon
             return kind switch
             {
                 TypeKind.Array when symbol is IArrayTypeSymbol a => IsUserDefinedTypes(model, a.ElementType, a.ElementType.TypeKind),
-                TypeKind.Class => IsUserDefinedTypes(model, symbol), // UdonSharp currently support user-defined types only.
+                TypeKind.Class => IsUserDefinedTypesInternal(model, symbol), // UdonSharp currently support user-defined types only.
                 _ => false
             };
         }
