@@ -121,14 +121,17 @@ namespace UdonRabbit.Analyzer.Udon
             }
         }
 
-        public bool FindUdonMethodName(SemanticModel model, IMethodSymbol symbol)
+        public bool FindUdonMethodName(SemanticModel model, IMethodSymbol symbol, ITypeSymbol providedReceiver = null)
         {
-            var receiver = symbol.ReceiverType;
+            var receiver = providedReceiver ?? symbol.ReceiverType;
             if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, receiver))
                 return true;
 
             var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(receiver));
             var functionNamespace = SanitizeTypeName(t.FullName).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            if (functionNamespace.CountOf("Array") >= 2)
+                functionNamespace = functionNamespace.Substring(0, functionNamespace.IndexOf("Array", StringComparison.InvariantCulture) + "Array".Length); // fix for jagged array
+
             var functionName = $"__{symbol.Name.Trim('_').TrimStart('.')}";
 
             if (functionName == "__VRCInstantiate")
@@ -170,17 +173,16 @@ namespace UdonRabbit.Analyzer.Udon
 
             var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(typeSymbol));
             var functionNamespace = SanitizeTypeName(t.FullName).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            if (functionNamespace.CountOf("Array") >= 2)
+                functionNamespace = functionNamespace.Substring(0, functionNamespace.IndexOf("Array", StringComparison.InvariantCulture) + "Array".Length); // fix for jagged array
+
             if (AllowClassNameList.Contains(functionNamespace))
                 return true;
-
-            // WORKAROUND for Enum Accessors
-            if (typeSymbol.TypeKind == TypeKind.Enum)
-                return _nodeDefinitions.Contains($"Type_{functionNamespace}");
 
             var functionName = $"__{(isSetter ? "set" : "get")}_{fieldSymbol.Name.Trim('_')}";
             var param = $"__{GetUdonNamedType(fieldSymbol.Type)}";
             var signature = $"{functionNamespace}.{functionName}{param}";
-            return _nodeDefinitions.Contains(signature);
+            return _nodeDefinitions.Contains(signature) || typeSymbol.TypeKind == TypeKind.Enum && _nodeDefinitions.Contains($"Type_{functionNamespace}");
         }
 
         public bool FindUdonVariableName(SemanticModel model, ITypeSymbol typeSymbol, IPropertySymbol symbol, bool isSetter)
@@ -190,8 +192,14 @@ namespace UdonRabbit.Analyzer.Udon
 
             var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(typeSymbol));
             var functionNamespace = SanitizeTypeName(t.FullName).Replace(UdonConstants.UdonBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
+            if (functionNamespace.CountOf("Array") >= 2)
+                functionNamespace = functionNamespace.Substring(0, functionNamespace.IndexOf("Array", StringComparison.InvariantCulture) + "Array".Length); // fix for jagged array
+
             if (AllowClassNameList.Contains(functionNamespace))
                 return true;
+
+            if (functionNamespace.Contains(UdonConstants.UdonSharpBehaviour))
+                functionNamespace = functionNamespace.Replace(UdonConstants.UdonSharpBehaviour, UdonConstants.UdonCommonInterfacesReceiver);
 
             var functionName = $"__{(isSetter ? "set" : "get")}_{symbol.Name.Trim('_')}";
             var param = $"__{GetUdonNamedType(symbol.Type)}";
@@ -206,7 +214,7 @@ namespace UdonRabbit.Analyzer.Udon
         {
             if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol))
                 return true;
-            if (typeSymbol.TypeKind == TypeKind.Array && UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol, TypeKind.Array))
+            if (typeSymbol.TypeKind == TypeKind.Array && (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol, TypeKind.Array) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol, TypeKind.Array)))
                 return true;
 
             var @namespace = GetUdonNamedType(typeSymbol);
