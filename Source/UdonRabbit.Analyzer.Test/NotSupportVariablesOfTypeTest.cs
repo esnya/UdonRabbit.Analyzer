@@ -77,6 +77,48 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourArrayOfAnotherUdonSharpBehaviourVariableHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Start()
+        {
+            UdonSharpBehaviour[] behaviour;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourJaggedArraysOfUserDefinedTypeHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Start()
+        {
+            TestBehaviour[][] t;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourNotAllowedJaggedArrayHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportVariablesOfType.ComponentId)
