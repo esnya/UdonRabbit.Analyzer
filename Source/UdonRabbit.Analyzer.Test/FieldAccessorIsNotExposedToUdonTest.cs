@@ -63,6 +63,30 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedInstancePropertyOfJaggedArraysHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private int[][] _array;
+
+        private void Start()
+        {
+            _array = new int[4][];
+            var i = _array.Length;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedPrimitivePropertyAccessorHasNoDiagnosticsReport()
         {
             const string source = @"
