@@ -4,8 +4,8 @@
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-    <RootNamespace>UdonRabbit.Analyzer.Vsix</RootNamespace>
-    <AssemblyName>UdonRabbit.Analyzer.Vsix</AssemblyName>
+    <RootNamespace>UdonRabbit.Analyzer.VisualStudio</RootNamespace>
+    <AssemblyName>UdonRabbit.Analyzer.VisualStudio</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup>
