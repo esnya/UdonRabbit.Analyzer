@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -16,7 +15,8 @@ namespace UdonRabbit.Analyzer.Udon
         {
             _assemblies = new HashSet<string>();
             _paths = paths.ToDictionary(w => w, _ => false);
-            _session = Guid.NewGuid().ToString();
+
+            _session = $"SDK@{UdonAssemblyVersion.SDKVersion}-Udon@{UdonAssemblyVersion.UdonVersion}-UdonSharp@{UdonAssemblyVersion.UdonSharpVersion}";
         }
 
         public string Resolve(string name)
@@ -40,7 +40,14 @@ namespace UdonRabbit.Analyzer.Udon
                     if (assembly.Contains("ScriptAssemblies"))
                     {
                         var dest = Path.Combine(baseDir, Path.GetFileName(assembly));
-                        File.Copy(assembly, dest);
+                        try
+                        {
+                            File.Copy(assembly, dest, true);
+                        }
+                        catch
+                        {
+                            // ignored
+                        }
 
                         _assemblies.Add(dest);
                     }
@@ -60,14 +67,7 @@ namespace UdonRabbit.Analyzer.Udon
 
         public void Cleanup()
         {
-            try
-            {
-                Directory.Delete(_sessionDir, true);
-            }
-            catch
-            {
-                // ignored
-            }
+            // Nothing To Do
         }
     }
 }
