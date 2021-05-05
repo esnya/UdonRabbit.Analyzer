@@ -66,6 +66,8 @@ namespace UdonRabbit.Analyzer.Udon
                 if (IsAssemblyLoaded)
                     return;
 
+                UdonAssemblyVersion.Initialize(references);
+
                 var path = references.First(w => w.ToFilePath().EndsWith("VRCSDK3.dll"));
                 _resolver = new UdonAssemblyResolver(FindAssetsDirectoryFromPath(path.ToFilePath()));
 
