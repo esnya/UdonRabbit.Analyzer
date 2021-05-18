@@ -110,6 +110,7 @@ jobs:
         working-directory: Source/UdonRabbit.Analyzer.VisualStudio
         run: |
           yarn global add vsce
+          $env:Path = "$(yarn global bin);" + $env:Path
           vsce package
 
       - uses: actions/upload-artifact@v2
