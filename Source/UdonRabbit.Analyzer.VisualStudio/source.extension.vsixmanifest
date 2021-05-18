@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="UdonRabbit.Analyzer.8c83ff44-e50b-427a-90b9-07308586965d" Version="0.11.4" Language="en-US" Publisher="esnya" />
+    <Identity Id="UdonRabbit.Analyzer.8c83ff44-e50b-427a-90b9-07308586965d" Version="0.11.5" Language="en-US" Publisher="esnya" />
     <DisplayName>UdonRabbit.Analyzer</DisplayName>
     <Description xml:space="preserve">UdonRabbit Analyzer is Roslyn Analyzer for VRChat Udon and UdonSharp.</Description>
   </Metadata>
