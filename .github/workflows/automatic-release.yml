@@ -107,7 +107,7 @@ jobs:
           cp ../UdonRabbit.Analyzer.Package/bin/Release/netstandard2.0/UdonRabbit.Analyzer.dll ./externals/UdonRabbit.Analyzer.dll
 
       - name: Packaging for VS Code
-        working-directory: Source/UdonRabbit.Analyzer.VisualStudio
+        working-directory: Source/UdonRabbit.Analyzer.VisualStudioCode
         run: |
           yarn global add vsce
           $env:Path = "$(yarn global bin);" + $env:Path
