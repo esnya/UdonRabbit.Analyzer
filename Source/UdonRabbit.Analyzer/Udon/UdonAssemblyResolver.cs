@@ -76,6 +76,11 @@ namespace UdonRabbit.Analyzer.Udon
             return null;
         }
 
+        public bool CanResolve(string name)
+        {
+            return _assemblies.Any(w => w.EndsWith(name));
+        }
+
         public void Cleanup()
         {
             // Nothing To Do
