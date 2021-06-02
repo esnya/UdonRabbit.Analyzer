@@ -37,7 +37,7 @@ namespace UdonRabbit.Analyzer
                 return;
 
             foreach (var parameter in parameters.Parameters.Where(parameter => parameter.Modifiers.Any(SyntaxKind.InKeyword)))
-                context.ReportDiagnostic(Diagnostic.Create(RuleSet, parameter.GetLocation()));
+                UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, parameter);
         }
     }
 }

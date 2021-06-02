@@ -35,7 +35,7 @@ namespace UdonRabbit.Analyzer
             if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntax(context.SemanticModel, nullable))
                 return;
 
-            context.ReportDiagnostic(Diagnostic.Create(RuleSet, nullable.GetLocation()));
+            UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, nullable);
         }
     }
 }

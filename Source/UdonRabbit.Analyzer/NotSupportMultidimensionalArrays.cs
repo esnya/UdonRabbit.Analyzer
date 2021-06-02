@@ -55,7 +55,7 @@ namespace UdonRabbit.Analyzer
 
             var s = context.SemanticModel.GetDeclaredSymbol(parameter);
             if (IsDimensionalArrayType(s.Type))
-                context.ReportDiagnostic(Diagnostic.Create(RuleSet, parameter.GetLocation()));
+                UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, parameter);
         }
 
         private static bool IsDimensionalArrayType(ITypeSymbol s)
