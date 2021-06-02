@@ -44,7 +44,7 @@ namespace UdonRabbit.Analyzer
 
             var generics = method.TypeArguments.Length;
             if (generics > 1)
-                context.ReportDiagnostic(Diagnostic.Create(RuleSet, invocation.GetLocation(), generics));
+                UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, invocation, generics);
         }
     }
 }

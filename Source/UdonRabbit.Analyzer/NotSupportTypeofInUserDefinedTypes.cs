@@ -37,7 +37,7 @@ namespace UdonRabbit.Analyzer
 
             var typeSymbol = context.SemanticModel.GetTypeInfo(expression.Type);
             if (UdonSharpBehaviourUtility.IsUserDefinedTypes(context.SemanticModel, typeSymbol.Type))
-                context.ReportDiagnostic(Diagnostic.Create(RuleSet, expression.GetLocation()));
+                UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, expression);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace UdonRabbit.Analyzer
             if (interfaces.All(w => w.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName("UnityEngine.ISerializationCallbackReceiver"), SymbolEqualityComparer.Default)))
                 return;
 
-            context.ReportDiagnostic(Diagnostic.Create(RuleSet, declaration.GetLocation(), interfaces.Select(w => w.ToDisplayString()).First()));
+            UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, declaration, interfaces.Select(w => w.ToDisplayString()).First());
         }
     }
 }
