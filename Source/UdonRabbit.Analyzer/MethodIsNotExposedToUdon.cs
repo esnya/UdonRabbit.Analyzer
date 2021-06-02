@@ -71,7 +71,7 @@ namespace UdonRabbit.Analyzer
 
                 // field access to enum
                 var typeInfo = context.SemanticModel.GetTypeInfo(receiver);
-                if (typeInfo.Type.BaseType.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName("System.Enum"), SymbolEqualityComparer.Default))
+                if (typeInfo.Type.BaseType != null && typeInfo.Type.BaseType.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName("System.Enum"), SymbolEqualityComparer.Default))
                 {
                     // receiver is enum properties
                     if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonMethodName(context.SemanticModel, method, typeInfo.Type))
