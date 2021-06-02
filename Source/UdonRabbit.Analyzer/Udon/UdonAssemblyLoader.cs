@@ -77,9 +77,12 @@ namespace UdonRabbit.Analyzer.Udon
                     if (name.EndsWith(".resources"))
                         return null;
 
+                    if (_resolver.CanResolve($"{name}.dll"))
+                        return Assembly.LoadFrom(_resolver.Resolve($"{name}.dll"));
+
                     if (references.Any(w => w.ToFilePath().EndsWith($"{name}.dll")))
                         return Assembly.LoadFrom(references.First(w => w.ToFilePath().EndsWith($"{name}.dll")).ToFilePath());
-                    return Assembly.LoadFrom(_resolver.Resolve($"{name}.dll"));
+                    return null;
                 };
 
                 var assembly = Assembly.LoadFrom(_resolver.Resolve("VRC.Udon.Editor.dll"));
