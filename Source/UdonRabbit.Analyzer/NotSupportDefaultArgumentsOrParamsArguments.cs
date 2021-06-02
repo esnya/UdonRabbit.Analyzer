@@ -38,10 +38,10 @@ namespace UdonRabbit.Analyzer
             foreach (var parameter in parameters.Parameters)
             {
                 if (parameter.Default != null)
-                    context.ReportDiagnostic(Diagnostic.Create(RuleSet, parameter.GetLocation()));
+                    UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, parameter);
 
                 if (parameter.Modifiers.Any(SyntaxKind.ParamsKeyword))
-                    context.ReportDiagnostic(Diagnostic.Create(RuleSet, parameter.GetLocation()));
+                    UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, parameter);
             }
         }
     }
