@@ -41,7 +41,10 @@ namespace UdonRabbit.Analyzer.Udon
 
             // why?
             $"{UdonConstants.UdonCommonInterfacesReceiver}.__GetProgramVariable__SystemString__T",
-            $"{UdonConstants.UdonCommonInterfacesReceiver}.__SetProgramVariable__SystemString_T__SystemVoid"
+            $"{UdonConstants.UdonCommonInterfacesReceiver}.__SetProgramVariable__SystemString_T__SystemVoid",
+
+            // workaround for detecting false-positive for gameObject in UdonBehaviour
+            $"{UdonConstants.UdonCommonInterfacesReceiver}.__get_gameObject__UnityEngineGameObject"
         };
 
         private static readonly Dictionary<string, Type> BuiltinTypes = new()
@@ -207,7 +210,7 @@ namespace UdonRabbit.Analyzer.Udon
                 param += "__SystemVoid";
 
             var signature = $"{functionNamespace}.{functionName}{param}";
-            return _nodeDefinitions.Contains(signature);
+            return AllowMethodNameList.Contains(signature) || _nodeDefinitions.Contains(signature);
         }
 
         public bool FindUdonTypeName(SemanticModel model, ITypeSymbol typeSymbol)
