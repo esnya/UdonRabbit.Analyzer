@@ -109,6 +109,43 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedGameObjectAccessorHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+using UnityEngine.Animations;
+
+using VRC.Udon;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private UdonSharpBehaviour _behaviour1; // allowed by whitelist
+
+        [SerializeField]
+        private UdonBehaviour _behaviour2; // allowed by workaround
+
+        [SerializeField]
+        private ScaleConstraint _constraint; // allowed by Udon
+
+        private void Start()
+        {
+            var go1 = _behaviour1.gameObject;
+            var go2 = _behaviour2.gameObject;
+            var go3 = _constraint.gameObject;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedInstancePropertyOfJaggedArraysHasNoDiagnosticsReport()
         {
             const string source = @"
@@ -350,6 +387,65 @@ namespace UdonRabbit
         private void Update()
         {
             var f = tm.font;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source, diagnostic);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourNotAllowedGameObjectAccessorHasDiagnosticsReport()
+        {
+            var diagnostic = ExpectDiagnostic(FieldAccessorIsNotExposedToUdon.ComponentId)
+                             .WithLocation(12, 22)
+                             .WithSeverity(DiagnosticSeverity.Error)
+                             .WithArguments("gameObject");
+
+            const string source = @"
+using UdonSharp;
+
+using VRC.SDKBase;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        private void Start()
+        {
+            var go = Networking.LocalPlayer.gameObject;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source, diagnostic);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourNotAllowedUnityGameObjectAccessorHasDiagnosticsReport()
+        {
+            var diagnostic = ExpectDiagnostic(FieldAccessorIsNotExposedToUdon.ComponentId)
+                             .WithLocation(15, 22)
+                             .WithSeverity(DiagnosticSeverity.Error)
+                             .WithArguments("gameObject");
+
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private ParticleSystemForceField _field;
+
+        private void Start()
+        {
+            var go = _field.gameObject;
         }
     }
 }
