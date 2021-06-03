@@ -13,6 +13,7 @@ Check out the [list of analyzers](./docs/analyzers/README.md) for supported gram
 ## Getting Started
 
 - [Microsoft Visual Studio 2019](./docs/getting-started/visual-studio.md)
+- [Visual Studio Code](./docs/getting-started/vscode.md)
 - [OmniSharp](./docs/getting-started/omnisharp.md)
 - [JetBrains Rider](./docs/getting-started/rider.md)
 
@@ -70,19 +71,17 @@ See https://docs.mochizuki.moe/en-us/udon-rabbit/packages/analyzer
 
 ## ScreenShots
 
-<img src="https://user-images.githubusercontent.com/10832834/112584755-c8528d00-8e3b-11eb-9204-1c05c0669ffc.PNG" width="500px" />
+### Report Unsupported Language Features
 
-## Troubleshooting
+<img src="https://user-images.githubusercontent.com/10832834/120594815-70a85180-c47c-11eb-8edf-2b9b7fbc0517.PNG" width="650px" />
 
-### I found a bug on VS/VS Code/Rider/Analyzer
+### Report Unsupported Udon APIs
 
-If you find a bug, feel free to create a new issue!
+<img src="https://user-images.githubusercontent.com/10832834/120595125-e1e80480-c47c-11eb-96d0-99e41217b5a9.PNG" width="650px" />
 
-### Analyzer is not worked on UdonSharpBehaviour
+### Report Unsupported Unity Messages
 
-You cannot run multiple UdonRabbit.Analyzer instances in the same Unity workspace.  
-Therefore, if you are running Analyzer in multiple editors, disable one.  
-If that doesn't work, we recommend restarting your PC.
+<img src="https://user-images.githubusercontent.com/10832834/120595297-16f45700-c47d-11eb-987e-9b09e322b889.PNG" width="450px" />
 
 ## License
 
