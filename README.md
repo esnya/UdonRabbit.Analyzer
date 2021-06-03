@@ -1,10 +1,8 @@
 # UdonRabbit.Analyzer
 
 Experimental .NET Roslyn Analyzer for VRChat Udon and UdonSharp.  
-This analyzer accelerates your Udon development with UdonSharp.  
-Check out the [list of analyzers](docs/analyzers/README.md) defined in this project.  
-Not enough types of analyzers in UdonRabbit.Analyzer?  
-You can check out the [list of missing analyzers](https://github.com/mika-f/UdonRabbit.Analyzer/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement) or create a new issues.
+This analyzer accelerates Udon development with UdonSharp by detecting grammars that are not supported by Udon and/or UdonSharp in the editor stage.  
+Check out the [list of analyzers](./docs/analyzers/README.md) for supported grammars and other information.
 
 ## Features
 
@@ -15,7 +13,7 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 ## Getting Started
 
 - [Microsoft Visual Studio 2019](./docs/getting-started/visual-studio.md)
-- [Visual Studio Code (OmniSharp)](./docs/getting-started/omnisharp.md)
+- [OmniSharp](./docs/getting-started/omnisharp.md)
 - [JetBrains Rider](./docs/getting-started/rider.md)
 
 ## Requirements
@@ -59,18 +57,16 @@ You can check out the [list of missing analyzers](https://github.com/mika-f/Udon
 
 1. Configure the following environment variables in `Source/UdonRabbit.Analyzer.Test/bin/Debug/net5.0/UdonRabbit.runsettings`
    - `UDONRABBIT_ANALYZER_TEST_PROJECT` : Unity 2018.4.20f1 Test Project Location (`.csproj`)
-     - Default: `null` (Current Directory)
      - I recommended to reference to `Assembly-CSharp.csproj` because it has all references to DLLs.
      - If you are not want to reference to `Assembly-CSharp.csproj`, add the following external references:
        - `TextMeshPro`
        - `UdonSharp.Runtime`
    - `UDONRABBIT_ANALYZER_TEST_UDON_SHARP` : `UdonSharp.Runtime.dll` Location
-     - Default: `null` (Current Directory)
 2. Run `dotnet test`
 
 ## Analyzer Documents
 
-See https://docs.mochizuki.moe/udon-rabbit/packages/analyzer/ (ja-JP)
+See https://docs.mochizuki.moe/en-us/udon-rabbit/packages/analyzer
 
 ## ScreenShots
 
