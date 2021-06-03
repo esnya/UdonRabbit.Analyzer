@@ -36,7 +36,7 @@ namespace UdonRabbit.Analyzer
                 return;
 
             if (accessor.ArgumentList.Arguments.Count >= 2)
-                context.ReportDiagnostic(Diagnostic.Create(RuleSet, accessor.GetLocation()));
+                UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, accessor);
         }
     }
 }
