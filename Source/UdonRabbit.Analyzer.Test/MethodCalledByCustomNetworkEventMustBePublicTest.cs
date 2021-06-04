@@ -11,7 +11,87 @@ namespace UdonRabbit.Analyzer.Test
     public class MethodCalledByCustomNetworkEventMustBePublicTest : DiagnosticVerifier<MethodCalledByCustomNetworkEventMustBePublic>
     {
         [Fact]
-        public async Task UdonSharpBehaviourSendCustomNetworkEventByNameOfFullSignatureIsNonPublicHasDiagnosticsReport()
+        public async Task UdonSharpBehaviourSendCustomEventMethodByVariableIsPrivateHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            var arg = ""SomeNetworkEvent"";
+            SendCustomEvent(arg);
+        }
+
+        private void SomeNetworkEvent()
+        {
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourSendCustomEventMethodIsNonPublicHasDiagnosticsReport()
+        {
+            var diagnostic = ExpectDiagnostic(MethodCalledByCustomNetworkEventMustBePublic.ComponentId)
+                             .WithLocation(13, 9)
+                             .WithSeverity(DiagnosticSeverity.Warning);
+
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            SendCustomEvent(""SomeNetworkEvent"");
+        }
+
+        private void SomeNetworkEvent()
+        {
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source, diagnostic);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourSendCustomEventMethodIsPublicHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            SendCustomEvent(""SomeNetworkEvent"");
+        }
+
+        public void SomeNetworkEvent()
+        {
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourSendCustomNetworkEventMethodByNameOfFullSignatureIsNonPublicHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodCalledByCustomNetworkEventMustBePublic.ComponentId)
                              .WithLocation(15, 9)
@@ -42,7 +122,7 @@ namespace UdonRabbit
         }
 
         [Fact]
-        public async Task UdonSharpBehaviourSendCustomNetworkEventByNameOfSignatureIsNonPublicHasDiagnosticsReport()
+        public async Task UdonSharpBehaviourSendCustomNetworkEventMethodByNameOfSignatureIsNonPublicHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodCalledByCustomNetworkEventMustBePublic.ComponentId)
                              .WithLocation(15, 9)
@@ -73,7 +153,7 @@ namespace UdonRabbit
         }
 
         [Fact]
-        public async Task UdonSharpBehaviourSendCustomNetworkEventIsNonPublicHasDiagnosticsReport()
+        public async Task UdonSharpBehaviourSendCustomNetworkEventMethodIsNonPublicHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodCalledByCustomNetworkEventMustBePublic.ComponentId)
                              .WithLocation(15, 9)
@@ -101,60 +181,6 @@ namespace UdonRabbit
 ";
 
             await VerifyAnalyzerAsync(source, diagnostic);
-        }
-
-        [Fact]
-        public async Task UdonSharpBehaviourSendMethodCustomEventIsNonPublicHasDiagnosticsReport()
-        {
-            var diagnostic = ExpectDiagnostic(MethodCalledByCustomNetworkEventMustBePublic.ComponentId)
-                             .WithLocation(13, 9)
-                             .WithSeverity(DiagnosticSeverity.Warning);
-
-            const string source = @"
-using UdonSharp;
-
-namespace UdonRabbit
-{
-    public class TestBehaviour : UdonSharpBehaviour
-    {
-        private void Update()
-        {
-            SendCustomEvent(""SomeNetworkEvent"");
-        }
-
-        private void SomeNetworkEvent()
-        {
-        }
-    }
-}
-";
-
-            await VerifyAnalyzerAsync(source, diagnostic);
-        }
-
-        [Fact]
-        public async Task UdonSharpBehaviourSendMethodCustomEventIsPublicHasNoDiagnosticsReport()
-        {
-            const string source = @"
-using UdonSharp;
-
-namespace UdonRabbit
-{
-    public class TestBehaviour : UdonSharpBehaviour
-    {
-        private void Update()
-        {
-            SendCustomEvent(""SomeNetworkEvent"");
-        }
-
-        public void SomeNetworkEvent()
-        {
-        }
-    }
-}
-";
-
-            await VerifyAnalyzerAsync(source);
         }
     }
 }
