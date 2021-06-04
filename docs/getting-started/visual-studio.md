@@ -1,4 +1,4 @@
-## Getting Started with UdonRabbit.Analyzer in Visual Studio
+# Getting Started with UdonRabbit.Analyzer in Visual Studio
 
 Install UdonRabbit.Analyzer to Microsoft Visual Studio is the following steps:
 

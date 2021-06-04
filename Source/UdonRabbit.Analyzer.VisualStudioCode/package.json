@@ -1,0 +1,65 @@
+{
+  "name": "udonrabbit-analyzer",
+  "publisher": "natsuneko",
+  "displayName": "UdonRabbit Analyzer",
+  "description": "The Roslyn Analyzer for VRChat Udon and UdonSharp.",
+  "version": "0.11.7",
+  "engines": {
+    "vscode": "^1.55.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "files": [
+    "out",
+    "externals"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/mika-f/UdonRabbit.Analyzer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mika-f/UdonRabbit.Analyzer.git"
+  },
+  "contributes": {
+    "configuration": {
+      "title": "UdonRabbit Analyzer",
+      "properties": {
+        "udonrabbit-analyzer.rewriteOmniSharpJson": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically rewrite omnisharp.json file in workspace or global."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "yarn run compile && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.55.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "eslint": "^7.19.0",
+    "eslint-config-prettier": "^8.1.0",
+    "glob": "^7.1.6",
+    "mocha": "^8.2.1",
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.3",
+    "vscode-test": "^1.5.0"
+  },
+  "dependencies": {
+    "json5": "^2.2.0"
+  }
+}

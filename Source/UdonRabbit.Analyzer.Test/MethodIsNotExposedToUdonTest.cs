@@ -34,6 +34,52 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedEnumToStringHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using VRC.SDK3.Components.Video;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            var s = VideoError.Unknown.ToString();
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedEnumToStringViaFieldHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using VRC.SDK3.Components.Video;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        public override void OnVideoError(VideoError err)
+        {
+            var s = err.ToString();
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedInstanceMethodHasNoDiagnosticsReport()
         {
             const string source = @"
@@ -50,6 +96,32 @@ namespace UdonRabbit
         private void Update()
         {
             ps.Play();
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedInstanceMethodReturnsArrayTHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private Transform _transform;
+
+        private void Start()
+        {
+            var components = _transform.GetComponentsInChildren<Transform>();
         }
     }
 }
@@ -110,6 +182,34 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedUdonInstanceMethodHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+using VRC.Udon;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private UdonBehaviour _behaviour;
+
+        private void Update()
+        {
+            _behaviour.SetProgramVariable(""variable"", 1);
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedUnityMethodHasNoDiagnosticReport()
         {
             const string source = @"
@@ -137,7 +237,35 @@ namespace UdonRabbit
         }
 
         [Fact]
-        public async Task UdonSharpBehaviourAllowedVrcMethodHasNoDiagnosticReport()
+        public async Task UdonSharpBehaviourAllowedVrcInstanceMethodHasNoDiagnosticReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+using VRC.SDKBase;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private VRC_Pickup _pickup;
+
+        private void Update()
+        {
+            _pickup.Drop();
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedVrcStaticMethodHasNoDiagnosticReport()
         {
             const string source = @"
 using UdonSharp;
