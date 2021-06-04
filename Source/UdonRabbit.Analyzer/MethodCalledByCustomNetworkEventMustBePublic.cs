@@ -83,26 +83,20 @@ namespace UdonRabbit.Analyzer
 
         private static string ParseLiteral(LiteralExpressionSyntax literal)
         {
-            switch (literal.Kind())
+            return literal.Kind() switch
             {
-                case SyntaxKind.StringLiteralExpression:
-                    return literal.Token.ValueText;
-
-                default:
-                    return "";
-            }
+                SyntaxKind.StringLiteralExpression => literal.Token.ValueText,
+                _ => ""
+            };
         }
 
         private static string ParseInvocation(InvocationExpressionSyntax invocation)
         {
-            switch (invocation.Expression)
+            return invocation.Expression switch
             {
-                case IdentifierNameSyntax identifier when identifier.Identifier.Kind() == SyntaxKind.IdentifierToken && identifier.Identifier.Text == "nameof":
-                    return invocation.ArgumentList.Arguments.FirstOrDefault()?.ToFullString();
-
-                default:
-                    return "";
-            }
+                IdentifierNameSyntax identifier when identifier.Identifier.Kind() == SyntaxKind.IdentifierToken && identifier.Identifier.Text == "nameof" => invocation.ArgumentList.Arguments.FirstOrDefault()?.GetLastToken().ValueText,
+                _ => ""
+            };
         }
     }
 }
