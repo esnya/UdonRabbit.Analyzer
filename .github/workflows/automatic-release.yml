@@ -39,13 +39,12 @@ jobs:
           echo ${{ github.ref }} | % { $_ -replace "refs/tags/v", "" } | Set-Item -Path Env:VERSION
           dotnet nuget push ./Source/UdonRabbit.Analyzer.Package/bin/Release/UdonRabbit.Analyzer.$env:VERSION.nupkg
 
-      # - name: Publish the package to Releases
-      #   uses: softprops/action-gh-release@v1
-      #   if: startsWith(github.ref, 'refs/tags/')
-      #   with:
-      #     files: Source/UdonRabbit.Analyzer.Package/bin/Release/*.nupkg
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish the package to Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          files: Source/UdonRabbit.Analyzer.Package/bin/Release/*.nupkg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   automatic-release-for-vs:
     runs-on: windows-latest
@@ -69,13 +68,12 @@ jobs:
           name: UdonRabbit.Analyzer.VisualStudio.vsix
           path: Source/UdonRabbit.Analyzer.VisualStudio/bin/Release/**/UdonRabbit.Analyzer.VisualStudio.vsix
 
-      # - name: Publish the package to Releases
-      #   uses: softprops/action-gh-release@v1
-      #   if: startsWith(github.ref, 'refs/tags/')
-      #   with:
-      #     files: Source/UdonRabbit.Analyzer.VisualStudio/bin/Release/**/UdonRabbit.Analyzer.VisualStudio.vsix
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish the package to Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          files: Source/UdonRabbit.Analyzer.VisualStudio/bin/Release/**/UdonRabbit.Analyzer.VisualStudio.vsix
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   automatic-release-for-vsc:
     runs-on: windows-latest
@@ -118,10 +116,9 @@ jobs:
           name: UdonRabbit.Analyzer.VSCode.nupkg
           path: Source/UdonRabbit.Analyzer.VisualStudioCode/*.vsix
 
-      # - name: Publish the package to Releases
-      #   uses: softprops/action-gh-release@v1
-      #   if: startsWith(github.ref, 'refs/tags/')
-      #   with:
-      #     files: Source/UdonRabbit.Analyzer.Package/bin/Release/*.nupkg
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish the package to Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          files: Source/UdonRabbit.Analyzer.VisualStudioCode/*.vsix
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
