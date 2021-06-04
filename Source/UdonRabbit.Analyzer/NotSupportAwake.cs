@@ -36,7 +36,7 @@ namespace UdonRabbit.Analyzer
                 return;
 
             if (declaration.Identifier.Text == "Awake")
-                context.ReportDiagnostic(Diagnostic.Create(RuleSet, declaration.GetLocation()));
+                UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, declaration);
         }
     }
 }

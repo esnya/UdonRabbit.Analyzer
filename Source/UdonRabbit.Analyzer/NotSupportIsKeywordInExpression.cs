@@ -36,7 +36,7 @@ namespace UdonRabbit.Analyzer
                 return;
 
             if (expression.Kind() == SyntaxKind.IsExpression)
-                context.ReportDiagnostic(Diagnostic.Create(RuleSet, expression.GetLocation()));
+                UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, expression);
         }
     }
 }

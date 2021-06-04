@@ -45,7 +45,7 @@ namespace UdonRabbit.Analyzer
                 return;
 
             foreach (var @class in classes.Skip(1))
-                context.ReportDiagnostic(Diagnostic.Create(RuleSet, @class.GetLocation()));
+                UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, @class);
         }
     }
 }

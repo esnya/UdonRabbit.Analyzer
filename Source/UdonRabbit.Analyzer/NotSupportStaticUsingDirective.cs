@@ -49,7 +49,7 @@ namespace UdonRabbit.Analyzer
                 return;
 
             if (directive.StaticKeyword != default)
-                context.ReportDiagnostic(Diagnostic.Create(RuleSet, directive.GetLocation()));
+                UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, directive);
         }
     }
 }

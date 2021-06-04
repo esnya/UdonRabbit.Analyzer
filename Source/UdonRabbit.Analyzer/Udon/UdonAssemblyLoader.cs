@@ -13,12 +13,17 @@ namespace UdonRabbit.Analyzer.Udon
     public static class UdonAssemblyLoader
     {
         private static readonly object LockObj = new();
+        private static UdonAssemblyResolver _resolver;
 
         private static readonly HashSet<string> UdonAllowAssemblies = new()
         {
             "VRC.Udon",
             "VRCSDK3",
-            "VRCSDKBase",
+            "VRCSDKBase"
+        };
+
+        private static readonly HashSet<string> UdonAllowedOptionalAssemblies = new()
+        {
             "Cinemachine",
             "Unity.Postprocessing.Runtime",
             "Unity.TextMeshPro"
@@ -26,6 +31,7 @@ namespace UdonRabbit.Analyzer.Udon
 
         private static readonly HashSet<string> UdonExternalAssemblies = new()
         {
+            "UdonSharp.Runtime",
             "VRC.Udon.VRCGraphModules",
             "VRC.Udon.VRCTypeResolverModules"
         };
@@ -60,8 +66,10 @@ namespace UdonRabbit.Analyzer.Udon
                 if (IsAssemblyLoaded)
                     return;
 
+                UdonAssemblyVersion.Initialize(references);
+
                 var path = references.First(w => w.ToFilePath().EndsWith("VRCSDK3.dll"));
-                var resolver = new UdonAssemblyResolver(FindAssetsDirectoryFromPath(path.ToFilePath()));
+                _resolver = new UdonAssemblyResolver(FindAssetsDirectoryFromPath(path.ToFilePath()));
 
                 AppDomain.CurrentDomain.AssemblyResolve += (_, args) =>
                 {
@@ -69,26 +77,38 @@ namespace UdonRabbit.Analyzer.Udon
                     if (name.EndsWith(".resources"))
                         return null;
 
+                    if (_resolver.CanResolve($"{name}.dll"))
+                        return Assembly.LoadFrom(_resolver.Resolve($"{name}.dll"));
+
                     if (references.Any(w => w.ToFilePath().EndsWith($"{name}.dll")))
                         return Assembly.LoadFrom(references.First(w => w.ToFilePath().EndsWith($"{name}.dll")).ToFilePath());
-                    return Assembly.LoadFrom(resolver.Resolve($"{name}.dll"));
+                    return null;
                 };
 
-                var assembly = Assembly.LoadFrom(resolver.Resolve("VRC.Udon.Editor.dll"));
+                var assembly = Assembly.LoadFrom(_resolver.Resolve("VRC.Udon.Editor.dll"));
                 if (assembly.GetType("VRC.Udon.Editor.UdonEditorManager") == null)
                     return;
 
                 foreach (var reference in references.Where(w => Path.GetFileNameWithoutExtension(w.ToFilePath()).Contains("UnityEngine")))
                     AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(reference.ToFilePath()));
                 foreach (var external in UdonExternalAssemblies)
-                    AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(resolver.Resolve($"{external}.dll")));
+                    AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(_resolver.Resolve($"{external}.dll")));
                 foreach (var allowed in UdonAllowAssemblies)
-                    AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(resolver.Resolve($"{allowed}.dll")));
+                    AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(_resolver.Resolve($"{allowed}.dll")));
+                foreach (var allowed in UdonAllowedOptionalAssemblies.Where(w => !string.IsNullOrWhiteSpace(_resolver.Resolve($"{w}.dll"))))
+                    AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(_resolver.Resolve($"{allowed}.dll")));
+
+                AppDomain.CurrentDomain.ProcessExit += CurrentDomainOnProcessExit;
 
                 UdonAssembly = AppDomain.CurrentDomain.GetAssemblies().First(w => w.GetName().Name == "VRC.Udon");
                 UdonEditorAssembly = assembly;
                 IsAssemblyLoaded = true;
             }
+        }
+
+        private static void CurrentDomainOnProcessExit(object sender, EventArgs e)
+        {
+            _resolver.Cleanup();
         }
     }
 }

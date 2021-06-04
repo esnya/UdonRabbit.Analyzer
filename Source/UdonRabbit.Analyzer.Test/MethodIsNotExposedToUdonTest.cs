@@ -27,8 +27,7 @@ namespace UdonRabbit
             ps.Play();
         }
     }
-}
-";
+}";
 
             await VerifyAnalyzerAsync(source);
         }
@@ -51,7 +50,6 @@ namespace UdonRabbit
         }
     }
 }
-
 ";
 
             await VerifyAnalyzerAsync(source);
@@ -75,7 +73,52 @@ namespace UdonRabbit
         }
     }
 }
+";
 
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedEnumToStringHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using VRC.SDK3.Components.Video;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            var s = VideoError.Unknown.ToString();
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedEnumToStringViaFieldHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using VRC.SDK3.Components.Video;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        public override void OnVideoError(VideoError err)
+        {
+            var s = err.ToString();
+        }
+    }
+}
 ";
 
             await VerifyAnalyzerAsync(source);
