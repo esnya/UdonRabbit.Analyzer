@@ -49,3 +49,4 @@ Those that are no longer needed due to Udon or UdonSharp updates will be assigne
 | URA0038     | [U# does not yet support labeled statements](./URA0038.md)                                          |   UdonSharp   |   Error   |
 | URA0039     | [Object initializers are not yet supported by U#](./URA0039.md)                                     |   UdonSharp   |   Error   |
 | URA0040     | [Nullable types are not currently supported by U#](./URA0040.md)                                    |   UdonSharp   |   Error   |
+| URA0041     | [The method called by SendCustomNetworkEvent must be public](./URA0041.md)                          |     Udon      |  Warning  |

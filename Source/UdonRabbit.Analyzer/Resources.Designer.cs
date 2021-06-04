@@ -1112,5 +1112,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0040Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   The method called by SendCustomNetworkEvent must be public に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0041Description {
+            get {
+                return ResourceManager.GetString("URA0041Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The method called by SendCustomNetworkEvent must be public に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0041MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0041MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The method called by SendCustomNetworkEvent must be public に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0041Title {
+            get {
+                return ResourceManager.GetString("URA0041Title", resourceCulture);
+            }
+        }
     }
 }
