@@ -146,15 +146,15 @@ namespace UdonRabbit.Analyzer.Udon
             var paramsSb = new StringBuilder();
             var parameters = symbol.ConstructedFrom.Parameters;
 
-            if (symbol.MethodKind == MethodKind.Constructor)
-            {
-                paramsSb.Append("__");
-            }
-            else if (parameters.Length > 0)
+            if (parameters.Length > 0)
             {
                 paramsSb.Append("_");
                 foreach (var parameter in parameters)
                     paramsSb.Append($"_{GetUdonNamedType(parameter.Type, parameter.RefKind, true)}");
+            }
+            else if (symbol.MethodKind == MethodKind.Constructor)
+            {
+                paramsSb.Append("__");
             }
 
             var returnsSb = new StringBuilder();
