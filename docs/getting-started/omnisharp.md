@@ -1,4 +1,4 @@
-## Getting Started with UdonRabbit.Analyzer in OmniSharp
+# Getting Started with UdonRabbit.Analyzer in OmniSharp
 
 Install UdonRabbit.Analyzer to Roslyn integration using OmniSharp (VS Code, Atom, Brackets, Vim and others) is the following steps:
 
@@ -19,6 +19,33 @@ Install UdonRabbit.Analyzer to Roslyn integration using OmniSharp (VS Code, Atom
   "RoslynExtensionsOptions": {
     "EnableAnalyzersSupport": true,
     "LocationPaths": ["./tools/UdonRabbit.Analyzer.0.3.0/analyzers/dotnet/cs"]
+  }
+}
+```
+
+## Troubleshooting
+
+### I cannot use both UdonRabbit Analyzer and Roslynator (and/or other analyzers) in Visual Studio Code
+
+Roslynator modifies the **global** `omnisharp.json` by Visual Studio Code Extension.  
+As a result, if you created local `omnisharp.json` as described above, the Roslynator configurations will not be found and will not work correctly.  
+Because UdonRabbit Analyzer provides the extension for Visual Studio Code to avoid conflicts, so consider using them.
+
+If you cannot install them, you have to rewrite local `omnisharp.json` as follows:
+
+```json
+// @ omnisharp.json
+{
+  "RoslynExtensionsOptions": {
+    "EnableAnalyzersSupport": true,
+    "LocationPaths": [
+      // replace %USERPROFILE% to your home directory
+      "%USERPROFILE%/.vscode/extensions/josefpihrt-vscode.roslynator-3.1.0/roslyn/common",
+      "%USERPROFILE%/.vscode/extensions/josefpihrt-vscode.roslynator-3.1.0/roslyn/analyzers",
+      "%USERPROFILE%/.vscode/extensions/josefpihrt-vscode.roslynator-3.1.0/roslyn/refactorings",
+      "%USERPROFILE%/.vscode/extensions/josefpihrt-vscode.roslynator-3.1.0/roslyn/fixes",
+      "./tools/UdonRabbit.Analyzer.0.3.0/analyzers/dotnet/cs"
+    ]
   }
 }
 ```
