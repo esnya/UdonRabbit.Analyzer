@@ -28,6 +28,7 @@ It is an analyzer to deal with the restrictions and specifications of language f
 | URA0036 | [Syncing of array type is only supported in manual sync mode](./URA0036.md)                       |   Udon   |  Error   |
 | URA0041 | [The method called by SendCustomNetworkEvent must be public](./URA0041.md)                        |   Udon   | Warning  |
 | URA0042 | [The method specify for SendCustomNetworkEvent must be public](./URA0042.md)                      |   Udon   | Warning  |
+| URA0043 | [The method called over the network cannot start with \_](./URA0043.md)                           |   Udon   | Warning  |
 
 ## UdonSharp
 
