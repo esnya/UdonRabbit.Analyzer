@@ -1193,5 +1193,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0043Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   The method specify for SendCustomNetworkEvent cannot start with _ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0044Description {
+            get {
+                return ResourceManager.GetString("URA0044Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The specified method &apos;{0}&apos; in &apos;{1}&apos; starts with underscore, it cannot be called over the network に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0044MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0044MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The method specify for SendCustomNetworkEvent cannot start with _ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0044Title {
+            get {
+                return ResourceManager.GetString("URA0044Title", resourceCulture);
+            }
+        }
     }
 }
