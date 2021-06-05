@@ -29,6 +29,7 @@ It is an analyzer to deal with the restrictions and specifications of language f
 | URA0041 | [The method called by SendCustomNetworkEvent must be public](./URA0041.md)                        |   Udon   | Warning  |
 | URA0042 | [The method specify for SendCustomNetworkEvent must be public](./URA0042.md)                      |   Udon   | Warning  |
 | URA0043 | [The method called over the network cannot start with \_](./URA0043.md)                           |   Udon   | Warning  |
+| URA0044 | [The method specify for SendCustomNetworkEvent cannot start with \_](./URA0044.md)                |   Udon   | Warning  |
 
 ## UdonSharp
 
