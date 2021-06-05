@@ -102,7 +102,7 @@ namespace UdonRabbit.Analyzer
                 return;
 
             if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonMethodName(context.SemanticModel, method))
-                context.ReportDiagnostic(Diagnostic.Create(RuleSet, expression.GetLocation(), method.Name));
+                UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, expression, method.Name);
         }
     }
 }
