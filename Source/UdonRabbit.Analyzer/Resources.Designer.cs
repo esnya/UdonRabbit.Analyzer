@@ -1166,5 +1166,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0042Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   The method called over the network cannot start with _ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0043Description {
+            get {
+                return ResourceManager.GetString("URA0043Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The method called over the network cannot start with _ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0043MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0043MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The method called over the network cannot start with _ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0043Title {
+            get {
+                return ResourceManager.GetString("URA0043Title", resourceCulture);
+            }
+        }
     }
 }

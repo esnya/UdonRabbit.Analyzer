@@ -427,4 +427,13 @@
   <data name="URA0042Title" xml:space="preserve">
     <value>The method specify for SendCustomNetworkEvent must be public</value>
   </data>
+  <data name="URA0043Description" xml:space="preserve">
+    <value>The method called over the network cannot start with _</value>
+  </data>
+  <data name="URA0043MessageFormat" xml:space="preserve">
+    <value>The method called over the network cannot start with _</value>
+  </data>
+  <data name="URA0043Title" xml:space="preserve">
+    <value>The method called over the network cannot start with _</value>
+  </data>
 </root>

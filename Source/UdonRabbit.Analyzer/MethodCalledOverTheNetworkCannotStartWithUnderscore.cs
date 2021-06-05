@@ -13,22 +13,19 @@ using UdonRabbit.Analyzer.Udon;
 namespace UdonRabbit.Analyzer
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class MethodCalledByCustomNetworkEventMustBePublic : DiagnosticAnalyzer
+    public class MethodCalledOverTheNetworkCannotStartWithUnderscore : DiagnosticAnalyzer
     {
-        public const string ComponentId = "URA0041";
+        public const string ComponentId = "URA0043";
         private const string Category = UdonConstants.UdonCategory;
-        private const string HelpLinkUri = "https://github.com/esnya/UdonRabbit.Analyzer/blob/master/docs/analyzers/URA0041.md";
-        private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.URA0041Title), Resources.ResourceManager, typeof(Resources));
-        private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.URA0041MessageFormat), Resources.ResourceManager, typeof(Resources));
-        private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.URA0041Description), Resources.ResourceManager, typeof(Resources));
+        private const string HelpLinkUri = "https://github.com/esnya/UdonRabbit.Analyzer/blob/master/docs/analyzers/URA0043.md";
+        private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.URA0043Title), Resources.ResourceManager, typeof(Resources));
+        private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.URA0043MessageFormat), Resources.ResourceManager, typeof(Resources));
+        private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.URA0043Description), Resources.ResourceManager, typeof(Resources));
         private static readonly DiagnosticDescriptor RuleSet = new(ComponentId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, true, Description, HelpLinkUri);
 
         private static readonly HashSet<(string, int)> ScannedMethodLists = new()
         {
-            ("SendCustomEvent", 0),
-            ("SendCustomNetworkEvent", 1),
-            ("SendCustomEventDelayedSeconds", 0),
-            ("SendCustomEventDelayedFrames", 0)
+            ("SendCustomNetworkEvent", 1)
         };
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RuleSet);
@@ -46,13 +43,13 @@ namespace UdonRabbit.Analyzer
             if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntax(context.SemanticModel, declaration))
                 return;
 
-            if (declaration.Modifiers.Any(SyntaxKind.PublicKeyword))
+            if (!declaration.Identifier.ValueText.StartsWith("_"))
                 return;
 
             var @class = declaration.FirstAncestorOrSelf<ClassDeclarationSyntax>();
             var invocations = @class.DescendantNodes()
                                     .OfType<InvocationExpressionSyntax>()
-                                    .Select(w => (Info: context.SemanticModel.GetSymbolInfo(w), Syntax: w))
+                                    .Select(w => (Info: ModelExtensions.GetSymbolInfo(context.SemanticModel, w), Syntax: w))
                                     .Where(w =>
                                     {
                                         if (w.Info.Symbol is not IMethodSymbol symbol)
