@@ -49,9 +49,6 @@ namespace UdonRabbit.Analyzer
                 UdonSymbols.Initialize();
 
             var methodSymbol = context.SemanticModel.GetSymbolInfo(invocation);
-            if (methodSymbol.Symbol == null)
-                return;
-
             if (methodSymbol.Symbol is not IMethodSymbol method)
                 return;
 
@@ -101,9 +98,6 @@ namespace UdonRabbit.Analyzer
                 UdonSymbols.Initialize();
 
             var methodSymbol = context.SemanticModel.GetSymbolInfo(expression);
-            if (methodSymbol.Symbol == null)
-                return;
-
             if (methodSymbol.Symbol is not IMethodSymbol method)
                 return;
 

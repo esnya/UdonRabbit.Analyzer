@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
+using UdonRabbit.Analyzer.Extensions;
 using UdonRabbit.Analyzer.Udon;
 
 namespace UdonRabbit.Analyzer
@@ -46,9 +47,6 @@ namespace UdonRabbit.Analyzer
                 return;
 
             var symbol = context.SemanticModel.GetSymbolInfo(invocation);
-            if (symbol.Symbol == null)
-                return;
-
             if (symbol.Symbol is not IMethodSymbol method)
                 return;
 
@@ -67,37 +65,14 @@ namespace UdonRabbit.Analyzer
                 if (arg == null)
                     return;
 
-                var name = arg.Expression switch
-                {
-                    LiteralExpressionSyntax literal => ParseLiteral(literal),
-                    InvocationExpressionSyntax invoke => ParseInvocation(invoke),
-                    _ => null
-                };
+                var name = arg.Expression.ParseValue();
 
                 var m = t.Type.GetMembers().Where(w => w is IMethodSymbol).FirstOrDefault(w => w.Name == name);
-                if (m?.DeclaredAccessibility == Accessibility.Public)
+                if (m == null || m.DeclaredAccessibility == Accessibility.Public)
                     return;
 
                 UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, expression, name, t.Type.ToDisplayString());
             }
-        }
-
-        private static string ParseLiteral(LiteralExpressionSyntax literal)
-        {
-            return literal.Kind() switch
-            {
-                SyntaxKind.StringLiteralExpression => literal.Token.ValueText,
-                _ => ""
-            };
-        }
-
-        private static string ParseInvocation(InvocationExpressionSyntax invocation)
-        {
-            return invocation.Expression switch
-            {
-                IdentifierNameSyntax identifier when identifier.Identifier.Kind() == SyntaxKind.IdentifierToken && identifier.Identifier.Text == "nameof" => invocation.ArgumentList.Arguments.FirstOrDefault()?.GetLastToken().ValueText,
-                _ => ""
-            };
         }
     }
 }
