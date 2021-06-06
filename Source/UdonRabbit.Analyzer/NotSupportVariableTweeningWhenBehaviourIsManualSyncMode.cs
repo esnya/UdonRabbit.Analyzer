@@ -47,7 +47,7 @@ namespace UdonRabbit.Analyzer
             if (UdonSharpBehaviourUtility.IsUdonSyncMode(context.SemanticModel, declaration.AttributeLists, "None"))
                 return;
 
-            context.ReportDiagnostic(Diagnostic.Create(RuleSet, declaration.GetLocation()));
+            UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, declaration);
         }
     }
 }
