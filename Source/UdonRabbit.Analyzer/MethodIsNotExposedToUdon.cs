@@ -33,6 +33,7 @@ namespace UdonRabbit.Analyzer
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.RegisterSyntaxNodeAction(AnalyzeInvocation, SyntaxKind.InvocationExpression);
+            context.RegisterSyntaxNodeAction(AnalyzeObjectCreation, SyntaxKind.ObjectCreationExpression);
         }
 
         private static void AnalyzeInvocation(SyntaxNodeAnalysisContext context)
@@ -48,9 +49,6 @@ namespace UdonRabbit.Analyzer
                 UdonSymbols.Initialize();
 
             var methodSymbol = context.SemanticModel.GetSymbolInfo(invocation);
-            if (methodSymbol.Symbol == null)
-                return;
-
             if (methodSymbol.Symbol is not IMethodSymbol method)
                 return;
 
@@ -82,6 +80,29 @@ namespace UdonRabbit.Analyzer
 
             if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonMethodName(context.SemanticModel, method))
                 UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, invocation, method.Name);
+        }
+
+        private static void AnalyzeObjectCreation(SyntaxNodeAnalysisContext context)
+        {
+            var expression = (ObjectCreationExpressionSyntax) context.Node;
+            if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntax(context.SemanticModel, expression))
+                return;
+
+            if (expression.NewKeyword.Equals(default))
+                return;
+
+            if (!UdonAssemblyLoader.IsAssemblyLoaded)
+                UdonAssemblyLoader.LoadUdonAssemblies(context.Compilation.ExternalReferences.ToList());
+
+            if (UdonSymbols.Instance == null)
+                UdonSymbols.Initialize();
+
+            var methodSymbol = context.SemanticModel.GetSymbolInfo(expression);
+            if (methodSymbol.Symbol is not IMethodSymbol method)
+                return;
+
+            if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonMethodName(context.SemanticModel, method))
+                UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, expression, method.Name);
         }
     }
 }

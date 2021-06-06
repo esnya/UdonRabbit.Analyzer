@@ -42,7 +42,7 @@ namespace UdonRabbit.Analyzer
                     case IFieldSymbol f when IsDimensionalArrayType(f.Type):
                     case ILocalSymbol l when IsDimensionalArrayType(l.Type):
                     case IParameterSymbol m when IsDimensionalArrayType(m.Type):
-                        context.ReportDiagnostic(Diagnostic.Create(RuleSet, variable.GetLocation()));
+                        UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, variable);
                         break;
                 }
         }

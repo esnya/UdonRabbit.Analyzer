@@ -1112,5 +1112,113 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0040Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   The method called by SendCustomNetworkEvent must be public に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0041Description {
+            get {
+                return ResourceManager.GetString("URA0041Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The method called by SendCustomNetworkEvent must be public に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0041MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0041MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The method called by SendCustomNetworkEvent must be public に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0041Title {
+            get {
+                return ResourceManager.GetString("URA0041Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The method specify for SendCustomNetworkEvent must be public に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0042Description {
+            get {
+                return ResourceManager.GetString("URA0042Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The specified method &apos;{0}&apos; is not public in &apos;{1}&apos; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0042MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0042MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The method specify for SendCustomNetworkEvent must be public に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0042Title {
+            get {
+                return ResourceManager.GetString("URA0042Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The method called over the network cannot start with _ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0043Description {
+            get {
+                return ResourceManager.GetString("URA0043Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The method called over the network cannot start with _ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0043MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0043MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The method called over the network cannot start with _ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0043Title {
+            get {
+                return ResourceManager.GetString("URA0043Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The method specify for SendCustomNetworkEvent cannot start with _ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0044Description {
+            get {
+                return ResourceManager.GetString("URA0044Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The specified method &apos;{0}&apos; in &apos;{1}&apos; starts with underscore, it cannot be called over the network に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0044MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0044MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The method specify for SendCustomNetworkEvent cannot start with _ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0044Title {
+            get {
+                return ResourceManager.GetString("URA0044Title", resourceCulture);
+            }
+        }
     }
 }

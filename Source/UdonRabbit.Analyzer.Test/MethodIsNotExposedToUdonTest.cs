@@ -27,6 +27,51 @@ namespace UdonRabbit
             ps.Play();
         }
     }
+}";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedConstructorHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using System.Diagnostics;
+
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            var i = new Stopwatch();
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourAllowedConstructorWithParametersHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using System;
+
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            var i = new DateTimeOffset(2021, 4, 6, 17, 29, 0, new TimeSpan(9, 0, 0));
+        }
+    }
 }
 ";
 
@@ -286,6 +331,34 @@ namespace UdonRabbit
 ";
 
             await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourNotAllowedConstructorHasDiagnosticsReport()
+        {
+            var diagnostic = ExpectDiagnostic(MethodIsNotExposedToUdon.ComponentId)
+                             .WithLocation(12, 21)
+                             .WithSeverity(DiagnosticSeverity.Error)
+                             .WithArguments(".ctor");
+
+            const string source = @"
+using UdonSharp;
+
+using TMPro;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            var i = new TextMeshProUGUI();
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source, diagnostic);
         }
 
         [Fact]

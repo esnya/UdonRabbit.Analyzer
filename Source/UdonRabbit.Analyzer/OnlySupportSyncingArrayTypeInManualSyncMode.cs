@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Diagnostics;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -49,7 +48,7 @@ namespace UdonRabbit.Analyzer
             if (info.Symbol is not IArrayTypeSymbol symbol)
                 return;
 
-            context.ReportDiagnostic(Diagnostic.Create(RuleSet, declaration.GetLocation(), UdonSharpBehaviourUtility.PrettyTypeName(symbol.ElementType)));
+            UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, declaration, UdonSharpBehaviourUtility.PrettyTypeName(symbol.ElementType));
         }
     }
 }
