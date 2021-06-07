@@ -7,7 +7,8 @@ Those that are no longer needed due to Udon or UdonSharp updates will be assigne
 
 ## Udon
 
-It is an analyzer to deal with the restrictions and specifications of language functions due to the specifications of VRChat Udon.
+It is an analyzer to deal with the restrictions and specifications of language features due to the specifications of VRChat Udon.
+If there is no problem with the specification, but unexpected behaviours occurs, a `Severify: Warning` is assigned.
 
 | ID      | Title                                                                                             | Category | Severity |
 | ------- | ------------------------------------------------------------------------------------------------- | :------: | :------: |
@@ -33,7 +34,7 @@ It is an analyzer to deal with the restrictions and specifications of language f
 
 ## UdonSharp
 
-It is a restriction of language function by the specification of UdonSharp. Basically all analyzers are reported as `Severity: Error`.
+It is a restriction of language features by the specification of UdonSharp. Basically all analyzers are reported as `Severity: Error`.
 
 | ID          | Title                                                                                               |   Category    | Severity  |
 | ----------- | --------------------------------------------------------------------------------------------------- | :-----------: | :-------: |
