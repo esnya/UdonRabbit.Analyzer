@@ -58,8 +58,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourObjectInitializerHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportObjectInitializer.ComponentId)
-                             .WithLocation(12, 38)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -72,7 +71,7 @@ namespace UdonRabbit
     {
         private void Start()
         {
-            var obj = new GameObject { tag = ""some tag"" };
+            var obj = new GameObject [|{ tag = ""some tag"" }|];
         }
     }
 }

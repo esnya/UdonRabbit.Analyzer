@@ -14,7 +14,6 @@ namespace UdonRabbit.Analyzer.Test
         public async Task InheritingFromInterfacesHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportInheritingFromInterfaces.ComponentId)
-                             .WithLocation(8, 5)
                              .WithSeverity(DiagnosticSeverity.Error)
                              .WithArguments("IDisposable");
 
@@ -25,7 +24,7 @@ using UdonSharp;
 
 namespace UdonRabbit
 {
-    public class TestClass : UdonSharpBehaviour, IDisposable
+    [|public class TestClass : UdonSharpBehaviour, IDisposable
     {
         private void Update()
         {
@@ -34,7 +33,7 @@ namespace UdonRabbit
         public void Dispose()
         {
         }
-    }
+    }|]
 }
 ";
 

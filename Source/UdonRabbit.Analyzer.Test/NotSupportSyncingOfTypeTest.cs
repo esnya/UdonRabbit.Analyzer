@@ -35,7 +35,6 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourUdonNotSupportSyncingTypeHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportSyncingOfType.ComponentId)
-                             .WithLocation(10, 9)
                              .WithSeverity(DiagnosticSeverity.Error)
                              .WithArguments("UnityEngine.Transform");
 
@@ -48,8 +47,8 @@ namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour
     {
-        [UdonSynced]
-        private Transform _transform;
+        [|[UdonSynced]
+        private Transform _transform;|]
     }
 }
 ";

@@ -67,8 +67,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourThrowExpressionHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportThrowingExceptions.ComponentId)
-                             .WithLocation(18, 17)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -87,7 +86,7 @@ namespace UdonRabbit
             }
             catch
             {
-                throw;
+               [|throw;|]
             }
         }
     }
@@ -101,8 +100,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourThrowStatementHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportThrowingExceptions.ComponentId)
-                             .WithLocation(12, 13)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using System;
@@ -115,7 +113,7 @@ namespace UdonRabbit
     {
         private void Update()
         {
-            throw new InvalidOperationException();
+            [|throw new InvalidOperationException();|]
         }
     }
 }

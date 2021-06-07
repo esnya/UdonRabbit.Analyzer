@@ -13,7 +13,7 @@ namespace UdonRabbit.Analyzer.Test
         public NotSupportLinearInterpolationOfSyncedTypeTest()
         {
             // Udon Networking Beta has validator of linear interpolation sync type, but other SDKs not worked correctly
-            _hasSupportUdonNetworkingTypes = false;
+            _hasSupportUdonNetworkingTypes = true;
         }
 
         private readonly bool _hasSupportUdonNetworkingTypes;
@@ -43,8 +43,8 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourNotSupportLinearInterpolationSyncTypeHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportLinearInterpolationOfSyncedType.ComponentId)
-                             .WithLocation(8, 9)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                             .WithSeverity(DiagnosticSeverity.Error)
+                             .WithArguments("bool");
 
             const string source = @"
 using UdonSharp;
@@ -53,8 +53,8 @@ namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour
     {
-        [UdonSynced(UdonSyncMode.Linear)]
-        private bool _b;
+        [|[UdonSynced(UdonSyncMode.Linear)]
+        private bool _b;|]
     }
 }
 ";

@@ -41,8 +41,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourSendCustomNetworkEventMethodStartsWithUnderscoreHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodCalledOverTheNetworkCannotStartWithUnderscore.ComponentId)
-                             .WithLocation(15, 9)
-                             .WithSeverity(DiagnosticSeverity.Warning);
+                .WithSeverity(DiagnosticSeverity.Warning);
 
             const string source = @"
 using UdonSharp;
@@ -58,9 +57,9 @@ namespace UdonRabbit
             SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TestBehaviour._SomeNetworkEvent));
         }
 
-        public void _SomeNetworkEvent()
+        [|public void _SomeNetworkEvent()
         {
-        }
+        }|]
     }
 }
 ";

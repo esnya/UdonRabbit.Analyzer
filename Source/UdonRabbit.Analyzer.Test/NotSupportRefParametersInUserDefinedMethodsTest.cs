@@ -34,8 +34,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourRefParameterInMethodDeclarationHasDiagnosticReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportRefParametersInUserDefinedMethods.ComponentId)
-                             .WithLocation(8, 32)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -44,7 +43,7 @@ namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour
     {
-        public void TestMethod(ref string str)
+        public void TestMethod([|ref string str|])
         {
         }
     }
@@ -58,8 +57,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourRefParameterInMethodParametersHasNoDiagnosticReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportRefParametersInUserDefinedMethods.ComponentId)
-                             .WithLocation(14, 33)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -74,7 +72,7 @@ namespace UdonRabbit
             SomeMethod(ref s);
         }
 
-        private void SomeMethod(ref string str)
+        private void SomeMethod([|ref string str|])
         {
         }
     }

@@ -14,7 +14,6 @@ namespace UdonRabbit.Analyzer.Test
         public async Task UdonSharpBehaviourSendCustomEventDelayedFramesThatAnotherReceiverMethodIsNonPublicHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodSpecifyForSendCustomNetworkEventMustBePublic.ComponentId)
-                             .WithLocation(15, 13)
                              .WithSeverity(DiagnosticSeverity.Warning)
                              .WithArguments("SomeNetworkEvent", "UdonRabbit.TestBehaviour2");
 
@@ -32,7 +31,7 @@ namespace UdonRabbit
 
         private void Update()
         {
-            _behaviour.SendCustomEventDelayedFrames(""SomeNetworkEvent"", 10);
+            [|_behaviour.SendCustomEventDelayedFrames|](""SomeNetworkEvent"", 10);
         }
     }
 
@@ -52,7 +51,6 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourSendCustomEventDelayedSecondsThatAnotherReceiverMethodIsNonPublicHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodSpecifyForSendCustomNetworkEventMustBePublic.ComponentId)
-                             .WithLocation(15, 13)
                              .WithSeverity(DiagnosticSeverity.Warning)
                              .WithArguments("SomeNetworkEvent", "UdonRabbit.TestBehaviour2");
 
@@ -70,7 +68,7 @@ namespace UdonRabbit
 
         private void Update()
         {
-            _behaviour.SendCustomEventDelayedSeconds(""SomeNetworkEvent"", 10);
+            [|_behaviour.SendCustomEventDelayedSeconds|](""SomeNetworkEvent"", 10);
         }
     }
 
@@ -90,7 +88,6 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourSendCustomEventThatAnotherReceiverMethodIsNonPublicHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodSpecifyForSendCustomNetworkEventMustBePublic.ComponentId)
-                             .WithLocation(15, 13)
                              .WithSeverity(DiagnosticSeverity.Warning)
                              .WithArguments("SomeNetworkEvent", "UdonRabbit.TestBehaviour2");
 
@@ -108,7 +105,7 @@ namespace UdonRabbit
 
         private void Update()
         {
-            _behaviour.SendCustomEvent(""SomeNetworkEvent"");
+            [|_behaviour.SendCustomEvent|](""SomeNetworkEvent"");
         }
     }
 
@@ -161,7 +158,6 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourSendCustomNetworkEventThatAnotherReceiverMethodIsNonPublicHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodSpecifyForSendCustomNetworkEventMustBePublic.ComponentId)
-                             .WithLocation(17, 13)
                              .WithSeverity(DiagnosticSeverity.Warning)
                              .WithArguments("SomeNetworkEvent", "UdonRabbit.TestBehaviour2");
 
@@ -181,7 +177,7 @@ namespace UdonRabbit
 
         private void Update()
         {
-            _behaviour.SendCustomNetworkEvent(NetworkEventTarget.All, ""SomeNetworkEvent"");
+            [|_behaviour.SendCustomNetworkEvent|](NetworkEventTarget.All, ""SomeNetworkEvent"");
         }
     }
 
