@@ -337,7 +337,6 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourNotAllowedConstructorHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodIsNotExposedToUdon.ComponentId)
-                             .WithLocation(12, 21)
                              .WithSeverity(DiagnosticSeverity.Error)
                              .WithArguments(".ctor");
 
@@ -352,7 +351,7 @@ namespace UdonRabbit
     {
         private void Update()
         {
-            var i = new TextMeshProUGUI();
+            var i = [|new TextMeshProUGUI()|];
         }
     }
 }
@@ -365,7 +364,6 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourNotAllowedInstanceMethodHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodIsNotExposedToUdon.ComponentId)
-                             .WithLocation(14, 21)
                              .WithSeverity(DiagnosticSeverity.Error)
                              .WithArguments("GetSafeCollisionEventSize");
 
@@ -382,7 +380,7 @@ namespace UdonRabbit
 
         private void Update()
         {
-            var i = ps.GetSafeCollisionEventSize();
+            var i = [|ps.GetSafeCollisionEventSize()|];
         }
     }
 }

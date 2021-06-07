@@ -140,7 +140,6 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourUdonNotAllowedMethodParameterTypeHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportMethodParametersOfType.ComponentId)
-                             .WithLocation(10, 33)
                              .WithSeverity(DiagnosticSeverity.Error)
                              .WithArguments("System.IntPtr");
 
@@ -153,7 +152,7 @@ namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour
     {
-        private void TestMethod(IntPtr ptr)
+        private void TestMethod([|IntPtr ptr|])
         {
         }
     }

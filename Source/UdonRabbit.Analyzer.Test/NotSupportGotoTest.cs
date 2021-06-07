@@ -75,12 +75,10 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourGotoCaseStatementHasDiagnosticsReport()
         {
             var diagnostic1 = ExpectDiagnostic(NotSupportGoto.ComponentId)
-                              .WithLocation(17, 21)
-                              .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             var diagnostic2 = ExpectDiagnostic(NotSupportGoto.ComponentId)
-                              .WithLocation(21, 21)
-                              .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -98,11 +96,11 @@ namespace UdonRabbit
                     break;
 
                 case ""b"":
-                    goto case ""a"";
+                    [|goto case ""a"";|]
                     break;
 
                 case ""c"":
-                    goto default;
+                    [|goto default;|]
                     break;
 
                 default:
@@ -120,8 +118,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourGotoStatementHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportGoto.ComponentId)
-                             .WithLocation(17, 25)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -139,7 +136,7 @@ namespace UdonRabbit
                 for (var j = 0; j < 100; j++)
                 {
                     if (i + j >= 50)
-                        goto Break;
+                        [|goto Break;|]
                 }
             }
 

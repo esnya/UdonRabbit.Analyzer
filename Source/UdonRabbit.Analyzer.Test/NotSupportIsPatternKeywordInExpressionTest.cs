@@ -41,8 +41,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourIsPatternExpressionHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportIsPatternKeywordInExpression.ComponentId)
-                             .WithLocation(15, 17)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -58,7 +57,7 @@ namespace UdonRabbit
 
         private void Start()
         {
-            if (_component is Transform t)
+            if ([|_component is Transform t|])
             {
                 var position = t.position;
             }

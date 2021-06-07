@@ -59,7 +59,6 @@ namespace UdonRabbit
         public async Task NotAllowedFieldAccessorHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(OnlySupportsOneTypeGenerics.ComponentId)
-                             .WithLocation(14, 13)
                              .WithSeverity(DiagnosticSeverity.Error)
                              .WithArguments("2");
 
@@ -76,7 +75,7 @@ namespace UdonRabbit
 
         private void Update()
         {
-            GetComponentFor<Transform, Transform>();
+            [|GetComponentFor<Transform, Transform>()|];
         }
 
         private void GetComponentFor<T1, T2>()

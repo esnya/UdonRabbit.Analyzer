@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -34,11 +35,62 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
 
         protected async Task VerifyAnalyzerAsync(string source, params DiagnosticResult[] expected)
         {
-            var testProject = new TestUnityProject(source, expected.Select(w => w.Id).ToArray());
+            var testProject = new TestUnityProject(expected.Select(w => w.Id).Distinct().ToArray());
 
-            testProject.ExpectedDiagnostics.AddRange(expected);
+            ParseSource(testProject, source, expected);
 
             await testProject.RunAsync(CancellationToken.None);
+        }
+
+        private void ParseSource(TestUnityProject testProject, string source, DiagnosticResult[] expected)
+        {
+            var sb = new StringBuilder();
+            var diagnostics = expected.ToList();
+
+            var line = 1;
+            var column = 1;
+            var expectedLine = 0;
+            var expectedColumn = 0;
+            var isReading = false;
+            var i = 0;
+
+            using var sr = new StringReader(source);
+            while (sr.Peek() > -1)
+            {
+                var c = sr.Read();
+                switch (c)
+                {
+                    case '\n':
+                        sb.Append((char) c);
+                        line++;
+                        column = 1;
+                        break;
+
+                    case '[' when sr.Peek() == '|':
+                        sr.Read();
+
+                        expectedLine = line;
+                        expectedColumn = column;
+                        isReading = true;
+                        break;
+
+                    case '|' when isReading && sr.Peek() == ']':
+                        sr.Read();
+
+                        diagnostics[i] = diagnostics[i].WithSpan(expectedLine, expectedColumn, line, column);
+                        i++;
+                        isReading = false;
+                        break;
+
+                    default:
+                        sb.Append((char) c);
+                        column++;
+                        break;
+                }
+            }
+
+            testProject.ExpectedDiagnostics.AddRange(diagnostics);
+            testProject.SourceCode = sb.ToString();
         }
 
         // Maybe CSharpAnalyzerTest isn't work in Unity Project????
@@ -63,9 +115,11 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
                 "CS1701" // https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-messages/cs1701
             };
 
-            private readonly Project _project;
+            private readonly Solution _solution;
 
             public readonly List<DiagnosticResult> ExpectedDiagnostics = new();
+
+            public string SourceCode { get; set; }
 
             static TestUnityProject()
             {
@@ -87,7 +141,7 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
                 ConfigureProcessEnvironmentVariableIfNotExists(EnvUdonSharp, ref UdonSharpPath);
             }
 
-            public TestUnityProject(string source, params string[] ids)
+            public TestUnityProject(params string[] ids)
             {
                 var projectId = ProjectId.CreateNewId(TestProjectId);
                 var solution = new AdhocWorkspace().CurrentSolution.AddProject(projectId, TestProjectId, TestProjectId, LanguageNames.CSharp);
@@ -104,20 +158,21 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
                     solution = solution.WithProjectCompilationOptions(projectId, compilerOptions!);
                 }
 
-                // create test behaviour
-                const string filename = "TestBehaviour.cs";
-                var documentId = DocumentId.CreateNewId(projectId, filename);
-                solution = solution.AddDocument(documentId, filename, SourceText.From(source), filePath: $"/{filename}");
-
-                _project = solution.GetProject(projectId);
+                _solution = solution;
             }
 
             public async Task RunAsync(CancellationToken cancellationToken)
             {
+                const string filename = "TestBehaviour.cs";
+
                 var analyzer = new TAnalyzer();
                 var diagnostics = new List<Diagnostic>();
+                var documentId = DocumentId.CreateNewId(_solution.ProjectIds.First(), filename);
+                var solution = _solution.AddDocument(documentId, filename, SourceText.From(SourceCode), filePath: $"/{filename}");
+                var project = solution.GetProject(solution.ProjectIds.First());
+                Assert.NotNull(project);
 
-                var compilation = await _project.GetCompilationAsync(cancellationToken);
+                var compilation = await project.GetCompilationAsync(cancellationToken);
                 Assert.NotNull(compilation);
 
                 var compilationOptions = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, true);
@@ -134,7 +189,7 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
                     }
                     else
                     {
-                        var syntax = await _project.Documents.First().GetSyntaxTreeAsync(cancellationToken);
+                        var syntax = await project.Documents.First().GetSyntaxTreeAsync(cancellationToken);
                         if (syntax == diagnostic.Location.SourceTree)
                             diagnostics.Add(diagnostic);
                     }
@@ -179,12 +234,19 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
                 var actualSpan = actual.GetLineSpan();
                 var expected = locations.First();
 
-                var actualLinePos = actualSpan.StartLinePosition;
-                if (actualLinePos.Line > 0 && actualLinePos.Line != expected.Span.StartLinePosition.Line)
-                    Assert.True(false, $"Expected diagnostic to be on line {expected.Span.StartLinePosition.Line + 1}, but was actually on line {actualLinePos.Line + 1}");
+                var actualStartLinePosition = actualSpan.StartLinePosition;
+                if (actualStartLinePosition.Line > 0 && actualStartLinePosition.Line != expected.Span.StartLinePosition.Line)
+                    Assert.True(false, $"Expected diagnostic to start on line {expected.Span.StartLinePosition.Line + 1}, but was actually on line {actualStartLinePosition.Line + 1}");
 
-                if (actualLinePos.Character > 0 && actualLinePos.Character != expected.Span.StartLinePosition.Character)
-                    Assert.True(false, $"Expected diagnostic to start at column {expected.Span.StartLinePosition.Character}, but was actually at column {actualLinePos.Character}");
+                if (actualStartLinePosition.Character > 0 && actualStartLinePosition.Character != expected.Span.StartLinePosition.Character)
+                    Assert.True(false, $"Expected diagnostic to start at column {expected.Span.StartLinePosition.Character}, but was actually at column {actualStartLinePosition.Character}");
+
+                var actualEndLinePosition = actualSpan.EndLinePosition;
+                if (actualEndLinePosition.Line > 0 && actualEndLinePosition.Line != expected.Span.EndLinePosition.Line)
+                    Assert.True(false, $"Expected diagnostic to end on line {expected.Span.EndLinePosition.Line + 1}, but was actually on line {actualEndLinePosition.Line + 1}");
+
+                if (actualEndLinePosition.Character > 0 && actualEndLinePosition.Character != expected.Span.EndLinePosition.Character)
+                    Assert.True(false, $"Expected diagnostic to end at column {expected.Span.EndLinePosition.Character}, but was actually at column {actualEndLinePosition.Character}");
             }
 
             private static IEnumerable<string> EmulateUnityExternalReferences()

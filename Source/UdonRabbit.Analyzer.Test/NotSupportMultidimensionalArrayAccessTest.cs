@@ -37,8 +37,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourMultidimensionalArrayAccessHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportMultidimensionalArrayAccess.ComponentId)
-                             .WithLocation(12, 13)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -51,7 +50,7 @@ namespace UdonRabbit
 
         private void Start()
         {
-            array1[0, 0] = 1;
+            [|array1[0, 0]|] = 1;
         }
     }
 }

@@ -37,14 +37,14 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourStaticUsingDirectiveHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportStaticUsingDirective.ComponentId)
-                             .WithLocation(4, 1)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
 
-using static UnityEngine.Debug;
+[|using static UnityEngine.Debug;|]
 
+//
 namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour

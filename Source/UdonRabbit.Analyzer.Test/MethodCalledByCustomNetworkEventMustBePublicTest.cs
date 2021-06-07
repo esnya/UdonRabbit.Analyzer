@@ -40,8 +40,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourSendCustomEventMethodIsNonPublicHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodCalledByCustomNetworkEventMustBePublic.ComponentId)
-                             .WithLocation(13, 9)
-                             .WithSeverity(DiagnosticSeverity.Warning);
+                .WithSeverity(DiagnosticSeverity.Warning);
 
             const string source = @"
 using UdonSharp;
@@ -55,9 +54,9 @@ namespace UdonRabbit
             SendCustomEvent(""SomeNetworkEvent"");
         }
 
-        private void SomeNetworkEvent()
+        [|private void SomeNetworkEvent()
         {
-        }
+        }|]
     }
 }
 ";
@@ -94,8 +93,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourSendCustomNetworkEventMethodByNameOfFullSignatureIsNonPublicHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodCalledByCustomNetworkEventMustBePublic.ComponentId)
-                             .WithLocation(15, 9)
-                             .WithSeverity(DiagnosticSeverity.Warning);
+                .WithSeverity(DiagnosticSeverity.Warning);
 
             const string source = @"
 using UdonSharp;
@@ -111,9 +109,9 @@ namespace UdonRabbit
             SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TestBehaviour.SomeNetworkEvent));
         }
 
-        private void SomeNetworkEvent()
+        [|private void SomeNetworkEvent()
         {
-        }
+        }|]
     }
 }
 ";
@@ -125,8 +123,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourSendCustomNetworkEventMethodByNameOfSignatureIsNonPublicHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodCalledByCustomNetworkEventMustBePublic.ComponentId)
-                             .WithLocation(15, 9)
-                             .WithSeverity(DiagnosticSeverity.Warning);
+                .WithSeverity(DiagnosticSeverity.Warning);
 
             const string source = @"
 using UdonSharp;
@@ -142,9 +139,9 @@ namespace UdonRabbit
             SendCustomNetworkEvent(NetworkEventTarget.All, nameof(SomeNetworkEvent));
         }
 
-        private void SomeNetworkEvent()
+        [|private void SomeNetworkEvent()
         {
-        }
+        }|]
     }
 }
 ";
@@ -156,8 +153,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourSendCustomNetworkEventMethodIsNonPublicHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(MethodCalledByCustomNetworkEventMustBePublic.ComponentId)
-                             .WithLocation(15, 9)
-                             .WithSeverity(DiagnosticSeverity.Warning);
+                .WithSeverity(DiagnosticSeverity.Warning);
 
             const string source = @"
 using UdonSharp;
@@ -173,9 +169,9 @@ namespace UdonRabbit
             SendCustomNetworkEvent(NetworkEventTarget.All, ""SomeNetworkEvent"");
         }
 
-        private void SomeNetworkEvent()
+        [|private void SomeNetworkEvent()
         {
-        }
+        }|]
     }
 }
 ";
