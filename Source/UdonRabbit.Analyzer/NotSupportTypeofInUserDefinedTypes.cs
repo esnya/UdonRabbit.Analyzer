@@ -36,7 +36,7 @@ namespace UdonRabbit.Analyzer
                 return;
 
             var typeSymbol = context.SemanticModel.GetTypeInfo(expression.Type);
-            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(context.SemanticModel, typeSymbol.Type))
+            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(context.SemanticModel, typeSymbol.Type, typeSymbol.Type.TypeKind) && typeSymbol.Type.TypeKind != TypeKind.Array)
                 UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, expression);
         }
     }
