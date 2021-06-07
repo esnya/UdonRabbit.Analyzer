@@ -72,12 +72,6 @@ namespace UdonRabbit.Analyzer.Udon
             };
         }
 
-        [Obsolete]
-        public static bool IsUserDefinedTypes(SemanticModel model, ITypeSymbol symbol)
-        {
-            return IsUserDefinedTypesInternal(model, symbol);
-        }
-
         private static bool IsUserDefinedTypesInternal(SemanticModel model, ITypeSymbol symbol)
         {
             if (symbol.BaseType == null)

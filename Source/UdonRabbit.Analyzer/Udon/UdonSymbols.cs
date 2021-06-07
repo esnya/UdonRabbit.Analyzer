@@ -127,7 +127,7 @@ namespace UdonRabbit.Analyzer.Udon
         public bool FindUdonMethodName(SemanticModel model, IMethodSymbol symbol, ITypeSymbol providedReceiver = null)
         {
             var receiver = providedReceiver ?? symbol.ReceiverType;
-            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, receiver))
+            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, receiver, receiver.TypeKind))
                 return true;
 
             var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(receiver));
@@ -171,7 +171,7 @@ namespace UdonRabbit.Analyzer.Udon
 
         public bool FindUdonVariableName(SemanticModel model, ITypeSymbol typeSymbol, IFieldSymbol fieldSymbol, bool isSetter)
         {
-            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol))
+            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol, typeSymbol.TypeKind) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol))
                 return true;
 
             var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(typeSymbol));
@@ -190,7 +190,7 @@ namespace UdonRabbit.Analyzer.Udon
 
         public bool FindUdonVariableName(SemanticModel model, ITypeSymbol typeSymbol, IPropertySymbol symbol, bool isSetter)
         {
-            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol))
+            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol, typeSymbol.TypeKind) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol))
                 return true;
 
             var t = RemapVrcBaseTypes(ConvertTypeSymbolToType(typeSymbol));
@@ -215,7 +215,7 @@ namespace UdonRabbit.Analyzer.Udon
 
         public bool FindUdonTypeName(SemanticModel model, ITypeSymbol typeSymbol)
         {
-            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol))
+            if (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol, typeSymbol.TypeKind) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol))
                 return true;
             if (typeSymbol.TypeKind == TypeKind.Array && (UdonSharpBehaviourUtility.IsUserDefinedTypes(model, typeSymbol, TypeKind.Array) || UdonSharpBehaviourUtility.IsUdonSharpDefinedTypes(model, typeSymbol, TypeKind.Array)))
                 return true;
