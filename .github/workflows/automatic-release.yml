@@ -122,3 +122,51 @@ jobs:
           files: Source/UdonRabbit.Analyzer.VisualStudioCode/*.vsix
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  automatic-release-for-unitypackage:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "5.0.x"
+          source-url: "https://nuget.pkg.github.com/mika-f/index.json"
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build the project (VS)
+        run: dotnet build --configuration Release Source/UdonRabbit.Analyzer.Package/
+
+      - name: Copy Build Artifacts (Unity)
+        working-directory: Source/UdonRabbit.Analyzer.UnityPackage
+        run: |
+          cp ../UdonRabbit.Analyzer.Package/bin/Release/netstandard2.0/UdonRabbit.Analyzer.CodeFixes.dll ./Assets/NatsunekoLaboratory/UdonRabbit/Analyzer/Plugins/UdonRabbit.Analyzer.CodeFixes.dll
+          cp ../UdonRabbit.Analyzer.Package/bin/Release/netstandard2.0/UdonRabbit.Analyzer.dll ./Assets/NatsunekoLaboratory/UdonRabbit/Analyzer/Plugins/UdonRabbit.Analyzer.dll
+
+      - name: Create MetaList for Packaging (Unity)
+        working-directory: Source/UdonRabbit.Analyzer.UnityPackage
+        run: |
+          echo ".\Assets\NatsunekoLaboratory.meta" >> MetaList
+          Get-ChildItem -Path ".\Assets\NatsunekoLaboratory" -Recurse -Filter "*.meta" -Name | %{ ".\Assets\NatsunekoLaboratory\{0}" -f $_ } >> MetaList
+
+      - name: Packaging for Unity
+        working-directory: Source/UdonRabbit.Analyzer.UnityPackage
+        uses: pCYSl5EDgo/create-unitypackage@master
+        with:
+          package-path: "UdonRabbit.Analyzer.unitypackage"
+          include-files: MetaList
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: UdonRabbit.Analyzer.Unity
+          path: Source/UdonRabbit.Analyzer.UnityPackage/*.unitypackage
+
+      - name: Publish the package to Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          files: Source/UdonRabbit.Analyzer.UnityPackage/*.unitypackage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
