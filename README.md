@@ -12,6 +12,7 @@ Check out the [list of analyzers](./docs/analyzers/README.md) for supported synt
 
 ## Getting Started
 
+- [Unity Workspace](./docs/getting-started/unity-workspace.md) (Recommended)
 - [Microsoft Visual Studio 2019](./docs/getting-started/visual-studio.md)
 - [Visual Studio Code](./docs/getting-started/vscode.md)
 - [OmniSharp](./docs/getting-started/omnisharp.md)
