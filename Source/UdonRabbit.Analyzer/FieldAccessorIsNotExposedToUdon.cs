@@ -50,14 +50,14 @@ namespace UdonRabbit.Analyzer
             var fieldSymbol = context.SemanticModel.GetSymbolInfo(memberAccess);
             if (fieldSymbol.Symbol is IFieldSymbol field)
             {
-                if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonVariableName(context.SemanticModel, t.Type, field, isAssignment))
+                if (UdonSymbols.Instance?.FindUdonVariableName(context.SemanticModel, t.Type, field, isAssignment) == false)
                     UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, memberAccess, field.Name);
                 return;
             }
 
             if (fieldSymbol.Symbol is IPropertySymbol props)
             {
-                if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonVariableName(context.SemanticModel, t.Type, props, isAssignment))
+                if (UdonSymbols.Instance?.FindUdonVariableName(context.SemanticModel, t.Type, props, isAssignment) == false)
                     UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, memberAccess, props.Name);
                 return;
             }

@@ -150,7 +150,7 @@ namespace UdonRabbit.Analyzer.Udon
             {
                 paramsSb.Append("_");
                 foreach (var parameter in parameters)
-                    paramsSb.Append($"_{GetUdonNamedType(parameter.Type, parameter.RefKind, true)}");
+                    paramsSb.Append('_').Append(GetUdonNamedType(parameter.Type, parameter.RefKind, true));
             }
             else if (symbol.MethodKind == MethodKind.Constructor)
             {
@@ -160,9 +160,9 @@ namespace UdonRabbit.Analyzer.Udon
             var returnsSb = new StringBuilder();
 
             if (symbol.MethodKind == MethodKind.Constructor)
-                returnsSb.Append($"__{GetUdonNamedType(receiver)}");
+                returnsSb.Append("__").Append(GetUdonNamedType(receiver));
             else
-                returnsSb.Append($"__{GetUdonNamedType(symbol.ConstructedFrom.ReturnType, true)}");
+                returnsSb.Append("__").Append(GetUdonNamedType(symbol.ConstructedFrom.ReturnType, true));
 
             var signature = $"{functionNamespace}.{functionName}{paramsSb}{returnsSb}";
 
