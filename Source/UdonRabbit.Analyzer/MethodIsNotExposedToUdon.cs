@@ -62,23 +62,23 @@ namespace UdonRabbit.Analyzer
                 if (symbolInfo.Symbol?.ContainingType != null && SymbolEqualityComparer.Default.Equals(symbolInfo.Symbol.ContainingType.BaseType, context.SemanticModel.Compilation.GetTypeByMetadataName("System.Enum")))
                 {
                     // receiver is enum properties
-                    if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonMethodName(context.SemanticModel, method, symbolInfo.Symbol.ContainingType))
+                    if (UdonSymbols.Instance?.FindUdonMethodName(context.SemanticModel, method, symbolInfo.Symbol.ContainingType) == false)
                         UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, invocation, method.Name);
                     return;
                 }
 
                 // field access to enum
                 var typeInfo = context.SemanticModel.GetTypeInfo(receiver);
-                if (typeInfo.Type.BaseType != null && typeInfo.Type.BaseType.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName("System.Enum"), SymbolEqualityComparer.Default))
+                if (typeInfo.Type.BaseType?.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName("System.Enum"), SymbolEqualityComparer.Default) == true)
                 {
                     // receiver is enum properties
-                    if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonMethodName(context.SemanticModel, method, typeInfo.Type))
+                    if (UdonSymbols.Instance?.FindUdonMethodName(context.SemanticModel, method, typeInfo.Type) == false)
                         UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, invocation, method.Name);
                     return;
                 }
             }
 
-            if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonMethodName(context.SemanticModel, method))
+            if (UdonSymbols.Instance?.FindUdonMethodName(context.SemanticModel, method) == false)
                 UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, invocation, method.Name);
         }
 
@@ -101,7 +101,7 @@ namespace UdonRabbit.Analyzer
             if (methodSymbol.Symbol is not IMethodSymbol method)
                 return;
 
-            if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonMethodName(context.SemanticModel, method))
+            if (UdonSymbols.Instance?.FindUdonMethodName(context.SemanticModel, method) == false)
                 UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, expression, method.Name);
         }
     }
