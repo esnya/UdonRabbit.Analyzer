@@ -31,6 +31,7 @@ If there is no problem with the specification, but unexpected behaviours occurs,
 | URA0042 | [The method specify for SendCustomNetworkEvent must be public](./URA0042.md)                      |   Udon   | Warning  |
 | URA0043 | [The method called over the network cannot start with \_](./URA0043.md)                           |   Udon   | Warning  |
 | URA0044 | [The method specify for SendCustomNetworkEvent cannot start with \_](./URA0044.md)                |   Udon   | Warning  |
+| URA0045 | [The method specify for SendCustomEvent is not declared in receiver](./URA0045.md)                |   Udon   | Warning  |
 
 ## UdonSharp
 
