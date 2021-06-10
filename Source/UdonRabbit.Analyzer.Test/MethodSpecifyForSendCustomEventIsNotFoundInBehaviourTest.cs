@@ -8,7 +8,7 @@ using Xunit;
 
 namespace UdonRabbit.Analyzer.Test
 {
-    public class MethodSpecifyForSendCustomEventIsNotFoundInBehaviourTest : DiagnosticVerifier<MethodSpecifyForSendCustomEventIsNotFoundInBehaviour>
+    public class MethodSpecifyForSendCustomEventIsNotFoundInBehaviourTest : CodeFixVerifier<MethodSpecifyForSendCustomEventIsNotFoundInBehaviour, MethodSpecifyForSendCustomEventIsNotFoundInBehaviourCodeFixProvider>
     {
         [Fact]
         public async Task UdonSharpBehaviourMethodSpecifyForSendCustomEventDelayedFramesIsDeclaredInSameClassHasNoDiagnosticsReport()
@@ -57,7 +57,26 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            SendCustomEventDelayedFrames(""SomeMethod"", 10);
+        }
+
+        public void SomeMethod()
+        {
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
 
         [Fact]
