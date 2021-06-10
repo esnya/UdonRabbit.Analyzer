@@ -1231,7 +1231,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   The specified method &apos;{0}&apos; in &apos;{1}&apos; is not declared in &apos;{2}&apos; に類似しているローカライズされた文字列を検索します。
+        ///   The specified method &apos;{0}&apos; in {1} is not declared in &apos;{2}&apos; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0045MessageFormat {
             get {
