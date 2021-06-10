@@ -1220,5 +1220,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0044Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   The method specify for SendCustomEvent is not declared in receiver に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0045Description {
+            get {
+                return ResourceManager.GetString("URA0045Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The specified method &apos;{0}&apos; in &apos;{1}&apos; is not declared in &apos;{2}&apos; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0045MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0045MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The method specify for SendCustomEvent is not declared in receiver に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0045Title {
+            get {
+                return ResourceManager.GetString("URA0045Title", resourceCulture);
+            }
+        }
     }
 }
