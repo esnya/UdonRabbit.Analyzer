@@ -504,4 +504,13 @@
   <data name="URA0044Title" xml:space="preserve">
     <value>The method specify for SendCustomNetworkEvent cannot start with _</value>
   </data>
+  <data name="URA0045Description" xml:space="preserve">
+    <value>The method specify for SendCustomEvent is not declared in receiver</value>
+  </data>
+  <data name="URA0045MessageFormat" xml:space="preserve">
+    <value>The specified method '{0}' in {1} is not declared in '{2}'</value>
+  </data>
+  <data name="URA0045Title" xml:space="preserve">
+    <value>The method specify for SendCustomEvent is not declared in receiver</value>
+  </data>
 </root>
