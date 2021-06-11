@@ -8,7 +8,7 @@ using Xunit;
 
 namespace UdonRabbit.Analyzer.Test
 {
-    public class MethodSpecifyForSendCustomEventIsNotFoundInBehaviourTest : DiagnosticVerifier<MethodSpecifyForSendCustomEventIsNotFoundInBehaviour>
+    public class MethodSpecifyForSendCustomEventIsNotFoundInBehaviourTest : CodeFixVerifier<MethodSpecifyForSendCustomEventIsNotFoundInBehaviour, MethodSpecifyForSendCustomEventIsNotFoundInBehaviourCodeFixProvider>
     {
         [Fact]
         public async Task UdonSharpBehaviourMethodSpecifyForSendCustomEventDelayedFramesIsDeclaredInSameClassHasNoDiagnosticsReport()
@@ -57,7 +57,26 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            SendCustomEventDelayedFrames(""SomeMethod"", 10);
+        }
+
+        public void SomeMethod()
+        {
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
 
         [Fact]
@@ -82,7 +101,26 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            SendCustomEventDelayedSeconds(""SomeMethod"", 10);
+        }
+
+        public void SomeMethod()
+        {
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
 
         [Fact]
@@ -107,7 +145,26 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            SendCustomEvent(""SomeMethod"");
+        }
+
+        public void SomeMethod()
+        {
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
 
         [Fact]
@@ -178,7 +235,36 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+using UnityEngine;
+
+using VRC.Udon.Common.Interfaces;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private AnotherBehaviour _behaviour;
+
+        private void Update()
+        {
+            _behaviour.SendCustomNetworkEvent(NetworkEventTarget.All, ""SomeMethod"");
+        }
+    }
+
+    public class AnotherBehaviour : UdonSharpBehaviour
+    {
+        public void SomeMethod()
+        {
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
 
         [Fact]
@@ -205,7 +291,28 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+using VRC.Udon.Common.Interfaces;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            this.SendCustomNetworkEvent(NetworkEventTarget.All, ""SomeMethod"");
+        }
+
+        public void SomeMethod()
+        {
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
     }
 }
