@@ -12,6 +12,7 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Formatting;
+using Microsoft.CodeAnalysis.Text;
 
 using UdonRabbit.Analyzer.Abstractions;
 using UdonRabbit.Analyzer.Extensions;
@@ -76,7 +77,7 @@ namespace UdonRabbit.Analyzer
                     var diagnostic = context.Diagnostics[0];
                     var name = GetMissingMethodName(invocation, model);
 
-                    var action = CreateCodeAction(CodeFixResources.URA0045CodeFixTitle, ct => CreateNewEmptyMethodInAnotherDocumentAsync(document, name, ct), diagnostic.Id, name);
+                    var action = CreateCodeAction(CodeFixResources.URA0045CodeFixTitle, ct => CreateNewEmptyMethodInAnotherDocumentAsync(document, declared.SourceSpan, name, ct), diagnostic.Id, name);
                     context.RegisterCodeFix(action, diagnostic);
                 }
             }
@@ -108,10 +109,11 @@ namespace UdonRabbit.Analyzer
             return await document.ReplaceNode(oldNode, newNode, cancellationToken).ConfigureAwait(false);
         }
 
-        private static async Task<Solution> CreateNewEmptyMethodInAnotherDocumentAsync(Document document, string missingMethodName, CancellationToken cancellationToken)
+        private static async Task<Solution> CreateNewEmptyMethodInAnotherDocumentAsync(Document document, TextSpan span, string missingMethodName, CancellationToken cancellationToken)
         {
             var oldRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
-            var oldNode = oldRoot.DescendantNodesAndSelf().Where(w => w is MemberDeclarationSyntax).OfType<ClassDeclarationSyntax>().First();
+            if (oldRoot.FindNode(span) is not ClassDeclarationSyntax oldNode)
+                return document.Project.Solution;
 
             var sb = new StringBuilder();
             sb.Append("public void ").Append(missingMethodName).AppendLine("()");
