@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CodeFixTitle" xml:space="preserve">
-    <value>Make uppercase</value>
+  <data name="URA0045CodeFixTitle" xml:space="preserve">
+    <value>Create an empty method named '{0}'</value>
     <comment>The title of the code fix.</comment>
   </data>
 </root>
