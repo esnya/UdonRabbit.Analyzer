@@ -1,6 +1,6 @@
 # UdonRabbit.Analyzer
 
-Experimental .NET Roslyn Analyzer for VRChat Udon and UdonSharp.  
+Experimental .NET Roslyn Analyzer, Code Fixes, Refactorings for VRChat Udon and UdonSharp.  
 This analyzer accelerates Udon development with UdonSharp by detecting syntaxes/language features that are not supported by Udon and/or UdonSharp in the editor stage.  
 Check out the [list of analyzers](./docs/analyzers/README.md) for supported syntaxes and other information.
 
