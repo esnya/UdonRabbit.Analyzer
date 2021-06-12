@@ -8,7 +8,7 @@ Those that are no longer needed due to Udon or UdonSharp updates will be assigne
 ## Udon
 
 It is an analyzer to deal with the restrictions and specifications of language features due to the specifications of VRChat Udon.
-If there is no problem with the specification, but unexpected behaviours occurs, a `Severify: Warning` is assigned.
+If there is no problem with the specification, but unexpected behaviour occurs, a `Severity: Warning` is assigned.
 
 | ID      | Title                                                                                             | Category | Severity | CodeFixes |
 | ------- | ------------------------------------------------------------------------------------------------- | :------: | :------: | :-------: |
