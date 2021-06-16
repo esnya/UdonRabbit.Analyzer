@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.CodeAnalysis;
@@ -13,6 +14,12 @@ namespace UdonRabbit.Analyzer.Extensions
             var newRoot = oldRoot.ReplaceNode(oldNode, newNode);
 
             return document.WithSyntaxRoot(newRoot);
+        }
+
+        public static async Task<T> FindEquivalentNodeAsync<T>(this Document document, T node, CancellationToken cancellationToken = default) where T : SyntaxNode
+        {
+            var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
+            return root.DescendantNodesAndSelf(_ => true).OfType<T>().FirstOrDefault(w => w.IsEquivalentTo(node, true));
         }
     }
 }
