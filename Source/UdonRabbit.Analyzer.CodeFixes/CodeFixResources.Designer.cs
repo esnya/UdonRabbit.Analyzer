@@ -68,5 +68,14 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0045CodeFixTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Remove UdonSyncType.Smooth option from UdonSynced attribute に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0046CodeFixTitle {
+            get {
+                return ResourceManager.GetString("URA0046CodeFixTitle", resourceCulture);
+            }
+        }
     }
 }

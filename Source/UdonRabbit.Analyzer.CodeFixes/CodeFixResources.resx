@@ -121,4 +121,7 @@
     <value>Create an empty method named '{0}'</value>
     <comment>The title of the code fix.</comment>
   </data>
+  <data name="URA0046CodeFixTitle" xml:space="preserve">
+    <value>Remove UdonSyncType.Smooth option from UdonSynced attribute</value>
+  </data>
 </root>
