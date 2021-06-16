@@ -32,6 +32,7 @@ If there is no problem with the specification, but unexpected behaviour occurs, 
 | URA0043 | [The method called over the network cannot start with \_](./URA0043.md)                           |   Udon   | Warning  |     x     |
 | URA0044 | [The method specify for SendCustomNetworkEvent cannot start with \_](./URA0044.md)                |   Udon   | Warning  |     x     |
 | URA0045 | [The method specify for SendCustomEvent is not declared in receiver](./URA0045.md)                |   Udon   | Warning  |     o     |
+| URA0046 | [Udon does not support smooth interpolation of the synced type](./URA0046.md)                     |   Udon   |  Error   |     o     |
 
 ## UdonSharp
 
