@@ -36,10 +36,7 @@ namespace UdonRabbit.Analyzer
                 return;
 
             var methodSymbol = context.SemanticModel.GetSymbolInfo(invocation);
-            if (methodSymbol.Symbol is not IMethodSymbol method)
-                return;
-
-            if (!method.IsGenericMethod)
+            if (methodSymbol.Symbol is not IMethodSymbol { IsGenericMethod: true } method)
                 return;
 
             var generics = method.TypeArguments.Length;
