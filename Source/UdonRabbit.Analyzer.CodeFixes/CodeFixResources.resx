@@ -121,7 +121,10 @@
     <value>Remove UdonSyncType.Linear option from UdonSynced attribute</value>
   </data>
   <data name="URA0041CodeFixTitie" xml:space="preserve">
-    <value>Make this method as public</value>
+    <value>Make the method as public</value>
+  </data>
+  <data name="URA0043CodeFixTitle" xml:space="preserve">
+    <value>Make the method callable over the network</value>
   </data>
   <data name="URA0045CodeFixTitle" xml:space="preserve">
     <value>Create an empty method named '{0}'</value>

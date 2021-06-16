@@ -8,7 +8,7 @@ using Xunit;
 
 namespace UdonRabbit.Analyzer.Test
 {
-    public class MethodCalledOverTheNetworkCannotStartWithUnderscoreTest : DiagnosticVerifier<MethodCalledOverTheNetworkCannotStartWithUnderscore>
+    public class MethodCalledOverTheNetworkCannotStartWithUnderscoreTest : CodeFixVerifier<MethodCalledOverTheNetworkCannotStartWithUnderscore, MethodCalledOverTheNetworkCannotStartWithUnderscoreCodeFixProvider>
     {
         [Fact]
         public async Task UdonSharpBehaviourSendCustomNetworkEventMethodNotStartsWithUnderscoreHasNoDiagnosticsReport()
@@ -64,7 +64,28 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+using VRC.Udon.Common.Interfaces;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TestBehaviour.SomeNetworkEvent));
+        }
+
+        public void SomeNetworkEvent()
+        {
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
     }
 }
