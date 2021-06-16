@@ -1247,5 +1247,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0045Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Udon does not support smooth interpolation of the synced type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0046Description {
+            get {
+                return ResourceManager.GetString("URA0046Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support smooth interpolation of the synced type &apos;{0}&apos; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0046MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0046MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Udon does not support smooth interpolation of the synced type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0046Title {
+            get {
+                return ResourceManager.GetString("URA0046Title", resourceCulture);
+            }
+        }
     }
 }
