@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace UdonRabbit.Analyzer
 {
     // May be, I should return NotSupportLinear....ComponentId in NotSupportSmoothInterpolationOfSyncedTypeCodeFixProvider#FixableDiagnosticIds
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(NotSupportLinearInterpolationOfSyncedTypeCodeFixProvider))]
+    [Shared]
     public class NotSupportLinearInterpolationOfSyncedTypeCodeFixProvider : CodeFixProviderBase
     {
         public override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(NotSupportLinearInterpolationOfSyncedType.ComponentId);

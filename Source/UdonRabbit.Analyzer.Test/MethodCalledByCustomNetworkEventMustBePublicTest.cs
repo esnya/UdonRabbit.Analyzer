@@ -8,7 +8,7 @@ using Xunit;
 
 namespace UdonRabbit.Analyzer.Test
 {
-    public class MethodCalledByCustomNetworkEventMustBePublicTest : DiagnosticVerifier<MethodCalledByCustomNetworkEventMustBePublic>
+    public class MethodCalledByCustomNetworkEventMustBePublicTest : CodeFixVerifier<MethodCalledByCustomNetworkEventMustBePublic, MethodCalledByCustomNetworkEventMustBePublicCodeFixProvider>
     {
         [Fact]
         public async Task UdonSharpBehaviourSendCustomEventMethodByVariableIsPrivateHasNoDiagnosticsReport()
@@ -61,7 +61,26 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            SendCustomEvent(""SomeNetworkEvent"");
+        }
+
+        public void SomeNetworkEvent()
+        {
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
 
         [Fact]
@@ -116,7 +135,28 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+using VRC.Udon.Common.Interfaces;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            SendCustomNetworkEvent(NetworkEventTarget.All, nameof(TestBehaviour.SomeNetworkEvent));
+        }
+
+        public void SomeNetworkEvent()
+        {
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
 
         [Fact]
@@ -146,7 +186,28 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+using VRC.Udon.Common.Interfaces;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            SendCustomNetworkEvent(NetworkEventTarget.All, nameof(SomeNetworkEvent));
+        }
+
+        public void SomeNetworkEvent()
+        {
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
 
         [Fact]
@@ -176,7 +237,28 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+using VRC.Udon.Common.Interfaces;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            SendCustomNetworkEvent(NetworkEventTarget.All, ""SomeNetworkEvent"");
+        }
+
+        public void SomeNetworkEvent()
+        {
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
     }
 }

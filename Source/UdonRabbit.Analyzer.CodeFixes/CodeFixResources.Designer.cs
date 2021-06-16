@@ -70,6 +70,15 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
+        ///   Make this method as public に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0041CodeFixTitie {
+            get {
+                return ResourceManager.GetString("URA0041CodeFixTitie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Create an empty method named &apos;{0}&apos; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0045CodeFixTitle {

@@ -27,7 +27,7 @@ If there is no problem with the specification, but unexpected behaviour occurs, 
 | URA0034 | [Udon does not support linear interpolation of the synced type](./URA0034.md)                     |   Udon   |  Error   |     o     |
 | URA0035 | [Udon does not support variable tweening when the behaviour is in Manual sync mode](./URA0035.md) |   Udon   |  Error   |     x     |
 | URA0036 | [Syncing of array type is only supported in manual sync mode](./URA0036.md)                       |   Udon   |  Error   |     x     |
-| URA0041 | [The method called by SendCustomNetworkEvent must be public](./URA0041.md)                        |   Udon   | Warning  |     x     |
+| URA0041 | [The method called by SendCustomNetworkEvent must be public](./URA0041.md)                        |   Udon   | Warning  |     o     |
 | URA0042 | [The method specify for SendCustomNetworkEvent must be public](./URA0042.md)                      |   Udon   | Warning  |     x     |
 | URA0043 | [The method called over the network cannot start with \_](./URA0043.md)                           |   Udon   | Warning  |     x     |
 | URA0044 | [The method specify for SendCustomNetworkEvent cannot start with \_](./URA0044.md)                |   Udon   | Warning  |     x     |

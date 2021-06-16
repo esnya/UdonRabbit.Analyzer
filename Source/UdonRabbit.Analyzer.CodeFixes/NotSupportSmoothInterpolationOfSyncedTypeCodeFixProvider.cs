@@ -61,10 +61,5 @@ namespace UdonRabbit.Analyzer
 
             return await document.ReplaceNode(oldNode, newNode, cancellationToken).ConfigureAwait(false);
         }
-
-        public override FixAllProvider GetFixAllProvider()
-        {
-            return WellKnownFixAllProviders.BatchFixer;
-        }
     }
 }

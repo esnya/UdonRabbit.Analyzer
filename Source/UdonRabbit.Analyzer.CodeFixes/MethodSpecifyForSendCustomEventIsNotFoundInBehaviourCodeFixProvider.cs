@@ -33,11 +33,6 @@ namespace UdonRabbit.Analyzer
 
         public override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(MethodSpecifyForSendCustomEventIsNotFoundInBehaviour.ComponentId);
 
-        public override FixAllProvider GetFixAllProvider()
-        {
-            return WellKnownFixAllProviders.BatchFixer;
-        }
-
         public override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
             var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken).ConfigureAwait(false);
