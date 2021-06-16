@@ -153,10 +153,10 @@ jobs:
           Get-ChildItem -Path ".\Assets\esnyaLaboratory" -Recurse -Filter "*.meta" -Name | %{ ".\Assets\esnyaLaboratory\{0}" -f $_ } >> MetaList
 
       - name: Packaging for Unity
-        working-directory: Source/UdonRabbit.Analyzer.UnityPackage
         uses: pCYSl5EDgo/create-unitypackage@master
         with:
           package-path: "UdonRabbit.Analyzer.unitypackage"
+          project-folder: Source/UdonRabbit.Analyzer.UnityPackage
           include-files: MetaList
 
       - uses: actions/upload-artifact@v2
