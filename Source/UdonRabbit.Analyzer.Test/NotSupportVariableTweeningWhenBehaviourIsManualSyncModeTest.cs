@@ -36,8 +36,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourNoSupportTweeningPatternHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportVariableTweeningWhenBehaviourIsManualSyncMode.ComponentId)
-                             .WithLocation(9, 9)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -45,10 +44,10 @@ using UdonSharp;
 namespace UdonRabbit
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-    public class TestBehaviour : MonoBehaviour
+    public class TestBehaviour : UdonSharpBehaviour
     {
-        [UdonSynced(UdonSyncMode.Linear)]
-        private int _data;
+        [|[UdonSynced(UdonSyncMode.Linear)]
+        private int _data;|]
     }
 }
 ";
@@ -66,7 +65,7 @@ using UnityEngine;
 
 namespace UdonRabbit
 {
-    [UdonBehaviourSyncMode]
+    [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     public class TestBehaviour : MonoBehaviour
     {
         [UdonSynced(UdonSyncMode.Linear)]

@@ -61,6 +61,15 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
+        ///   Remove UdonSyncType.Linear option from UdonSynced attribute に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0034CodeFixTitle {
+            get {
+                return ResourceManager.GetString("URA0034CodeFixTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Create an empty method named &apos;{0}&apos; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0045CodeFixTitle {

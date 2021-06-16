@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using System.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,11 +15,11 @@ using UdonRabbit.Analyzer.Udon;
 
 namespace UdonRabbit.Analyzer
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(NotSupportSmoothInterpolationOfSyncedTypeCodeFixProvider))]
-    [Shared]
-    public class NotSupportSmoothInterpolationOfSyncedTypeCodeFixProvider : CodeFixProviderBase
+    // May be, I should return NotSupportLinear....ComponentId in NotSupportSmoothInterpolationOfSyncedTypeCodeFixProvider#FixableDiagnosticIds
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(NotSupportLinearInterpolationOfSyncedTypeCodeFixProvider))]
+    public class NotSupportLinearInterpolationOfSyncedTypeCodeFixProvider : CodeFixProviderBase
     {
-        public override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(NotSupportSmoothInterpolationOfSyncedType.ComponentId);
+        public override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(NotSupportLinearInterpolationOfSyncedType.ComponentId);
 
         public override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
@@ -30,11 +29,11 @@ namespace UdonRabbit.Analyzer
 
             var document = context.Document;
             var diagnostic = context.Diagnostics[0];
-            var action = CreateCodeAction(CodeFixResources.URA0046CodeFixTitle, ct => RemoveUdonSyncedSmoothAttributeOptionFromAttribute(document, diagnostic.Location.SourceSpan, declaration, ct), diagnostic.Id);
+            var action = CreateCodeAction(CodeFixResources.URA0034CodeFixTitle, ct => RemoveLinearAttributeOptionFromAttribute(document, diagnostic.Location.SourceSpan, declaration, ct), diagnostic.Id);
             context.RegisterCodeFix(action, diagnostic);
         }
 
-        private static async Task<Document> RemoveUdonSyncedSmoothAttributeOptionFromAttribute(Document document, TextSpan span, FieldDeclarationSyntax declaration, CancellationToken cancellationToken)
+        private static async Task<Document> RemoveLinearAttributeOptionFromAttribute(Document document, TextSpan span, FieldDeclarationSyntax declaration, CancellationToken cancellationToken)
         {
             var semanticModel = await document.GetSemanticModelAsync(cancellationToken).ConfigureAwait(false);
             var canUseSimplifiedName = semanticModel.CanReferenceNamedSymbol(span, "UdonSyncedAttribute");
@@ -60,11 +59,6 @@ namespace UdonRabbit.Analyzer
             var newNode = oldNode.WithAttributeLists(SyntaxFactory.List(attributes));
 
             return await document.ReplaceNode(oldNode, newNode, cancellationToken).ConfigureAwait(false);
-        }
-
-        public override FixAllProvider GetFixAllProvider()
-        {
-            return WellKnownFixAllProviders.BatchFixer;
         }
     }
 }

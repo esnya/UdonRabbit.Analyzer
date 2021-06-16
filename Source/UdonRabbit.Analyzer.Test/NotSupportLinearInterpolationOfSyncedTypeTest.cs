@@ -8,7 +8,7 @@ using Xunit;
 
 namespace UdonRabbit.Analyzer.Test
 {
-    public class NotSupportLinearInterpolationOfSyncedTypeTest : DiagnosticVerifier<NotSupportLinearInterpolationOfSyncedType>
+    public class NotSupportLinearInterpolationOfSyncedTypeTest : CodeFixVerifier<NotSupportLinearInterpolationOfSyncedType, NotSupportLinearInterpolationOfSyncedTypeCodeFixProvider>
     {
         [Fact]
         public async Task UdonSharpBehaviourNotSupportLinearInterpolationSyncTypeHasDiagnosticsReport()
@@ -30,7 +30,20 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        [UdonSynced]
+        private bool _b;
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
 
         [Fact]
