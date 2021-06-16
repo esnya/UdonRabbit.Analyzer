@@ -160,7 +160,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# only supports one type generics. に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp only supports one type generics. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0003Title {
             get {
@@ -187,7 +187,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not currently supports static method declaration. に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not currently supports static method declaration. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0004Title {
             get {
@@ -214,7 +214,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not yet support inheriting from interfaces に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not yet support inheriting from interfaces に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0005Title {
             get {
@@ -241,7 +241,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not currently support constructors on UdonSharpBehaviour に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not currently support constructors on UdonSharpBehaviour に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0007Title {
             get {
@@ -268,7 +268,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   User property declarations are not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        ///   User property declarations are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0008Title {
             get {
@@ -295,7 +295,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   Base type calling is not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        ///   Base type calling is not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0009Title {
             get {
@@ -322,7 +322,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   Default expressions are not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        ///   Default expressions are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0010Title {
             get {
@@ -349,7 +349,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   Try/Catch/Finally is not supported by U# に類似しているローカライズされた文字列を検索します。
+        ///   Try/Catch/Finally is not supported by UdonSharp に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0011Title {
             get {
@@ -376,7 +376,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not support throwing exceptions に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not support throwing exceptions に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0012Title {
             get {
@@ -403,7 +403,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not support multidimensional arrays, use jagged arrays に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not support multidimensional arrays, use jagged arrays に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0013Title {
             get {
@@ -430,7 +430,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not support multidimensional array accesses yet に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not support multidimensional array accesses yet に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0014Title {
             get {
@@ -457,7 +457,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not currently support null conditional operators に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not currently support null conditional operators に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0015Title {
             get {
@@ -511,7 +511,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not yet support &apos;out&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not yet support &apos;out&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0017Title {
             get {
@@ -538,7 +538,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not yet support &apos;in&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not yet support &apos;in&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0018Title {
             get {
@@ -565,7 +565,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not yet support &apos;ref&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not yet support &apos;ref&apos; parameters on user-defined methods に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0019Title {
             get {
@@ -592,7 +592,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   The &apos;is&apos; keyword is not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        ///   The &apos;is&apos; keyword is not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0020Title {
             get {
@@ -619,7 +619,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   The &apos;as&apos; keyword is not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        ///   The &apos;as&apos; keyword is not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0021Title {
             get {
@@ -646,7 +646,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not currently support type checking with the &apos;is&apos; keyword に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not currently support type checking with the &apos;is&apos; keyword に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0022Title {
             get {
@@ -673,7 +673,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   Only one class declaration per file is currently supported by U# に類似しているローカライズされた文字列を検索します。
+        ///   Only one class declaration per file is currently supported by UdonSharp に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0023Title {
             get {
@@ -700,7 +700,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# custom methods currently do not support default arguments or params arguments に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp custom methods currently do not support default arguments or params arguments に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0024Title {
             get {
@@ -727,7 +727,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   Static fields are not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        ///   Static fields are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0025Title {
             get {
@@ -808,7 +808,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not currently support using typeof on user defined types に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not currently support using typeof on user defined types に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0029Title {
             get {
@@ -835,7 +835,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not yet support static using directives に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not yet support static using directives に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0030Title {
             get {
@@ -862,7 +862,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not yet support namespace alias directives に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not yet support namespace alias directives に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0031Title {
             get {
@@ -1024,7 +1024,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not yet support goto に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not yet support goto に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0037Title {
             get {
@@ -1051,7 +1051,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   U# does not yet support labeled statements に類似しているローカライズされた文字列を検索します。
+        ///   UdonSharp does not yet support labeled statements に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0038Title {
             get {
@@ -1078,7 +1078,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   Object initializers are not yet supported by U# に類似しているローカライズされた文字列を検索します。
+        ///   Object initializers are not yet supported by UdonSharp に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0039Title {
             get {
@@ -1105,7 +1105,7 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
-        ///   Nullable types are not currently supported by U# に類似しているローカライズされた文字列を検索します。
+        ///   Nullable types are not currently supported by UdonSharp に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0040Title {
             get {

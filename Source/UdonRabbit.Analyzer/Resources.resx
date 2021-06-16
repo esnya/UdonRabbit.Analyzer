@@ -92,7 +92,7 @@
     <value>UdonSharp only supports 1 type generic methods, but you use {0} type generic method.</value>
   </data>
   <data name="URA0003Title" xml:space="preserve">
-    <value>U# only supports one type generics.</value>
+    <value>UdonSharp only supports one type generics.</value>
   </data>
   <data name="URA0004Description" xml:space="preserve">
     <value>UdonSharp does not currently supports static method declarations.</value>
@@ -101,7 +101,7 @@
     <value>UdonSharp does not currently supports static method declarations.</value>
   </data>
   <data name="URA0004Title" xml:space="preserve">
-    <value>U# does not currently supports static method declaration.</value>
+    <value>UdonSharp does not currently supports static method declaration.</value>
   </data>
   <data name="URA0005Description" xml:space="preserve">
     <value>UdonSharp does not yet support inheriting from interfaces</value>
@@ -110,7 +110,7 @@
     <value>UdonSharp does not yet support inheriting from interfaces</value>
   </data>
   <data name="URA0005Title" xml:space="preserve">
-    <value>U# does not yet support inheriting from interfaces</value>
+    <value>UdonSharp does not yet support inheriting from interfaces</value>
   </data>
   <data name="URA0007Description" xml:space="preserve">
     <value>UdonSharp does not currently support constructors on UdonSharpBehaviours, use the Start()</value>
@@ -119,7 +119,7 @@
     <value>UdonSharp does not currently support constructors on UdonSharpBehaviours, use the Start()</value>
   </data>
   <data name="URA0007Title" xml:space="preserve">
-    <value>U# does not currently support constructors on UdonSharpBehaviour</value>
+    <value>UdonSharp does not currently support constructors on UdonSharpBehaviour</value>
   </data>
   <data name="URA0008Description" xml:space="preserve">
     <value>User property declarations are not yet supported by UdonSharp</value>
@@ -128,7 +128,7 @@
     <value>User property declarations are not yet supported by UdonSharp</value>
   </data>
   <data name="URA0008Title" xml:space="preserve">
-    <value>User property declarations are not yet supported by U#</value>
+    <value>User property declarations are not yet supported by UdonSharp</value>
   </data>
   <data name="URA0009Description" xml:space="preserve">
     <value>Base type calling is not yet supported by UdonSharp</value>
@@ -137,7 +137,7 @@
     <value>Base type calling is not yet supported by UdonSharp</value>
   </data>
   <data name="URA0009Title" xml:space="preserve">
-    <value>Base type calling is not yet supported by U#</value>
+    <value>Base type calling is not yet supported by UdonSharp</value>
   </data>
   <data name="URA0010Description" xml:space="preserve">
     <value>Default expressions are not yet supported by UdonSharp</value>
@@ -146,7 +146,7 @@
     <value>Default expressions are not yet supported by UdonSharp</value>
   </data>
   <data name="URA0010Title" xml:space="preserve">
-    <value>Default expressions are not yet supported by U#</value>
+    <value>Default expressions are not yet supported by UdonSharp</value>
   </data>
   <data name="URA0011Description" xml:space="preserve">
     <value>Try/Catch/Finally is not supported by UdonSharp since Udon does not have a way to handle exceptions</value>
@@ -155,7 +155,7 @@
     <value>Try/Catch/Finally is not supported by UdonSharp since Udon does not have a way to handle exceptions</value>
   </data>
   <data name="URA0011Title" xml:space="preserve">
-    <value>Try/Catch/Finally is not supported by U#</value>
+    <value>Try/Catch/Finally is not supported by UdonSharp</value>
   </data>
   <data name="URA0012Description" xml:space="preserve">
     <value>UdonSharp does not support throwing exceptions since Udon does not have support for exception throwing at the moment</value>
@@ -164,7 +164,7 @@
     <value>UdonSharp does not support throwing exceptions since Udon does not have support for exception throwing at the moment</value>
   </data>
   <data name="URA0012Title" xml:space="preserve">
-    <value>U# does not support throwing exceptions</value>
+    <value>UdonSharp does not support throwing exceptions</value>
   </data>
   <data name="URA0013Description" xml:space="preserve">
     <value>UdonSharp does not support multidimensional arrays at the moment, use jagged arrays instead for now</value>
@@ -173,7 +173,7 @@
     <value>UdonSharp does not support multidimensional arrays at the moment, use jagged arrays instead for now</value>
   </data>
   <data name="URA0013Title" xml:space="preserve">
-    <value>U# does not support multidimensional arrays, use jagged arrays</value>
+    <value>UdonSharp does not support multidimensional arrays, use jagged arrays</value>
   </data>
   <data name="URA0014Description" xml:space="preserve">
     <value>UdonSharp does not support multidimensional array accesses yet</value>
@@ -182,7 +182,7 @@
     <value>UdonSharp does not support multidimensional array accesses yet</value>
   </data>
   <data name="URA0014Title" xml:space="preserve">
-    <value>U# does not support multidimensional array accesses yet</value>
+    <value>UdonSharp does not support multidimensional array accesses yet</value>
   </data>
   <data name="URA0015Description" xml:space="preserve">
     <value>UdonSharp does not currently support null conditional operators</value>
@@ -191,7 +191,7 @@
     <value>UdonSharp does not currently support null conditional operators</value>
   </data>
   <data name="URA0015Title" xml:space="preserve">
-    <value>U# does not currently support null conditional operators</value>
+    <value>UdonSharp does not currently support null conditional operators</value>
   </data>
   <data name="URA0016Description" xml:space="preserve">
     <value>Udon does not support the 'Awake' event, use 'Start' instead</value>
@@ -209,7 +209,7 @@
     <value>UdonSharp does not yet support 'out' parameters on user-defined methods</value>
   </data>
   <data name="URA0017Title" xml:space="preserve">
-    <value>U# does not yet support 'out' parameters on user-defined methods</value>
+    <value>UdonSharp does not yet support 'out' parameters on user-defined methods</value>
   </data>
   <data name="URA0018Description" xml:space="preserve">
     <value>UdonSharp does not yet support 'in' parameters on user-defined methods</value>
@@ -218,7 +218,7 @@
     <value>UdonSharp does not yet support 'in' parameters on user-defined methods</value>
   </data>
   <data name="URA0018Title" xml:space="preserve">
-    <value>U# does not yet support 'in' parameters on user-defined methods</value>
+    <value>UdonSharp does not yet support 'in' parameters on user-defined methods</value>
   </data>
   <data name="URA0019Description" xml:space="preserve">
     <value>UdonSharp does not yet support 'ref' parameters on user-defined methods</value>
@@ -227,7 +227,7 @@
     <value>UdonSharp does not yet support 'ref' parameters on user-defined methods</value>
   </data>
   <data name="URA0019Title" xml:space="preserve">
-    <value>U# does not yet support 'ref' parameters on user-defined methods</value>
+    <value>UdonSharp does not yet support 'ref' parameters on user-defined methods</value>
   </data>
   <data name="URA0020Description" xml:space="preserve">
     <value>The 'is' keyword is not yet supported by UdonSharp since Udon does not expose what is necessary</value>
@@ -236,7 +236,7 @@
     <value>The 'is' keyword is not yet supported by UdonSharp since Udon does not expose what is necessary</value>
   </data>
   <data name="URA0020Title" xml:space="preserve">
-    <value>The 'is' keyword is not yet supported by U#</value>
+    <value>The 'is' keyword is not yet supported by UdonSharp</value>
   </data>
   <data name="URA0021Description" xml:space="preserve">
     <value>The 'as' keyword is not yet supported by UdonSharp since Udon does not expose what is necessary</value>
@@ -245,7 +245,7 @@
     <value>The 'as' keyword is not yet supported by UdonSharp since Udon does not expose what is necessary</value>
   </data>
   <data name="URA0021Title" xml:space="preserve">
-    <value>The 'as' keyword is not yet supported by U#</value>
+    <value>The 'as' keyword is not yet supported by UdonSharp</value>
   </data>
   <data name="URA0022Description" xml:space="preserve">
     <value>UdonSharp does not currently support type checking with the 'is' keyword since Udon does not yet expose the proper functionality for type checking.</value>
@@ -254,7 +254,7 @@
     <value>UdonSharp does not currently support type checking with the 'is' keyword since Udon does not yet expose the proper functionality for type checking.</value>
   </data>
   <data name="URA0022Title" xml:space="preserve">
-    <value>U# does not currently support type checking with the 'is' keyword</value>
+    <value>UdonSharp does not currently support type checking with the 'is' keyword</value>
   </data>
   <data name="URA0023Description" xml:space="preserve">
     <value>Only one class declaration per file is currently supported by UdonSharp</value>
@@ -263,7 +263,7 @@
     <value>Only one class declaration per file is currently supported by UdonSharp</value>
   </data>
   <data name="URA0023Title" xml:space="preserve">
-    <value>Only one class declaration per file is currently supported by U#</value>
+    <value>Only one class declaration per file is currently supported by UdonSharp</value>
   </data>
   <data name="URA0024Description" xml:space="preserve">
     <value>UdonSharp custom methods currently do not support default arguments or params arguments</value>
@@ -272,7 +272,7 @@
     <value>UdonSharp custom methods currently do not support default arguments or params arguments</value>
   </data>
   <data name="URA0024Title" xml:space="preserve">
-    <value>U# custom methods currently do not support default arguments or params arguments</value>
+    <value>UdonSharp custom methods currently do not support default arguments or params arguments</value>
   </data>
   <data name="URA0025Description" xml:space="preserve">
     <value>Static fields are not yet supported by UdonSharp</value>
@@ -281,7 +281,7 @@
     <value>Static fields are not yet supported by UdonSharp</value>
   </data>
   <data name="URA0025Title" xml:space="preserve">
-    <value>Static fields are not yet supported by U#</value>
+    <value>Static fields are not yet supported by UdonSharp</value>
   </data>
   <data name="URA0026Description" xml:space="preserve">
     <value>Udon does not support return values of this type</value>
@@ -308,7 +308,7 @@
     <value>UdonSharp does not currently support using typeof on user defined types</value>
   </data>
   <data name="URA0029Title" xml:space="preserve">
-    <value>U# does not currently support using typeof on user defined types</value>
+    <value>UdonSharp does not currently support using typeof on user defined types</value>
   </data>
   <data name="URA0030Description" xml:space="preserve">
     <value>UdonSharp does not yet support static using directives</value>
@@ -317,7 +317,7 @@
     <value>UdonSharp does not yet support static using directives</value>
   </data>
   <data name="URA0030Title" xml:space="preserve">
-    <value>U# does not yet support static using directives</value>
+    <value>UdonSharp does not yet support static using directives</value>
   </data>
   <data name="URA0031Description" xml:space="preserve">
     <value>UdonSharp does not yet support namespace alias directives</value>
@@ -326,7 +326,7 @@
     <value>UdonSharp does not yet support namespace alias directives</value>
   </data>
   <data name="URA0031Title" xml:space="preserve">
-    <value>U# does not yet support namespace alias directives</value>
+    <value>UdonSharp does not yet support namespace alias directives</value>
   </data>
   <data name="URA0032Description" xml:space="preserve">
     <value>Udon does not support variables of this type</value>
@@ -380,7 +380,7 @@
     <value>UdonSharp does not yet support goto</value>
   </data>
   <data name="URA0037Title" xml:space="preserve">
-    <value>U# does not yet support goto</value>
+    <value>UdonSharp does not yet support goto</value>
   </data>
   <data name="URA0038Description" xml:space="preserve">
     <value>UdonSharp does not yet support labeled statements</value>
@@ -389,7 +389,7 @@
     <value>UdonSharp does not yet support labeled statements</value>
   </data>
   <data name="URA0038Title" xml:space="preserve">
-    <value>U# does not yet support labeled statements</value>
+    <value>UdonSharp does not yet support labeled statements</value>
   </data>
   <data name="URA0039Description" xml:space="preserve">
     <value>Object initializers are not yet supported by UdonSharp</value>
@@ -398,7 +398,7 @@
     <value>Object initializers are not yet supported by UdonSharp</value>
   </data>
   <data name="URA0039Title" xml:space="preserve">
-    <value>Object initializers are not yet supported by U#</value>
+    <value>Object initializers are not yet supported by UdonSharp</value>
   </data>
   <data name="URA0040Description" xml:space="preserve">
     <value>Nullable types are not currently supported by UdonSharp</value>
@@ -407,7 +407,7 @@
     <value>Nullable types are not currently supported by UdonSharp</value>
   </data>
   <data name="URA0040Title" xml:space="preserve">
-    <value>Nullable types are not currently supported by U#</value>
+    <value>Nullable types are not currently supported by UdonSharp</value>
   </data>
   <data name="URA0041Description" xml:space="preserve">
     <value>The method called by SendCustomNetworkEvent must be public</value>
