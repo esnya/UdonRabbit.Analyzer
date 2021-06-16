@@ -155,7 +155,7 @@ jobs:
       - name: Packaging for Unity
         uses: pCYSl5EDgo/create-unitypackage@master
         with:
-          package-path: "UdonRabbit.Analyzer.unitypackage"
+          package-path: "Source/UdonRabbit.Analyzer.UnityPackage/UdonRabbit.Analyzer.unitypackage"
           project-folder: Source/UdonRabbit.Analyzer.UnityPackage
           include-files: MetaList
 
