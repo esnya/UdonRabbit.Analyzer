@@ -37,7 +37,7 @@ namespace UdonRabbit.Analyzer
             var oldNode = declaration.FirstAncestorOrSelf<MethodDeclarationSyntax>();
             var newNode = oldNode.WithModifiers(SyntaxTokenList.Create(SyntaxFactory.Token(SyntaxKind.PublicKeyword)));
 
-            return await document.ReplaceNode(oldNode, newNode, cancellationToken).ConfigureAwait(false);
+            return await document.ReplaceNodeAsync(oldNode, newNode, cancellationToken).ConfigureAwait(false);
         }
     }
 }

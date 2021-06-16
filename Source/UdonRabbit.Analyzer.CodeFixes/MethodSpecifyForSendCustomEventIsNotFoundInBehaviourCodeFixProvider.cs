@@ -101,7 +101,7 @@ namespace UdonRabbit.Analyzer
 
             var newNode = oldNode.AddMembers(SyntaxFactory.ParseMemberDeclaration(sb.ToString())).WithAdditionalAnnotations(Formatter.Annotation);
 
-            return await document.ReplaceNode(oldNode, newNode, cancellationToken).ConfigureAwait(false);
+            return await document.ReplaceNodeAsync(oldNode, newNode, cancellationToken).ConfigureAwait(false);
         }
 
         private static async Task<Solution> CreateNewEmptyMethodInAnotherDocumentAsync(Document document, TextSpan span, string missingMethodName, CancellationToken cancellationToken)

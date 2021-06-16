@@ -60,7 +60,7 @@ namespace UdonRabbit.Analyzer
             var attributes = oldNode.AttributeLists.Select(w => SyntaxFactory.AttributeList(SyntaxFactory.SeparatedList(w.Attributes.Select(ModifyUdonSyncedAttribute))));
             var newNode = oldNode.WithAttributeLists(SyntaxFactory.List(attributes));
 
-            return await document.ReplaceNode(oldNode, newNode, cancellationToken).ConfigureAwait(false);
+            return await document.ReplaceNodeAsync(oldNode, newNode, cancellationToken).ConfigureAwait(false);
         }
     }
 }

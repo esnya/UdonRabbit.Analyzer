@@ -7,7 +7,7 @@ namespace UdonRabbit.Analyzer.Extensions
 {
     public static class DocumentExtensions
     {
-        public static async Task<Document> ReplaceNode(this Document document, SyntaxNode oldNode, SyntaxNode newNode, CancellationToken cancellationToken = default)
+        public static async Task<Document> ReplaceNodeAsync(this Document document, SyntaxNode oldNode, SyntaxNode newNode, CancellationToken cancellationToken = default)
         {
             var oldRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
             var newRoot = oldRoot.ReplaceNode(oldNode, newNode);
