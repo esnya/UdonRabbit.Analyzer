@@ -60,16 +60,13 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourNullableTypeHasDiagnosticsReport()
         {
             var diagnostic1 = ExpectDiagnostic(NotSupportNullableTypes.ComponentId)
-                              .WithLocation(8, 17)
-                              .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             var diagnostic2 = ExpectDiagnostic(NotSupportNullableTypes.ComponentId)
-                              .WithLocation(10, 17)
-                              .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             var diagnostic3 = ExpectDiagnostic(NotSupportNullableTypes.ComponentId)
-                              .WithLocation(10, 34)
-                              .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -78,9 +75,9 @@ namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour
     {
-        private int? _i;
+        private [|int?|] _i;
 
-        private bool? TestMethod(bool? b)
+        private [|bool?|] TestMethod([|bool?|] b)
         {
             return null;
         }

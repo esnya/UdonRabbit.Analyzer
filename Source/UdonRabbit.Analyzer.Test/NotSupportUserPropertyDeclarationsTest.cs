@@ -32,8 +32,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourClassUserGetPropertyDeclarationsHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportUserPropertyDeclarations.ComponentId)
-                             .WithLocation(8, 9)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -42,7 +41,7 @@ namespace UdonRabbit
 {
     public class TestClass : UdonSharpBehaviour
     {
-        public string TestProperty { get; }
+        [|public string TestProperty { get; }|]
     }
 }
 ";
@@ -54,8 +53,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourClassUserPropertyDeclarationsHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportUserPropertyDeclarations.ComponentId)
-                             .WithLocation(8, 9)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -64,7 +62,7 @@ namespace UdonRabbit
 {
     public class TestClass : UdonSharpBehaviour
     {
-        public string TestProperty { get; set; }
+        [|public string TestProperty { get; set; }|]
     }
 }
 ";

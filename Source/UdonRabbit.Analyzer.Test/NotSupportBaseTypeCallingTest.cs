@@ -35,8 +35,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourClassBaseTypeCallingHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportBaseTypeCalling.ComponentId)
-                             .WithLocation(12, 13)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -49,7 +48,7 @@ namespace UdonRabbit
     {
         private void Update()
         {
-            base.GetComponent<Transform>();
+            [|base|].GetComponent<Transform>();
         }
     }
 }

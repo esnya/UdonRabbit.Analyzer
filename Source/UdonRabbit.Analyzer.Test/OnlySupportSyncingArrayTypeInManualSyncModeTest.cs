@@ -13,7 +13,7 @@ namespace UdonRabbit.Analyzer.Test
         public OnlySupportSyncingArrayTypeInManualSyncModeTest()
         {
             // Udon Networking Beta has validator of linear interpolation sync type, but other SDKs not worked correctly
-            _hasSupportUdonNetworkingTypes = false;
+            _hasSupportUdonNetworkingTypes = true;
         }
 
         private readonly bool _hasSupportUdonNetworkingTypes;
@@ -45,8 +45,8 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourSyncingArrayTypeInContinuousSyncModeHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(OnlySupportSyncingArrayTypeInManualSyncMode.ComponentId)
-                             .WithLocation(9, 9)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                             .WithSeverity(DiagnosticSeverity.Error)
+                             .WithArguments("int");
 
             const string source = @"
 using UdonSharp;
@@ -56,8 +56,8 @@ namespace UdonRabbit
     [UdonBehaviourSyncMode(BehaviourSyncMode.Continuous)]
     public class TestBehaviour : UdonSharpBehaviour
     {
-        [UdonSynced]
-        private int[] _data;
+        [|[UdonSynced]
+        private int[] _data;|]
     }
 }
 ";

@@ -11,31 +11,7 @@ namespace UdonRabbit.Analyzer.Test
     public class NotSupportConstructorsTest : DiagnosticVerifier<NotSupportConstructors>
     {
         [Fact]
-        public async Task ClassHasConstructorHasDiagnosticsReport()
-        {
-            var diagnostic = ExpectDiagnostic(NotSupportConstructors.ComponentId)
-                             .WithLocation(8, 9)
-                             .WithSeverity(DiagnosticSeverity.Error);
-
-            const string source = @"
-using UdonSharp;
-
-namespace UdonRabbit
-{
-    public class TestClass : UdonSharpBehaviour
-    {
-        public TestClass()
-        {
-        }
-    }
-}
-";
-
-            await VerifyAnalyzerAsync(source, diagnostic);
-        }
-
-        [Fact]
-        public async Task NoDiagnosticsReport()
+        public async Task MonoBehaviourThatHasConstructorHasNoDiagnosticsReport()
         {
             const string source = @"
 namespace UdonRabbit
@@ -50,6 +26,29 @@ namespace UdonRabbit
 ";
 
             await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourThatHasConstructorHasDiagnosticsReport()
+        {
+            var diagnostic = ExpectDiagnostic(NotSupportConstructors.ComponentId)
+                .WithSeverity(DiagnosticSeverity.Error);
+
+            const string source = @"
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        [|public TestClass()
+        {
+        }|]
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source, diagnostic);
         }
     }
 }

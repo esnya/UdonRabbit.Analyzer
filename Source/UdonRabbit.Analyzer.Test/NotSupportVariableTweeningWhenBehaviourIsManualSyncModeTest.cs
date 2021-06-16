@@ -10,14 +10,6 @@ namespace UdonRabbit.Analyzer.Test
 {
     public class NotSupportVariableTweeningWhenBehaviourIsManualSyncModeTest : DiagnosticVerifier<NotSupportVariableTweeningWhenBehaviourIsManualSyncMode>
     {
-        public NotSupportVariableTweeningWhenBehaviourIsManualSyncModeTest()
-        {
-            // Udon Networking Beta has validator of linear interpolation sync type, but other SDKs not worked correctly
-            _hasSupportUdonNetworkingTypes = false;
-        }
-
-        private readonly bool _hasSupportUdonNetworkingTypes;
-
         [Fact]
         public async Task MonoBehaviourNoSupportTweeningPatternHasNoDiagnosticsReport()
         {
@@ -37,8 +29,7 @@ namespace UdonRabbit
 }
 ";
 
-            if (_hasSupportUdonNetworkingTypes)
-                await VerifyAnalyzerAsync(source);
+            await VerifyAnalyzerAsync(source);
         }
 
         [Fact]
@@ -62,8 +53,7 @@ namespace UdonRabbit
 }
 ";
 
-            if (_hasSupportUdonNetworkingTypes)
-                await VerifyAnalyzerAsync(source, diagnostic);
+            await VerifyAnalyzerAsync(source, diagnostic);
         }
 
         [Fact]
@@ -85,8 +75,7 @@ namespace UdonRabbit
 }
 ";
 
-            if (_hasSupportUdonNetworkingTypes)
-                await VerifyAnalyzerAsync(source);
+            await VerifyAnalyzerAsync(source);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace UdonRabbit.Analyzer
                 UdonSymbols.Initialize();
 
             var info = context.SemanticModel.GetSymbolInfo(declaration.Declaration.Type);
-            if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonSyncType((INamedTypeSymbol) info.Symbol, "Linear"))
+            if (UdonSymbols.Instance?.FindUdonSyncType((INamedTypeSymbol)info.Symbol, "Linear") == false)
                 UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, declaration, UdonSharpBehaviourUtility.PrettyTypeName(info.Symbol));
         }
     }

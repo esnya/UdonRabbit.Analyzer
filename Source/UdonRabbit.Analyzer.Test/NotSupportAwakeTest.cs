@@ -32,8 +32,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourAwakeEventHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportAwake.ComponentId)
-                             .WithLocation(8, 9)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -42,7 +41,7 @@ namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour
     {
-        private void Awake() {}
+        [|private void Awake() {}|]
     }
 }
 ";

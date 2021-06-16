@@ -38,8 +38,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourNullConditionalOperatorHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportNullConditionalOperators.ComponentId)
-                             .WithLocation(15, 21)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -55,7 +54,7 @@ namespace UdonRabbit
 
         private void Start()
         {
-            var t = _go?.GetComponent<Transform>();
+            var t = [|_go?.GetComponent<Transform>()|];
         }
     }
 }

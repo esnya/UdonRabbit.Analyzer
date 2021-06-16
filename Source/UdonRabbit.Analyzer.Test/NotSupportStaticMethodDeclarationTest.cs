@@ -57,8 +57,7 @@ namespace UdonRabbit
         public async Task StaticMethodHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportStaticMethodDeclaration.ComponentId)
-                             .WithLocation(12, 9)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -71,9 +70,9 @@ namespace UdonRabbit
         {
         }
 
-        private static void TestMethod()
+        [|private static void TestMethod()
         {
-        }
+        }|]
     }
 }
 ";

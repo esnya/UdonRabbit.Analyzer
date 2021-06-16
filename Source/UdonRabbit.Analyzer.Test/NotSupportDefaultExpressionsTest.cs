@@ -32,8 +32,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourClassDefaultExpressionHasNotDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportDefaultExpressions.ComponentId)
-                             .WithLocation(8, 34)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -42,7 +41,7 @@ namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour
     {
-        private int _initValue = default(int);
+        private int _initValue = [|default(int)|];
     }
 }
 ";

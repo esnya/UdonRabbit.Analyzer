@@ -58,8 +58,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourMultidimensionalArrayClassVariableHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportMultidimensionalArrays.ComponentId)
-                             .WithLocation(8, 24)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -68,7 +67,7 @@ namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour
     {
-        private int[,] array1;
+        private int[,] [|array1|];
 
         private void Start()
         {
@@ -85,8 +84,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourMultidimensionalArrayLocalVariableHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportMultidimensionalArrays.ComponentId)
-                             .WithLocation(10, 17)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -97,7 +95,7 @@ namespace UdonRabbit
     {
         private void Start()
         {
-            var array1 = new int[2, 4];
+            var [|array1 = new int[2, 4]|];
         }
     }
 }
@@ -110,8 +108,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourMultidimensionalMethodParameterVariableHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportMultidimensionalArrays.ComponentId)
-                             .WithLocation(8, 33)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -120,7 +117,7 @@ namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour
     {
-        private void TestMethod(int[,] array) {}
+        private void TestMethod([|int[,] array|]) {}
     }
 }
 ";

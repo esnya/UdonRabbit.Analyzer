@@ -32,8 +32,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourStaticFieldsHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportStaticFields.ComponentId)
-                             .WithLocation(8, 9)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -42,7 +41,7 @@ namespace UdonRabbit
 {
     public class TestClass : UdonSharpBehaviour
     {
-        public static string Message = ""Hello"";
+        [|public static string Message = ""Hello"";|]
     }
 }
 ";

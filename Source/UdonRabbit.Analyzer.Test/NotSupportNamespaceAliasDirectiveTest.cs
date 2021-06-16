@@ -31,12 +31,12 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourNamespaceAliasDirectiveHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportNamespaceAliasDirective.ComponentId)
-                             .WithLocation(2, 1)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
-using USharp = UdonSharp;
+[|using USharp = UdonSharp;|]
 
+//
 namespace UdonRabbit
 {
     public class TestBehaviour : USharp.UdonSharpBehaviour

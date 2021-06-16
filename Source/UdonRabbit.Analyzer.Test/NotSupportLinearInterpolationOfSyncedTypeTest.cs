@@ -10,41 +10,12 @@ namespace UdonRabbit.Analyzer.Test
 {
     public class NotSupportLinearInterpolationOfSyncedTypeTest : DiagnosticVerifier<NotSupportLinearInterpolationOfSyncedType>
     {
-        public NotSupportLinearInterpolationOfSyncedTypeTest()
-        {
-            // Udon Networking Beta has validator of linear interpolation sync type, but other SDKs not worked correctly
-            _hasSupportUdonNetworkingTypes = false;
-        }
-
-        private readonly bool _hasSupportUdonNetworkingTypes;
-
-        [Fact]
-        public async Task MonoBehaviourNotSupportLinearInterpolationSyncTypeHasNoDiagnosticsReport()
-        {
-            const string source = @"
-using UdonSharp;
-
-using UnityEngine;
-
-namespace UdonRabbit
-{
-    public class TestBehaviour : MonoBehaviour
-    {
-        [UdonSynced(UdonSyncMode.Linear)]
-        private bool _b;
-    }
-}
-";
-
-            await VerifyAnalyzerAsync(source);
-        }
-
         [Fact]
         public async Task UdonSharpBehaviourNotSupportLinearInterpolationSyncTypeHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportLinearInterpolationOfSyncedType.ComponentId)
-                             .WithLocation(8, 9)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                             .WithSeverity(DiagnosticSeverity.Error)
+                             .WithArguments("bool");
 
             const string source = @"
 using UdonSharp;
@@ -53,14 +24,13 @@ namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour
     {
-        [UdonSynced(UdonSyncMode.Linear)]
-        private bool _b;
+        [|[UdonSynced(UdonSyncMode.Linear)]
+        private bool _b;|]
     }
 }
 ";
 
-            if (_hasSupportUdonNetworkingTypes)
-                await VerifyAnalyzerAsync(source, diagnostic);
+            await VerifyAnalyzerAsync(source, diagnostic);
         }
 
         [Fact]

@@ -43,8 +43,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourClassTryCatchStatementHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportTryCatchFinally.ComponentId)
-                             .WithLocation(12, 13)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -57,13 +56,13 @@ namespace UdonRabbit
         {
             object o = null;
 
-            try
+            [|try
             {
                 var i = (int) o;
             }
             catch
             {
-            }
+            }|]
         }
     }
 }
@@ -76,8 +75,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourClassTryFinallyStatementHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportTryCatchFinally.ComponentId)
-                             .WithLocation(12, 13)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -90,13 +88,13 @@ namespace UdonRabbit
         {
             object o = null;
 
-            try
+            [|try
             {
                 var i = (int) o;
             }
             finally
             {
-            }
+            }|]
         }
     }
 }

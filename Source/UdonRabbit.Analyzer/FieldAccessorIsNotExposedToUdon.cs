@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using System.Diagnostics;
 using System.Linq;
 
 using Microsoft.CodeAnalysis;
@@ -48,21 +47,22 @@ namespace UdonRabbit.Analyzer
 
             var t = context.SemanticModel.GetTypeInfo(memberAccess.Expression);
             var fieldSymbol = context.SemanticModel.GetSymbolInfo(memberAccess);
-            if (fieldSymbol.Symbol is IFieldSymbol field)
+            switch (fieldSymbol.Symbol)
             {
-                if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonVariableName(context.SemanticModel, t.Type, field, isAssignment))
-                    UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, memberAccess, field.Name);
-                return;
-            }
+                case IFieldSymbol field:
+                {
+                    if (UdonSymbols.Instance?.FindUdonVariableName(context.SemanticModel, t.Type, field, isAssignment) == false)
+                        UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, memberAccess, field.Name);
+                    return;
+                }
 
-            if (fieldSymbol.Symbol is IPropertySymbol props)
-            {
-                if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonVariableName(context.SemanticModel, t.Type, props, isAssignment))
-                    UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, memberAccess, props.Name);
-                return;
+                case IPropertySymbol props:
+                {
+                    if (UdonSymbols.Instance?.FindUdonVariableName(context.SemanticModel, t.Type, props, isAssignment) == false)
+                        UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, memberAccess, props.Name);
+                    return;
+                }
             }
-
-            Debug.WriteLine("Unknown Field Accessor");
         }
     }
 }

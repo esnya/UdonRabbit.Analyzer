@@ -122,7 +122,6 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourNotAllowedJaggedArrayHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportVariablesOfType.ComponentId)
-                             .WithLocation(12, 13)
                              .WithSeverity(DiagnosticSeverity.Error)
                              .WithArguments("System.IntPtr[][]");
 
@@ -137,7 +136,7 @@ namespace UdonRabbit
     {
         private void Start()
         {
-            IntPtr[][] ptr;
+            [|IntPtr[][] ptr|];
         }
     }
 }
@@ -310,7 +309,6 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourUdonNotExposedVariableHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportVariablesOfType.ComponentId)
-                             .WithLocation(12, 13)
                              .WithSeverity(DiagnosticSeverity.Error)
                              .WithArguments("System.IntPtr");
 
@@ -325,7 +323,7 @@ namespace UdonRabbit
     {
         private void Start()
         {
-            IntPtr ptr;
+            [|IntPtr ptr|];
         }
     }
 }

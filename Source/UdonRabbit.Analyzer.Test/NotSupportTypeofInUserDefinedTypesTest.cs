@@ -79,8 +79,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourTypeofInUserDefinedTypeHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportTypeofInUserDefinedTypes.ComponentId)
-                             .WithLocation(10, 21)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -91,7 +90,7 @@ namespace UdonRabbit
     {
         private void Start()
         {
-            var t = typeof(TestBehaviour);
+            var t = [|typeof(TestBehaviour)|];
         }
     }
 }

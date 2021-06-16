@@ -222,7 +222,6 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourUdonNotAllowedJaggedArrayReturnValueInMethodDeclarationHasNoDiagnosticsReports()
         {
             var diagnostic = ExpectDiagnostic(NotSupportReturnsValuesOfType.ComponentId)
-                             .WithLocation(10, 9)
                              .WithSeverity(DiagnosticSeverity.Error)
                              .WithArguments("System.IntPtr[][]");
 
@@ -235,10 +234,10 @@ namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour
     {
-        private IntPtr[][] GetTypeOf()
+        [|private IntPtr[][] GetTypeOf()
         {
             return new IntPtr[1][];
-        }
+        }|]
     }
 }
 ";
@@ -250,7 +249,6 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourUdonNotAllowedReturnValueInMethodDeclarationHasNoDiagnosticsReports()
         {
             var diagnostic = ExpectDiagnostic(NotSupportReturnsValuesOfType.ComponentId)
-                             .WithLocation(10, 9)
                              .WithSeverity(DiagnosticSeverity.Error)
                              .WithArguments("System.IntPtr");
 
@@ -263,10 +261,10 @@ namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour
     {
-        private IntPtr GetTypeOf()
+        [|private IntPtr GetTypeOf()
         {
             return IntPtr.Zero;
-        }
+        }|]
     }
 }
 ";

@@ -35,8 +35,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourOutParameterInMethodDeclarationHasDiagnosticReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportOutParametersInUserDefinedMethods.ComponentId)
-                             .WithLocation(8, 32)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -45,7 +44,7 @@ namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour
     {
-        public void TestMethod(out string str)
+        public void TestMethod([|out string str|])
         {
             str = """";
         }

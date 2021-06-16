@@ -57,6 +57,31 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedFieldAccessorHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using TMPro;
+
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        public TextMeshProUGUI tm;
+
+        private void Update()
+        {
+            var t = tm.text;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedFieldAccessorInInnerClassHasNoDiagnosticsReport()
         {
             const string source = @"
@@ -75,31 +100,6 @@ namespace UdonRabbit
         {
             var trackingData = _player.GetTrackingData(_trackingTarget);
             transform.SetPositionAndRotation(trackingData.position, trackingData.rotation);
-        }
-    }
-}
-";
-
-            await VerifyAnalyzerAsync(source);
-        }
-
-        [Fact]
-        public async Task UdonSharpBehaviourAllowedFieldAccessorIsNoDiagnosticsReport()
-        {
-            const string source = @"
-using TMPro;
-
-using UdonSharp;
-
-namespace UdonRabbit
-{
-    public class TestClass : UdonSharpBehaviour
-    {
-        public TextMeshProUGUI tm;
-
-        private void Update()
-        {
-            var t = tm.text;
         }
     }
 }
@@ -243,6 +243,29 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourAllowedStaticFieldAccessorHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+namespace UdonRabbit
+{
+    public class TestClass : UdonSharpBehaviour
+    {
+        private void Update()
+        {
+            var v = Vector3.one;
+        }
+    }
+}
+";
+
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourAllowedStaticFieldAccessorInIfStatementHasNoDiagnosticsReport()
         {
             const string source = @"
@@ -266,7 +289,7 @@ namespace UdonRabbit
         }
 
         [Fact]
-        public async Task UdonSharpBehaviourAllowedStaticFieldAccessorIntoLocalVariableIsNoDiagnosticsReport()
+        public async Task UdonSharpBehaviourAllowedStaticFieldAccessorIntoLocalVariableHasNoDiagnosticsReport()
         {
             const string source = @"
 using UdonSharp;
@@ -282,29 +305,6 @@ namespace UdonRabbit
         private void Update()
         {
             _initialScale = Vector3.one;
-        }
-    }
-}
-";
-
-            await VerifyAnalyzerAsync(source);
-        }
-
-        [Fact]
-        public async Task UdonSharpBehaviourAllowedStaticFieldAccessorIsNoDiagnosticsReport()
-        {
-            const string source = @"
-using UdonSharp;
-
-using UnityEngine;
-
-namespace UdonRabbit
-{
-    public class TestClass : UdonSharpBehaviour
-    {
-        private void Update()
-        {
-            var v = Vector3.one;
         }
     }
 }
@@ -369,7 +369,6 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourNotAllowedFieldAccessorHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(FieldAccessorIsNotExposedToUdon.ComponentId)
-                             .WithLocation(14, 21)
                              .WithSeverity(DiagnosticSeverity.Error)
                              .WithArguments("font");
 
@@ -386,7 +385,7 @@ namespace UdonRabbit
 
         private void Update()
         {
-            var f = tm.font;
+            var f = [|tm.font|];
         }
     }
 }
@@ -399,7 +398,6 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourNotAllowedGameObjectAccessorHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(FieldAccessorIsNotExposedToUdon.ComponentId)
-                             .WithLocation(12, 22)
                              .WithSeverity(DiagnosticSeverity.Error)
                              .WithArguments("gameObject");
 
@@ -414,7 +412,7 @@ namespace UdonRabbit
     {
         private void Start()
         {
-            var go = Networking.LocalPlayer.gameObject;
+            var go = [|Networking.LocalPlayer.gameObject|];
         }
     }
 }
@@ -427,7 +425,6 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourNotAllowedUnityGameObjectAccessorHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(FieldAccessorIsNotExposedToUdon.ComponentId)
-                             .WithLocation(15, 22)
                              .WithSeverity(DiagnosticSeverity.Error)
                              .WithArguments("gameObject");
 
@@ -445,7 +442,7 @@ namespace UdonRabbit
 
         private void Start()
         {
-            var go = _field.gameObject;
+            var go = [|_field.gameObject|];
         }
     }
 }

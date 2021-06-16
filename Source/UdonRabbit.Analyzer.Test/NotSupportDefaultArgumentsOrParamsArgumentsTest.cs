@@ -74,8 +74,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourDefaultArgumentHasNoDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportDefaultArgumentsOrParamsArguments.ComponentId)
-                             .WithLocation(8, 45)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -84,7 +83,7 @@ namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour
     {
-        private void TestMethod(string str, string area = """")
+        private void TestMethod(string str, [|string area = """"|])
         {
         }
     }
@@ -98,8 +97,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourParamsArgumentHasNoDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportDefaultArgumentsOrParamsArguments.ComponentId)
-                             .WithLocation(8, 45)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -108,7 +106,7 @@ namespace UdonRabbit
 {
     public class TestBehaviour : UdonSharpBehaviour
     {
-        private void TestMethod(string str, params string[] options)
+        private void TestMethod(string str, [|params string[] options|])
         {
         }
     }

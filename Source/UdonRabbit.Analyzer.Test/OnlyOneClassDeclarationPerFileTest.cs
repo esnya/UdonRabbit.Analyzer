@@ -63,8 +63,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourTwiceClassHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(OnlyOneClassDeclarationPerFile.ComponentId)
-                             .WithLocation(7, 5)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -72,7 +71,7 @@ using UdonSharp;
 namespace UdonRabbit
 {
     public class SomeBehaviour1 : UdonSharpBehaviour {}
-    public class SomeBehaviour2 : UdonSharpBehaviour {}
+    [|public class SomeBehaviour2 : UdonSharpBehaviour {}|]
 }
 ";
 
@@ -83,8 +82,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourTwiceClassInSeparatedNamespaceHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(OnlyOneClassDeclarationPerFile.ComponentId)
-                             .WithLocation(10, 9)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -95,7 +93,7 @@ namespace UdonRabbit
 
     namespace Interop
     {
-        public class SomeBehaviour2 : UdonSharpBehaviour {}
+        [|public class SomeBehaviour2 : UdonSharpBehaviour {}|]
     }
 }
 ";
@@ -107,8 +105,7 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviourTwiceClassInSeparatedNamespaceInRootHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(OnlyOneClassDeclarationPerFile.ComponentId)
-                             .WithLocation(11, 5)
-                             .WithSeverity(DiagnosticSeverity.Error);
+                .WithSeverity(DiagnosticSeverity.Error);
 
             const string source = @"
 using UdonSharp;
@@ -120,7 +117,7 @@ namespace UdonRabbit
 
 namespace RabbitUdon
 {
-    public class SomeBehaviour2 : UdonSharpBehaviour {}
+    [|public class SomeBehaviour2 : UdonSharpBehaviour {}|]
 }
 ";
 

@@ -44,7 +44,7 @@ namespace UdonRabbit.Analyzer
 
             var @return = declaration.ReturnType;
             var typeSymbol = context.SemanticModel.GetTypeInfo(@return);
-            if (UdonSymbols.Instance != null && !UdonSymbols.Instance.FindUdonTypeName(context.SemanticModel, typeSymbol.Type))
+            if (UdonSymbols.Instance?.FindUdonTypeName(context.SemanticModel, typeSymbol.Type) == false)
                 UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, declaration, typeSymbol.Type.ToDisplayString());
         }
     }
