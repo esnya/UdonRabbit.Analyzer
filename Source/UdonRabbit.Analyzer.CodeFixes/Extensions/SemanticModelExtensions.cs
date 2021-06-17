@@ -11,5 +11,10 @@ namespace UdonRabbit.Analyzer.Extensions
         {
             return obj.LookupNamespacesAndTypes(span.Start, null, name).Any();
         }
+
+        public static bool ShouldUseQualifiedName(this SemanticModel obj, TextSpan span, string name)
+        {
+            return obj.LookupNamespacesAndTypes(span.Start, null, name).Length > 1;
+        }
     }
 }
