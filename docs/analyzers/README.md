@@ -59,7 +59,7 @@ It is a restriction of language features by the specification of UdonSharp. Basi
 | URA0025     | [Static fields are not yet supported by UdonSharp](./URA0025.md)                                           |   UdonSharp   |   Error   |     x     |
 | ~~URA0028~~ | [~~UdonSharp does not yet support user defined enums~~](./URA0028.md)                                      | ~~UdonSharp~~ | ~~Error~~ |     x     |
 | URA0029     | [UdonSharp does not currently support using typeof on user defined types](./URA0029.md)                    |   UdonSharp   |   Error   |     x     |
-| URA0030     | [UdonSharp does not yet support static using directives](./URA0030.md)                                     |   UdonSharp   |   Error   |     x     |
+| URA0030     | [UdonSharp does not yet support static using directives](./URA0030.md)                                     |   UdonSharp   |   Error   |     o     |
 | URA0031     | [UdonSharp does not yet support namespace alias directives](./URA0031.md)                                  |   UdonSharp   |   Error   |     x     |
 | URA0037     | [UdonSharp does not yet support goto](./URA0037.md)                                                        |   UdonSharp   |   Error   |     x     |
 | URA0038     | [UdonSharp does not yet support labeled statements](./URA0038.md)                                          |   UdonSharp   |   Error   |     x     |
