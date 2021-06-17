@@ -8,7 +8,7 @@ using Xunit;
 
 namespace UdonRabbit.Analyzer.Test
 {
-    public class NotSupportStaticUsingDirectiveTest : DiagnosticVerifier<NotSupportStaticUsingDirective>
+    public class NotSupportStaticUsingDirectiveTest : CodeFixVerifier<NotSupportStaticUsingDirective, NotSupportStaticUsingDirectiveCodeFixProvider>
     {
         [Fact]
         public async Task MonoBehaviourStaticUsingDirectiveHasNoDiagnosticsReport()
@@ -34,6 +34,61 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourStaticUsingDirectiveAlreadyHasParentUsingDirectiveHasDiagnosticsReport()
+        {
+            var diagnostic = ExpectDiagnostic(NotSupportStaticUsingDirective.ComponentId)
+                .WithSeverity(DiagnosticSeverity.Error);
+
+            const string source = @"
+using UdonSharp;
+
+using UnityEngine;
+
+[|using static UnityEngine.Debug;|]
+
+//
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private string _field;
+
+        private void Start()
+        {
+            Log(""Hello"");
+            Break();
+        }
+    }
+}
+";
+
+            const string newSource = @"
+using UdonSharp;
+
+using UnityEngine;
+
+//
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private string _field;
+
+        private void Start()
+        {
+            Debug.Log(""Hello"");
+            Debug.Break();
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourStaticUsingDirectiveHasDiagnosticsReport()
         {
             var diagnostic = ExpectDiagnostic(NotSupportStaticUsingDirective.ComponentId)
@@ -52,12 +107,38 @@ namespace UdonRabbit
         private void Start()
         {
             Log(""Hello"");
+            Break();
+
+            if (developerConsoleVisible)
+                Log(""Is Console Visible"");
         }
     }
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+using UnityEngine;
+
+//
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private void Start()
+        {
+            Debug.Log(""Hello"");
+            Debug.Break();
+
+            if (Debug.developerConsoleVisible)
+                Debug.Log(""Is Console Visible"");
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
     }
 }

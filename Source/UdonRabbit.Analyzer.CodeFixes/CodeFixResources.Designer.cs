@@ -61,6 +61,15 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
+        ///   Use the regular static method call instead of using static directive に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0030CodeFixTitle {
+            get {
+                return ResourceManager.GetString("URA0030CodeFixTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Remove UdonSyncType.Linear option from UdonSynced attribute に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0034CodeFixTitle {
