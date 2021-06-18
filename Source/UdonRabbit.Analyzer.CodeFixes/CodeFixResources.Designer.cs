@@ -70,6 +70,15 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
+        ///   Use the qualified type name instead of namespace alias に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0031CodeFixTitle {
+            get {
+                return ResourceManager.GetString("URA0031CodeFixTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Remove UdonSyncType.Linear option from UdonSynced attribute に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0034CodeFixTitle {

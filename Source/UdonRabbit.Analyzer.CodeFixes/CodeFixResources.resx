@@ -120,6 +120,9 @@
   <data name="URA0030CodeFixTitle" xml:space="preserve">
     <value>Use the regular static method call instead of using static directive</value>
   </data>
+  <data name="URA0031CodeFixTitle" xml:space="preserve">
+    <value>Use the qualified type name instead of namespace alias</value>
+  </data>
   <data name="URA0034CodeFixTitle" xml:space="preserve">
     <value>Remove UdonSyncType.Linear option from UdonSynced attribute</value>
   </data>
