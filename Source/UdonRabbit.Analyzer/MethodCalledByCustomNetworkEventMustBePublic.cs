@@ -40,27 +40,8 @@ namespace UdonRabbit.Analyzer
             if (declaration.Modifiers.Any(SyntaxKind.PublicKeyword))
                 return;
 
-            var @class = declaration.FirstAncestorOrSelf<ClassDeclarationSyntax>();
-            var invocations = @class.DescendantNodes()
-                                    .OfType<InvocationExpressionSyntax>()
-                                    .Select(w => (Info: context.SemanticModel.GetSymbolInfo(w), Syntax: w))
-                                    .Where(w =>
-                                    {
-                                        if (w.Info.Symbol is not IMethodSymbol symbol)
-                                            return false;
-                                        return UdonConstants.UdonCustomMethodInvokers.Any(v => v.Item1 == symbol.Name);
-                                    })
-                                    .ToList();
-
-            var hasCaller = invocations.Any(w =>
-            {
-                var i = UdonConstants.UdonCustomMethodInvokers.First(v => v.Item1 == w.Info.Symbol.Name).Item2;
-                var arg = w.Syntax.ArgumentList.Arguments.ElementAtOrDefault(i);
-                if (arg == null)
-                    return false;
-
-                return arg.Expression.ParseValue() == declaration.Identifier.Text;
-            });
+            var invocations = declaration.ScanMethodCallers(context.SemanticModel, UdonMethodInvoker.IsInvokerMethod).Select(w => new UdonMethodInvoker(w));
+            var hasCaller = invocations.Any(w => w.GetTargetMethodName() == declaration.Identifier.Text);
 
             if (hasCaller)
                 UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, declaration);

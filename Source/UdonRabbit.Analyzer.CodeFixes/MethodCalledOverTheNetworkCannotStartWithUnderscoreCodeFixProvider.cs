@@ -62,27 +62,8 @@ namespace UdonRabbit.Analyzer
 
         private static async Task<Document> RenameSpecifiedByStringLiteral(Document document, SemanticModel semanticModel, MethodDeclarationSyntax oldDeclaration, string oldName, string newName, CancellationToken cancellationToken)
         {
-            var @class = oldDeclaration.FirstAncestorOrSelf<ClassDeclarationSyntax>();
-            var invocations = @class.DescendantNodes()
-                                    .OfType<InvocationExpressionSyntax>()
-                                    .Select(w => (Info: semanticModel.GetSymbolInfo(w), Syntax: w))
-                                    .Where(w =>
-                                    {
-                                        if (w.Info.Symbol is not IMethodSymbol symbol)
-                                            return false;
-                                        return UdonConstants.UdonCustomNetworkMethodInvokers.Any(v => v.Item1 == symbol.Name);
-                                    })
-                                    .ToList();
-
-            var callers = invocations.Where(w =>
-            {
-                var i = UdonConstants.UdonCustomNetworkMethodInvokers.First(v => v.Item1 == w.Info.Symbol.Name).Item2;
-                var arg = w.Syntax.ArgumentList.Arguments.ElementAtOrDefault(i);
-                if (arg == null)
-                    return false;
-
-                return arg.Expression.ParseValue() == oldName;
-            }).ToList();
+            var invocations = oldDeclaration.ScanMethodCallers(semanticModel, UdonMethodInvoker.IsNetworkInvokerMethod).Select(w => new UdonMethodInvoker(w));
+            var callers = invocations.Where(w => w.GetTargetMethodName() == oldName);
 
             ArgumentSyntax ReplaceStringLiteral(ArgumentSyntax arg, bool replace)
             {
@@ -95,9 +76,8 @@ namespace UdonRabbit.Analyzer
 
             foreach (var caller in callers)
             {
-                var node = caller.Syntax;
-                var argumentAt = UdonConstants.UdonCustomNetworkMethodInvokers.First(w => w.Item1 == caller.Info.Symbol.Name).Item2;
-                var oldNode = node.ArgumentList;
+                var argumentAt = caller.GetArgumentAt();
+                var oldNode = caller.Node.ArgumentList;
                 var arguments = oldNode.Arguments.Select((w, i) => ReplaceStringLiteral(w, i == argumentAt));
                 var newNode = oldNode.WithArguments(SyntaxFactory.SeparatedList(arguments));
 

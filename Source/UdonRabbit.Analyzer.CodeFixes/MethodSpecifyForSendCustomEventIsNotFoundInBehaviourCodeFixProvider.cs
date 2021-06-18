@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Composition;
 using System.Linq;
@@ -123,12 +122,7 @@ namespace UdonRabbit.Analyzer
             if (s.Symbol is not IMethodSymbol m)
                 return string.Empty; // UNREACHABLE
 
-            var i = UdonConstants.UdonCustomMethodInvokers.First(w => w.Item1 == m.Name).Item2;
-            var arg = invocation.ArgumentList.Arguments.ElementAtOrDefault(i);
-            if (arg == null)
-                return string.Empty; // UNREACHABLE
-
-            return arg.Expression.ParseValue();
+            return UdonMethodInvoker.GetTargetMethodName(m, invocation);
         }
     }
 }

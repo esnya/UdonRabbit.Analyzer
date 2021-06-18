@@ -6,7 +6,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-using UdonRabbit.Analyzer.Extensions;
 using UdonRabbit.Analyzer.Udon;
 
 namespace UdonRabbit.Analyzer
@@ -41,7 +40,7 @@ namespace UdonRabbit.Analyzer
             if (symbol.Symbol is not IMethodSymbol method)
                 return;
 
-            if (UdonConstants.UdonCustomNetworkMethodInvokers.All(w => w.Item1 != method.Name))
+            if (!UdonMethodInvoker.IsNetworkInvokerMethod(method))
                 return;
 
             if (invocation.Expression is MemberAccessExpressionSyntax expression)
@@ -51,12 +50,7 @@ namespace UdonRabbit.Analyzer
                 if (!UdonSharpBehaviourUtility.IsUserDefinedTypes(context.SemanticModel, t.Type, t.Type.TypeKind))
                     return;
 
-                var i = UdonConstants.UdonCustomNetworkMethodInvokers.First(v => v.Item1 == method.Name).Item2;
-                var arg = invocation.ArgumentList.Arguments.ElementAtOrDefault(i);
-                if (arg == null)
-                    return;
-
-                var name = arg.Expression.ParseValue();
+                var name = UdonMethodInvoker.GetTargetMethodName(method, invocation);
 
                 var m = t.Type.GetMembers().Where(w => w is IMethodSymbol).FirstOrDefault(w => w.Name == name);
                 if (m == null || !name.StartsWith("_"))

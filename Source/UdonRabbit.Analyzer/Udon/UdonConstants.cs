@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
-namespace UdonRabbit.Analyzer.Udon
+﻿namespace UdonRabbit.Analyzer.Udon
 {
     public static class UdonConstants
     {
@@ -15,18 +12,5 @@ namespace UdonRabbit.Analyzer.Udon
         public const string UdonCategory = "Udon";
         public const string UdonSharpCategory = "UdonSharp";
         public const string CompilerCategory = "Compiler";
-
-        public static ReadOnlyCollection<(string, int)> UdonCustomMethodInvokers => new List<(string, int)>
-        {
-            ("SendCustomEvent", 0),
-            ("SendCustomNetworkEvent", 1),
-            ("SendCustomEventDelayedSeconds", 0),
-            ("SendCustomEventDelayedFrames", 0)
-        }.AsReadOnly();
-
-        public static ReadOnlyCollection<(string, int)> UdonCustomNetworkMethodInvokers => new List<(string, int)>
-        {
-            ("SendCustomNetworkEvent", 1)
-        }.AsReadOnly();
     }
 }
