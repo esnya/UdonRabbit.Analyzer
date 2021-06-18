@@ -16,6 +16,8 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Text;
 
+using UdonRabbit.Analyzer.Extensions;
+
 using Xunit;
 
 namespace UdonRabbit.Analyzer.Test.Infrastructure
@@ -140,6 +142,10 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
             Assert.NotNull(project);
 
             var document = project.Documents.First(w => w.Id == documentId);
+            Assert.NotNull(document);
+
+            var trees = await document.GetSyntaxTreeAsync(cancellationToken);
+            var nodes = await Task.WhenAll(Diagnostics.Select(async w => await document.FindNodeAsync(w.Location.SourceSpan, cancellationToken)));
 
             async Task<Document> ApplyCodeFix(CodeAction action)
             {
@@ -147,10 +153,12 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
                 return operation.OfType<ApplyChangesOperation>().Single().ChangedSolution.GetDocument(documentId);
             }
 
-            foreach (var diagnostic in Diagnostics)
+            foreach (var (diagnostic, i) in Diagnostics.Select((w, i) => (w, i)))
             {
+                var s = await document.FindEquivalentNodeAsync(nodes[i], cancellationToken);
+                var d = Diagnostic.Create(diagnostic.Descriptor, Location.Create(trees, s.Span), diagnostic.Severity, diagnostic.AdditionalLocations, diagnostic.Properties, null);
                 var actions = new List<CodeAction>();
-                var context = new CodeFixContext(document, diagnostic, (a, b) => actions.Add(a), cancellationToken);
+                var context = new CodeFixContext(document, d, (a, _) => actions.Add(a), cancellationToken);
                 await codeFix.RegisterCodeFixesAsync(context);
 
                 document = await ApplyCodeFix(actions.First());

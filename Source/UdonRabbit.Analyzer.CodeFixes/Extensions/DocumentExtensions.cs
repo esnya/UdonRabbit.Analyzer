@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Text;
 
 namespace UdonRabbit.Analyzer.Extensions
 {
@@ -20,6 +21,12 @@ namespace UdonRabbit.Analyzer.Extensions
         {
             var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
             return root.DescendantNodesAndSelf(_ => true).OfType<T>().FirstOrDefault(w => w.IsEquivalentTo(node, true));
+        }
+
+        public static async Task<SyntaxNode> FindNodeAsync(this Document document, TextSpan span, CancellationToken cancellationToken = default)
+        {
+            var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
+            return root.FindNode(span);
         }
     }
 }
