@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -23,14 +22,6 @@ namespace UdonRabbit.Analyzer
         private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.URA0042Description), Resources.ResourceManager, typeof(Resources));
         private static readonly DiagnosticDescriptor RuleSet = new(ComponentId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, true, Description, HelpLinkUri);
 
-        private static readonly HashSet<(string, int)> ScannedMethodLists = new()
-        {
-            ("SendCustomEvent", 0),
-            ("SendCustomNetworkEvent", 1),
-            ("SendCustomEventDelayedSeconds", 0),
-            ("SendCustomEventDelayedFrames", 0)
-        };
-
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RuleSet);
 
         public override void Initialize(AnalysisContext context)
@@ -50,7 +41,7 @@ namespace UdonRabbit.Analyzer
             if (symbol.Symbol is not IMethodSymbol method)
                 return;
 
-            if (ScannedMethodLists.All(w => w.Item1 != method.Name))
+            if (UdonConstants.UdonCustomMethodInvokers.All(w => w.Item1 != method.Name))
                 return;
 
             if (invocation.Expression is MemberAccessExpressionSyntax expression)
@@ -60,7 +51,7 @@ namespace UdonRabbit.Analyzer
                 if (!UdonSharpBehaviourUtility.IsUserDefinedTypes(context.SemanticModel, t.Type, t.Type.TypeKind))
                     return;
 
-                var i = ScannedMethodLists.First(v => v.Item1 == method.Name).Item2;
+                var i = UdonConstants.UdonCustomMethodInvokers.First(v => v.Item1 == method.Name).Item2;
                 var arg = invocation.ArgumentList.Arguments.ElementAtOrDefault(i);
                 if (arg == null)
                     return;

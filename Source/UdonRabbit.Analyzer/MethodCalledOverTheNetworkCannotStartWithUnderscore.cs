@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -22,11 +21,6 @@ namespace UdonRabbit.Analyzer
         private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.URA0043MessageFormat), Resources.ResourceManager, typeof(Resources));
         private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.URA0043Description), Resources.ResourceManager, typeof(Resources));
         private static readonly DiagnosticDescriptor RuleSet = new(ComponentId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, true, Description, HelpLinkUri);
-
-        private static readonly HashSet<(string, int)> ScannedMethodLists = new()
-        {
-            ("SendCustomNetworkEvent", 1)
-        };
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RuleSet);
 
@@ -54,13 +48,13 @@ namespace UdonRabbit.Analyzer
                                     {
                                         if (w.Info.Symbol is not IMethodSymbol symbol)
                                             return false;
-                                        return ScannedMethodLists.Any(v => v.Item1 == symbol.Name);
+                                        return UdonConstants.UdonCustomNetworkMethodInvokers.Any(v => v.Item1 == symbol.Name);
                                     })
                                     .ToList();
 
             var hasCaller = invocations.Any(w =>
             {
-                var i = ScannedMethodLists.First(v => v.Item1 == w.Info.Symbol.Name).Item2;
+                var i = UdonConstants.UdonCustomNetworkMethodInvokers.First(v => v.Item1 == w.Info.Symbol.Name).Item2;
                 var arg = w.Syntax.ArgumentList.Arguments.ElementAtOrDefault(i);
                 if (arg == null)
                     return false;

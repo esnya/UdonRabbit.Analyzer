@@ -16,6 +16,7 @@ using Microsoft.CodeAnalysis.Text;
 
 using UdonRabbit.Analyzer.Abstractions;
 using UdonRabbit.Analyzer.Extensions;
+using UdonRabbit.Analyzer.Udon;
 
 namespace UdonRabbit.Analyzer
 {
@@ -23,14 +24,6 @@ namespace UdonRabbit.Analyzer
     [Shared]
     public class MethodSpecifyForSendCustomEventIsNotFoundInBehaviourCodeFixProvider : CodeFixProviderBase
     {
-        private static readonly HashSet<(string, int)> ScannedMethodLists = new()
-        {
-            ("SendCustomEvent", 0),
-            ("SendCustomNetworkEvent", 1),
-            ("SendCustomEventDelayedSeconds", 0),
-            ("SendCustomEventDelayedFrames", 0)
-        };
-
         public override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(MethodSpecifyForSendCustomEventIsNotFoundInBehaviour.ComponentId);
 
         public override async Task RegisterCodeFixesAsync(CodeFixContext context)
@@ -130,7 +123,7 @@ namespace UdonRabbit.Analyzer
             if (s.Symbol is not IMethodSymbol m)
                 return string.Empty; // UNREACHABLE
 
-            var i = ScannedMethodLists.First(w => w.Item1 == m.Name).Item2;
+            var i = UdonConstants.UdonCustomMethodInvokers.First(w => w.Item1 == m.Name).Item2;
             var arg = invocation.ArgumentList.Arguments.ElementAtOrDefault(i);
             if (arg == null)
                 return string.Empty; // UNREACHABLE

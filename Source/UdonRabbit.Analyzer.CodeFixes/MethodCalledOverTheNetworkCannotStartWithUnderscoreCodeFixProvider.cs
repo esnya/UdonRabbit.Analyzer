@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,17 +11,13 @@ using Microsoft.CodeAnalysis.Rename;
 
 using UdonRabbit.Analyzer.Abstractions;
 using UdonRabbit.Analyzer.Extensions;
+using UdonRabbit.Analyzer.Udon;
 
 namespace UdonRabbit.Analyzer
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(MethodCalledOverTheNetworkCannotStartWithUnderscoreCodeFixProvider))]
     public class MethodCalledOverTheNetworkCannotStartWithUnderscoreCodeFixProvider : CodeFixProviderBase
     {
-        private static readonly HashSet<(string, int)> ScannedMethodList = new()
-        {
-            ("SendCustomNetworkEvent", 1)
-        };
-
         public override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(MethodCalledOverTheNetworkCannotStartWithUnderscore.ComponentId);
 
         public override async Task RegisterCodeFixesAsync(CodeFixContext context)
@@ -75,13 +70,13 @@ namespace UdonRabbit.Analyzer
                                     {
                                         if (w.Info.Symbol is not IMethodSymbol symbol)
                                             return false;
-                                        return ScannedMethodList.Any(v => v.Item1 == symbol.Name);
+                                        return UdonConstants.UdonCustomNetworkMethodInvokers.Any(v => v.Item1 == symbol.Name);
                                     })
                                     .ToList();
 
             var callers = invocations.Where(w =>
             {
-                var i = ScannedMethodList.First(v => v.Item1 == w.Info.Symbol.Name).Item2;
+                var i = UdonConstants.UdonCustomNetworkMethodInvokers.First(v => v.Item1 == w.Info.Symbol.Name).Item2;
                 var arg = w.Syntax.ArgumentList.Arguments.ElementAtOrDefault(i);
                 if (arg == null)
                     return false;
@@ -101,7 +96,7 @@ namespace UdonRabbit.Analyzer
             foreach (var caller in callers)
             {
                 var node = caller.Syntax;
-                var argumentAt = ScannedMethodList.First(w => w.Item1 == caller.Info.Symbol.Name).Item2;
+                var argumentAt = UdonConstants.UdonCustomNetworkMethodInvokers.First(w => w.Item1 == caller.Info.Symbol.Name).Item2;
                 var oldNode = node.ArgumentList;
                 var arguments = oldNode.Arguments.Select((w, i) => ReplaceStringLiteral(w, i == argumentAt));
                 var newNode = oldNode.WithArguments(SyntaxFactory.SeparatedList(arguments));
