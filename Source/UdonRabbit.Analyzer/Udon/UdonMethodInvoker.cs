@@ -12,7 +12,7 @@ namespace UdonRabbit.Analyzer.Udon
 {
     public class UdonMethodInvoker
     {
-        public static ReadOnlyCollection<(string, int)> CustomMethodInvokers => new List<(string, int)>
+        private static ReadOnlyCollection<(string, int)> CustomMethodInvokers => new List<(string, int)>
         {
             ("SendCustomEvent", 0),
             ("SendCustomNetworkEvent", 1),
@@ -20,7 +20,7 @@ namespace UdonRabbit.Analyzer.Udon
             ("SendCustomEventDelayedFrames", 0)
         }.AsReadOnly();
 
-        public static ReadOnlyCollection<(string, int)> CustomNetworkMethodInvokers => new List<(string, int)>
+        private static ReadOnlyCollection<(string, int)> CustomNetworkMethodInvokers => new List<(string, int)>
         {
             ("SendCustomNetworkEvent", 1)
         }.AsReadOnly();
