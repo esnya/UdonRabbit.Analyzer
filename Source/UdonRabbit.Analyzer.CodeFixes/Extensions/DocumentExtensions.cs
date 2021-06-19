@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,6 +29,12 @@ namespace UdonRabbit.Analyzer.Extensions
         {
             var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
             return root.FindNode(span);
+        }
+
+        public static async Task<IEnumerable<T>> EnumerableNodesAsync<T>(this Document document, Func<T, bool> predicate, CancellationToken cancellationToken = default)
+        {
+            var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
+            return root.DescendantNodesAndSelf().OfType<T>().Where(predicate.Invoke);
         }
     }
 }
