@@ -1274,5 +1274,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0046Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   The generic method of GetComponent&lt;T&gt;() is currently broken in Udon for SDK3 Components に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0047Description {
+            get {
+                return ResourceManager.GetString("URA0047Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   &apos;{0}&lt;T&gt;()&apos; is currently broken in Udon for SDK3 Components に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0047MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0047MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The generic method of GetComponent&lt;T&gt;() is currently broken in Udon for SDK3 Components に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0047Title {
+            get {
+                return ResourceManager.GetString("URA0047Title", resourceCulture);
+            }
+        }
     }
 }

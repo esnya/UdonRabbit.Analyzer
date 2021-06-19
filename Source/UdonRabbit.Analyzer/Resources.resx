@@ -463,4 +463,13 @@
   <data name="URA0046Title" xml:space="preserve">
     <value>Udon does not support smooth interpolation of the synced type</value>
   </data>
+  <data name="URA0047Description" xml:space="preserve">
+    <value>The generic method of GetComponent&lt;T&gt;() is currently broken in Udon for SDK3 Components</value>
+  </data>
+  <data name="URA0047MessageFormat" xml:space="preserve">
+    <value>'{0}&lt;T&gt;()' is currently broken in Udon for SDK3 Components</value>
+  </data>
+  <data name="URA0047Title" xml:space="preserve">
+    <value>The generic method of GetComponent&lt;T&gt;() is currently broken in Udon for SDK3 Components</value>
+  </data>
 </root>

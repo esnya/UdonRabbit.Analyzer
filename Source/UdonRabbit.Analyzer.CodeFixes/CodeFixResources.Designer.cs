@@ -131,5 +131,14 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0046CodeFixTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Generic method of GetComponent&lt;T&gt; is currently broken in Udon, use the GetComponent(Type) instead of GetComponent&lt;T&gt;() に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0047CodeFixTitle {
+            get {
+                return ResourceManager.GetString("URA0047CodeFixTitle", resourceCulture);
+            }
+        }
     }
 }

@@ -141,4 +141,7 @@
   <data name="URA0046CodeFixTitle" xml:space="preserve">
     <value>Remove UdonSyncType.Smooth option from UdonSynced attribute</value>
   </data>
+  <data name="URA0047CodeFixTitle" xml:space="preserve">
+    <value>Generic method of GetComponent&lt;T&gt; is currently broken in Udon, use the GetComponent(Type) instead of GetComponent&lt;T&gt;()</value>
+  </data>
 </root>
