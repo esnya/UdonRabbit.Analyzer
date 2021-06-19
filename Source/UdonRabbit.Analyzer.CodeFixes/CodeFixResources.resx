@@ -131,14 +131,12 @@
   </data>
   <data name="URA0042CodeFixTitle" xml:space="preserve">
     <value>Make the method as public</value>
-    <comment>1</comment>
   </data>
   <data name="URA0043CodeFixTitle" xml:space="preserve">
     <value>Make the method callable over the network</value>
   </data>
   <data name="URA0045CodeFixTitle" xml:space="preserve">
     <value>Create an empty method named '{0}'</value>
-    <comment>The title of the code fix.</comment>
   </data>
   <data name="URA0046CodeFixTitle" xml:space="preserve">
     <value>Remove UdonSyncType.Smooth option from UdonSynced attribute</value>
