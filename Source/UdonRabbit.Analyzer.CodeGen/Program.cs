@@ -194,7 +194,6 @@ namespace UdonRabbit
         public async Task UdonSharpBehaviour__HasDiagnosticsReport()
         {{
             var diagnostic = ExpectDiagnostic({@class}.ComponentId)
-                             .WithLocation(10, 33)
                              .WithSeverity(DiagnosticSeverity.{severity});
 
             const string source = @""
