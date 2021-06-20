@@ -67,3 +67,4 @@ It is a restriction of language features by the specification of UdonSharp. Basi
 | URA0039     | [Object initializers are not yet supported by UdonSharp](./URA0039.md)                                     |   UdonSharp   |   Error   |     x     |
 | URA0040     | [Nullable types are not currently supported by UdonSharp](./URA0040.md)                                    |   UdonSharp   |   Error   |     x     |
 | URA0048     | [UdonSharp does not currently support C# 7.1 language features](./URA0048.md)                              |   UdonSharp   |   Error   |     x     |
+| URA0049     | [UdonSharp does not currently support C# 7.2 language features](./URA0049.md)                              |   UdonSharp   |   Error   |     x     |
