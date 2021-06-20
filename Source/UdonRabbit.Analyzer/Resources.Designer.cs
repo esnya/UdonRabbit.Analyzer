@@ -1301,5 +1301,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0047Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support C# 7.1 language features に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0048Description {
+            get {
+                return ResourceManager.GetString("URA0048Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support C# 7.1 language features: {0} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0048MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0048MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support C# 7.1 language features に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0048Title {
+            get {
+                return ResourceManager.GetString("URA0048Title", resourceCulture);
+            }
+        }
     }
 }
