@@ -46,21 +46,35 @@ namespace UdonRabbit.Analyzer
             var genericArguments = method.TypeArguments;
             var arguments = oldNode.ArgumentList.Arguments.ToList();
 
-            var typeofExpression = CreateTypeofExpression(semanticModel, oldNode.Span, genericArguments[0]);
+            var typeofExpression = SyntaxFactory.TypeOfExpression(AvailableTypeName(semanticModel, oldNode.Span, genericArguments[0]));
             arguments.Insert(0, SyntaxFactory.Argument(typeofExpression));
 
             var newArguments = SyntaxFactory.ArgumentList(SyntaxFactory.SeparatedList(arguments));
-            var newExpression = SyntaxFactory.IdentifierName(((GenericNameSyntax) oldNode.Expression).Identifier);
-            var newNode = oldNode.WithArgumentList(newArguments).WithExpression(newExpression);
+            var newExpression = CreateNonGenericExpression(oldNode.Expression);
+            var newNode = SyntaxFactory.CastExpression(AvailableTypeName(semanticModel, oldNode.Span, genericArguments[0]), oldNode.WithArgumentList(newArguments).WithExpression(newExpression));
 
             return await document.ReplaceNodeAsync(oldNode, newNode, cancellationToken).ConfigureAwait(false);
         }
 
-        private static ExpressionSyntax CreateTypeofExpression(SemanticModel semanticModel, TextSpan span, ITypeSymbol t)
+        private static TypeSyntax AvailableTypeName(SemanticModel semanticModel, TextSpan span, ITypeSymbol t)
         {
             if (semanticModel.CanReferenceNamedSymbol(span, t.Name))
-                return SyntaxFactory.TypeOfExpression(SyntaxFactory.ParseTypeName(t.Name));
-            return SyntaxFactory.TypeOfExpression(SyntaxFactory.ParseTypeName(t.ToDisplayString()));
+                return SyntaxFactory.ParseTypeName(t.Name);
+            return SyntaxFactory.ParseTypeName(t.ToDisplayString());
+        }
+
+        private static ExpressionSyntax CreateNonGenericExpression(ExpressionSyntax expression)
+        {
+            switch (expression)
+            {
+                case GenericNameSyntax g:
+                    return SyntaxFactory.IdentifierName(g.Identifier);
+
+                case MemberAccessExpressionSyntax m:
+                    return m.WithName(SyntaxFactory.IdentifierName(((GenericNameSyntax) m.Name).Identifier));
+            }
+
+            return expression;
         }
     }
 }
