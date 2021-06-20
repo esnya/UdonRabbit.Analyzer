@@ -84,7 +84,7 @@ namespace UdonRabbit.Analyzer.CodeGen
             await sw.WriteLineAsync(content);
         }
 
-        private static async Task ModifyResourceManager(string path, int id, string title, string description, string messageFormat)
+        private static Task ModifyResourceManager(string path, int id, string title, string description, string messageFormat)
         {
             var destResX = Path.Combine(path, "Source", "UdonRabbit.Analyzer", "Resources.resx");
             using var rr = new ResXResourceReader(destResX);
@@ -98,7 +98,9 @@ namespace UdonRabbit.Analyzer.CodeGen
             rw.AddResource(new ResXDataNode($"URA{id:0000}MessageFormat", messageFormat));
             rw.AddResource(new ResXDataNode($"URA{id:0000}Title", title));
             rw.Close();
-        }
+
+			return Task.CompletedTask;
+		}
 
         private static async Task CreateAnalyzerClass(string path, int id, string @class, string category, string severity)
         {
