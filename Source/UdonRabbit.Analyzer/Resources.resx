@@ -499,4 +499,13 @@
   <data name="URA0050Title" xml:space="preserve">
     <value>UdonSharp does not currently support static user-defined property declarations</value>
   </data>
+  <data name="URA0051Description" xml:space="preserve">
+    <value>UdonSharp does not currently support initializers on properties</value>
+  </data>
+  <data name="URA0051MessageFormat" xml:space="preserve">
+    <value>UdonSharp does not currently support initializers on properties</value>
+  </data>
+  <data name="URA0051Title" xml:space="preserve">
+    <value>UdonSharp does not currently support initializers on properties</value>
+  </data>
 </root>

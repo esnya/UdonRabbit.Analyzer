@@ -1382,5 +1382,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0050Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support initializers on properties に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0051Description {
+            get {
+                return ResourceManager.GetString("URA0051Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support initializers on properties に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0051MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0051MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support initializers on properties に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0051Title {
+            get {
+                return ResourceManager.GetString("URA0051Title", resourceCulture);
+            }
+        }
     }
 }
