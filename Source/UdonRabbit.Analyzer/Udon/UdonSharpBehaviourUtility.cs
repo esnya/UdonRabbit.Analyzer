@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Microsoft.CodeAnalysis;
@@ -172,6 +173,50 @@ namespace UdonRabbit.Analyzer.Udon
                 INamedTypeSymbol t => $"{t.ToDisplayString()}",
                 _ => string.Empty
             };
+        }
+
+        public static bool IsUdonSharpGreaterThanOrEquals(List<MetadataReference> references, string version)
+        {
+            if (!UdonAssemblyVersion.IsAlreadyEvaluated)
+                UdonAssemblyVersion.Initialize(references);
+
+            var targetVersion = new Version(version);
+            var actualVersion = new Version(UdonAssemblyVersion.UdonSharpVersion.Substring(1));
+
+            return actualVersion.CompareTo(targetVersion) >= 0;
+        }
+
+        public static bool IsUdonSharpGreaterThan(List<MetadataReference> references, string version)
+        {
+            if (!UdonAssemblyVersion.IsAlreadyEvaluated)
+                UdonAssemblyVersion.Initialize(references);
+
+            var targetVersion = new Version(version);
+            var actualVersion = new Version(UdonAssemblyVersion.UdonSharpVersion.Substring(1));
+
+            return actualVersion.CompareTo(targetVersion) > 0;
+        }
+
+        public static bool IsUdonSharpLessThanOrEquals(List<MetadataReference> references, string version)
+        {
+            if (!UdonAssemblyVersion.IsAlreadyEvaluated)
+                UdonAssemblyVersion.Initialize(references);
+
+            var targetVersion = new Version(version);
+            var actualVersion = new Version(UdonAssemblyVersion.UdonSharpVersion.Substring(1));
+
+            return actualVersion.CompareTo(targetVersion) <= 0;
+        }
+
+        public static bool IsUdonSharpLessThan(List<MetadataReference> references, string version)
+        {
+            if (!UdonAssemblyVersion.IsAlreadyEvaluated)
+                UdonAssemblyVersion.Initialize(references);
+
+            var targetVersion = new Version(version);
+            var actualVersion = new Version(UdonAssemblyVersion.UdonSharpVersion.Substring(1));
+
+            return actualVersion.CompareTo(targetVersion) < 0;
         }
     }
 }

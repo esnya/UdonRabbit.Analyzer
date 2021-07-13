@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Linq;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -35,7 +36,8 @@ namespace UdonRabbit.Analyzer
             if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntax(context.SemanticModel, declaration))
                 return;
 
-            UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, declaration);
+            if (UdonSharpBehaviourUtility.IsUdonSharpLessThan(context.Compilation.ExternalReferences.ToList(), "0.20.0"))
+                UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, declaration);
         }
     }
 }
