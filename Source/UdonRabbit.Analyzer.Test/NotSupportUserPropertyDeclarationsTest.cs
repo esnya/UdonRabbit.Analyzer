@@ -46,6 +46,7 @@ namespace UdonRabbit
 }
 ";
 
+            DisableVerifierOn("0.20.0", Comparision.GreaterThanOrEqual);
             await VerifyAnalyzerAsync(source, diagnostic);
         }
 
@@ -67,6 +68,7 @@ namespace UdonRabbit
 }
 ";
 
+            DisableVerifierOn("0.20.0", Comparision.GreaterThanOrEqual);
             await VerifyAnalyzerAsync(source, diagnostic);
         }
     }

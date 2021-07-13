@@ -17,6 +17,7 @@ using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Text;
 
 using UdonRabbit.Analyzer.Extensions;
+using UdonRabbit.Analyzer.Udon;
 
 using Xunit;
 
@@ -49,6 +50,8 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
         protected readonly List<Diagnostic> Diagnostics = new();
 
         public readonly List<DiagnosticResult> ExpectedDiagnostics = new();
+
+        public bool SkipVerifier { get; set; }
 
         public string SourceCode { get; set; }
 
@@ -92,8 +95,43 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
             _solution = solution;
         }
 
+        public void DisableVerifierOn(string version, Comparision comparision)
+        {
+            var references = _solution.Projects.First().MetadataReferences.ToList();
+            if (!UdonAssemblyVersion.IsAlreadyEvaluated)
+                UdonAssemblyVersion.Initialize(references);
+
+            switch (comparision)
+            {
+                case Comparision.GreaterThan:
+                    SkipVerifier = UdonSharpBehaviourUtility.IsUdonSharpGreaterThan(references, version);
+                    break;
+
+                case Comparision.GreaterThanOrEqual:
+                    SkipVerifier = UdonSharpBehaviourUtility.IsUdonSharpGreaterThanOrEquals(references, version);
+                    break;
+
+                case Comparision.LesserThan:
+                    SkipVerifier = UdonSharpBehaviourUtility.IsUdonSharpLessThan(references, version);
+                    break;
+
+                case Comparision.LesserThanOrEqual:
+                    SkipVerifier = UdonSharpBehaviourUtility.IsUdonSharpLessThanOrEquals(references, version);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(comparision), comparision, null);
+            }
+        }
+
         public async Task RunAnalyzerAsync(CancellationToken cancellationToken)
         {
+            if (SkipVerifier)
+            {
+                Assert.True(true);
+                return;
+            }
+
             const string filename = "TestBehaviour.cs";
 
             var analyzer = new TAnalyzer();
@@ -133,6 +171,12 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
 
         public async Task RunCodeFixAsync<TCodeFix>(string fixedSource, CancellationToken cancellationToken) where TCodeFix : CodeFixProvider, new()
         {
+            if (SkipVerifier)
+            {
+                Assert.True(true);
+                return;
+            }
+
             const string filename = "TestBehaviour";
 
             var codeFix = new TCodeFix();

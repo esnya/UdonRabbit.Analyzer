@@ -13,15 +13,25 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
 {
     public abstract class DiagnosticVerifier<TAnalyzer> where TAnalyzer : DiagnosticAnalyzer, new()
     {
+        private Comparision _comparision;
+        private string _version;
+
         protected DiagnosticResult ExpectDiagnostic(string diagnosticId)
         {
             return new(new TAnalyzer().SupportedDiagnostics.Single(w => w.Id == diagnosticId));
+        }
+
+        protected void DisableVerifierOn(string version, Comparision comparision)
+        {
+            _version = version;
+            _comparision = comparision;
         }
 
         protected async Task VerifyAnalyzerAsync(string source, params DiagnosticResult[] expected)
         {
             var testProject = new TestUnityProject<TAnalyzer>(expected.Select(w => w.Id).Distinct().ToArray());
 
+            ShouldVerifyTest(testProject);
             ParseSource(testProject, source, expected);
 
             await testProject.RunAnalyzerAsync(CancellationToken.None);
@@ -76,6 +86,14 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
 
             testProject.ExpectedDiagnostics.AddRange(diagnostics);
             testProject.SourceCode = sb.ToString();
+        }
+
+        protected void ShouldVerifyTest(TestUnityProject<TAnalyzer> testProject)
+        {
+            if (string.IsNullOrWhiteSpace(_version))
+                return;
+
+            testProject.DisableVerifierOn(_version, _comparision);
         }
     }
 }
