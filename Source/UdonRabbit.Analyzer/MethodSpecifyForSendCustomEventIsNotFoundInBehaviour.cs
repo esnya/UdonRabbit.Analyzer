@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -7,7 +6,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-using UdonRabbit.Analyzer.Extensions;
 using UdonRabbit.Analyzer.Udon;
 
 namespace UdonRabbit.Analyzer
@@ -22,14 +20,6 @@ namespace UdonRabbit.Analyzer
         private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.URA0045MessageFormat), Resources.ResourceManager, typeof(Resources));
         private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.URA0045Description), Resources.ResourceManager, typeof(Resources));
         private static readonly DiagnosticDescriptor RuleSet = new(ComponentId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, true, Description, HelpLinkUri);
-
-        private static readonly HashSet<(string, int)> ScannedMethodLists = new()
-        {
-            ("SendCustomEvent", 0),
-            ("SendCustomNetworkEvent", 1),
-            ("SendCustomEventDelayedSeconds", 0),
-            ("SendCustomEventDelayedFrames", 0)
-        };
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RuleSet);
 
@@ -50,7 +40,7 @@ namespace UdonRabbit.Analyzer
             if (symbol.Symbol is not IMethodSymbol method)
                 return;
 
-            if (ScannedMethodLists.All(w => w.Item1 != method.Name))
+            if (!UdonMethodInvoker.IsInvokerMethod(method))
                 return;
 
             // has receiver
@@ -61,26 +51,14 @@ namespace UdonRabbit.Analyzer
                 if (!UdonSharpBehaviourUtility.IsUserDefinedTypes(context.SemanticModel, t.Type, t.Type.TypeKind))
                     return;
 
-                var i = ScannedMethodLists.First(v => v.Item1 == method.Name).Item2;
-                var arg = invocation.ArgumentList.Arguments.ElementAtOrDefault(i);
-                if (arg == null)
-                    return;
-
-                var name = arg.Expression.ParseValue();
-
+                var name = UdonMethodInvoker.GetTargetMethodName(method, invocation);
                 var m = t.Type.GetMembers().Where(w => w is IMethodSymbol).FirstOrDefault(w => w.Name == name);
                 if (m == null)
                     UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, invocation, name, method.Name, t.Type.Name);
             }
             else
             {
-                var i = ScannedMethodLists.First(v => v.Item1 == method.Name).Item2;
-                var arg = invocation.ArgumentList.Arguments.ElementAtOrDefault(i);
-                if (arg == null)
-                    return;
-
-                var name = arg.Expression.ParseValue();
-
+                var name = UdonMethodInvoker.GetTargetMethodName(method, invocation);
                 var m = context.SemanticModel.LookupSymbols(invocation.SpanStart).Where(w => w is IMethodSymbol).FirstOrDefault(w => w.Name == name);
                 if (m == null)
                 {

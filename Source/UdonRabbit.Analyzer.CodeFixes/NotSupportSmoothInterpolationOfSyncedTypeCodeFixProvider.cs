@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Text;
 
 using UdonRabbit.Analyzer.Abstractions;
 using UdonRabbit.Analyzer.Extensions;
@@ -29,13 +30,14 @@ namespace UdonRabbit.Analyzer
 
             var document = context.Document;
             var diagnostic = context.Diagnostics[0];
-            var action = CreateCodeAction(CodeFixResources.URA0046CodeFixTitle, ct => RemoveUdonSyncedSmoothAttributeOptionFromAttribute(document, declaration, ct), diagnostic.Id);
+            var action = CreateCodeAction(CodeFixResources.URA0046CodeFixTitle, ct => RemoveUdonSyncedSmoothAttributeOptionFromAttribute(document, diagnostic.Location.SourceSpan, declaration, ct), diagnostic.Id);
             context.RegisterCodeFix(action, diagnostic);
         }
 
-        private static async Task<Document> RemoveUdonSyncedSmoothAttributeOptionFromAttribute(Document document, FieldDeclarationSyntax declaration, CancellationToken cancellationToken)
+        private static async Task<Document> RemoveUdonSyncedSmoothAttributeOptionFromAttribute(Document document, TextSpan span, FieldDeclarationSyntax declaration, CancellationToken cancellationToken)
         {
             var semanticModel = await document.GetSemanticModelAsync(cancellationToken).ConfigureAwait(false);
+            var canUseSimplifiedName = semanticModel.CanReferenceNamedSymbol(span, "UdonSyncedAttribute");
 
             AttributeSyntax ModifyUdonSyncedAttribute(AttributeSyntax attribute)
             {
@@ -44,7 +46,11 @@ namespace UdonRabbit.Analyzer
                     return attribute; // UNREACHABLE
 
                 if (UdonSharpBehaviourUtility.PrettyTypeName(m) == "UdonSharp.UdonSyncedAttribute")
-                    return SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("UdonSynced"), null);
+                {
+                    if (canUseSimplifiedName)
+                        return SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("UdonSynced"), null);
+                    return SyntaxFactory.Attribute(SyntaxFactory.QualifiedName(SyntaxFactory.IdentifierName("UdonSharp"), SyntaxFactory.IdentifierName("UdonSynced")), null);
+                }
 
                 return attribute;
             }
@@ -53,12 +59,7 @@ namespace UdonRabbit.Analyzer
             var attributes = oldNode.AttributeLists.Select(w => SyntaxFactory.AttributeList(SyntaxFactory.SeparatedList(w.Attributes.Select(ModifyUdonSyncedAttribute))));
             var newNode = oldNode.WithAttributeLists(SyntaxFactory.List(attributes));
 
-            return await document.ReplaceNode(oldNode, newNode, cancellationToken).ConfigureAwait(false);
-        }
-
-        public override FixAllProvider GetFixAllProvider()
-        {
-            return WellKnownFixAllProviders.BatchFixer;
+            return await document.ReplaceNodeAsync(oldNode, newNode, cancellationToken).ConfigureAwait(false);
         }
     }
 }

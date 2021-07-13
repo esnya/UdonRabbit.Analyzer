@@ -16,6 +16,9 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Text;
 
+using UdonRabbit.Analyzer.Extensions;
+using UdonRabbit.Analyzer.Udon;
+
 using Xunit;
 
 namespace UdonRabbit.Analyzer.Test.Infrastructure
@@ -47,6 +50,8 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
         protected readonly List<Diagnostic> Diagnostics = new();
 
         public readonly List<DiagnosticResult> ExpectedDiagnostics = new();
+
+        public bool SkipVerifier { get; set; }
 
         public string SourceCode { get; set; }
 
@@ -90,8 +95,43 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
             _solution = solution;
         }
 
+        public void DisableVerifierOn(string version, Comparision comparision)
+        {
+            var references = _solution.Projects.First().MetadataReferences.ToList();
+            if (!UdonAssemblyVersion.IsAlreadyEvaluated)
+                UdonAssemblyVersion.Initialize(references);
+
+            switch (comparision)
+            {
+                case Comparision.GreaterThan:
+                    SkipVerifier = UdonSharpBehaviourUtility.IsUdonSharpGreaterThan(references, version);
+                    break;
+
+                case Comparision.GreaterThanOrEqual:
+                    SkipVerifier = UdonSharpBehaviourUtility.IsUdonSharpGreaterThanOrEquals(references, version);
+                    break;
+
+                case Comparision.LesserThan:
+                    SkipVerifier = UdonSharpBehaviourUtility.IsUdonSharpLessThan(references, version);
+                    break;
+
+                case Comparision.LesserThanOrEqual:
+                    SkipVerifier = UdonSharpBehaviourUtility.IsUdonSharpLessThanOrEquals(references, version);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(comparision), comparision, null);
+            }
+        }
+
         public async Task RunAnalyzerAsync(CancellationToken cancellationToken)
         {
+            if (SkipVerifier)
+            {
+                Assert.True(true);
+                return;
+            }
+
             const string filename = "TestBehaviour.cs";
 
             var analyzer = new TAnalyzer();
@@ -131,6 +171,12 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
 
         public async Task RunCodeFixAsync<TCodeFix>(string fixedSource, CancellationToken cancellationToken) where TCodeFix : CodeFixProvider, new()
         {
+            if (SkipVerifier)
+            {
+                Assert.True(true);
+                return;
+            }
+
             const string filename = "TestBehaviour";
 
             var codeFix = new TCodeFix();
@@ -140,6 +186,10 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
             Assert.NotNull(project);
 
             var document = project.Documents.First(w => w.Id == documentId);
+            Assert.NotNull(document);
+
+            var trees = await document.GetSyntaxTreeAsync(cancellationToken);
+            var nodes = await Task.WhenAll(Diagnostics.Select(async w => await document.FindNodeAsync(w.Location.SourceSpan, cancellationToken)));
 
             async Task<Document> ApplyCodeFix(CodeAction action)
             {
@@ -147,10 +197,12 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
                 return operation.OfType<ApplyChangesOperation>().Single().ChangedSolution.GetDocument(documentId);
             }
 
-            foreach (var diagnostic in Diagnostics)
+            foreach (var (diagnostic, i) in Diagnostics.Select((w, i) => (w, i)))
             {
+                var s = await document.FindEquivalentNodeAsync(nodes[i], cancellationToken);
+                var d = Diagnostic.Create(diagnostic.Descriptor, Location.Create(trees, s.Span), diagnostic.Severity, diagnostic.AdditionalLocations, diagnostic.Properties, null);
                 var actions = new List<CodeAction>();
-                var context = new CodeFixContext(document, diagnostic, (a, b) => actions.Add(a), cancellationToken);
+                var context = new CodeFixContext(document, d, (a, _) => actions.Add(a), cancellationToken);
                 await codeFix.RegisterCodeFixesAsync(context);
 
                 document = await ApplyCodeFix(actions.First());

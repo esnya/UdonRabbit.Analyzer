@@ -14,6 +14,9 @@ namespace UdonRabbit.Analyzer.Udon
         private const string UdonGuid = "473737f63e15e204aa3a3df7a3a173e3";
         private const string UdonSharpGuid = "cb4c25a39519c854fbe183f6a7ec08f7";
         private const string SDKGuid = "2cdbe2e71e2c46e48951c13df254e5b1";
+        private static readonly object LockObj = new();
+
+        public static bool IsAlreadyEvaluated { get; private set; }
 
         public static string UdonVersion { get; private set; }
         public static string UdonSharpVersion { get; private set; }
@@ -38,31 +41,39 @@ namespace UdonRabbit.Analyzer.Udon
 
         public static void Initialize(List<MetadataReference> references)
         {
-            static bool HasSpecifiedGuid(string path, string guid)
+            lock (LockObj)
             {
-                using var sr = new StreamReader(path);
-                return sr.ReadToEnd().IndexOf(guid, StringComparison.InvariantCulture) >= 0;
-            }
+                if (IsAlreadyEvaluated)
+                    return;
 
-            static string ReadVersionFromMeta(string path)
-            {
-                using var sr = new StreamReader(Path.Combine(Path.GetDirectoryName(path) ?? throw new InvalidOperationException(), Path.GetFileNameWithoutExtension(path)));
-                return sr.ReadLine();
-            }
-
-            var paths = FindAssetsDirectoryFromPath(references.First(w => w.ToFilePath().EndsWith("VRCSDK3.dll")).ToFilePath());
-            foreach (var path in paths)
-            {
-                var metas = Directory.GetFiles(Path.Combine(path, "Assets"), "version.txt.meta", SearchOption.AllDirectories);
-                foreach (var meta in metas)
+                static bool HasSpecifiedGuid(string path, string guid)
                 {
-                    if (HasSpecifiedGuid(meta, UdonGuid))
-                        UdonVersion = ReadVersionFromMeta(meta);
-                    if (HasSpecifiedGuid(meta, UdonSharpGuid))
-                        UdonSharpVersion = ReadVersionFromMeta(meta);
-                    if (HasSpecifiedGuid(meta, SDKGuid))
-                        SDKVersion = ReadVersionFromMeta(meta);
+                    using var sr = new StreamReader(path);
+                    return sr.ReadToEnd().IndexOf(guid, StringComparison.InvariantCulture) >= 0;
                 }
+
+                static string ReadVersionFromMeta(string path)
+                {
+                    using var sr = new StreamReader(Path.Combine(Path.GetDirectoryName(path) ?? throw new InvalidOperationException(), Path.GetFileNameWithoutExtension(path)));
+                    return sr.ReadLine();
+                }
+
+                var paths = FindAssetsDirectoryFromPath(references.First(w => w.ToFilePath().EndsWith("VRCSDK3.dll")).ToFilePath());
+                foreach (var path in paths)
+                {
+                    var metas = Directory.GetFiles(Path.Combine(path, "Assets"), "version.txt.meta", SearchOption.AllDirectories);
+                    foreach (var meta in metas)
+                    {
+                        if (HasSpecifiedGuid(meta, UdonGuid))
+                            UdonVersion = ReadVersionFromMeta(meta);
+                        if (HasSpecifiedGuid(meta, UdonSharpGuid))
+                            UdonSharpVersion = ReadVersionFromMeta(meta);
+                        if (HasSpecifiedGuid(meta, SDKGuid))
+                            SDKVersion = ReadVersionFromMeta(meta);
+                    }
+                }
+
+                IsAlreadyEvaluated = true;
             }
         }
     }

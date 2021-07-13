@@ -117,11 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="URA0030CodeFixTitle" xml:space="preserve">
+    <value>Use the regular static method call instead of using static directive</value>
+  </data>
+  <data name="URA0031CodeFixTitle" xml:space="preserve">
+    <value>Use the qualified type name instead of namespace alias</value>
+  </data>
+  <data name="URA0034CodeFixTitle" xml:space="preserve">
+    <value>Remove UdonSyncType.Linear option from UdonSynced attribute</value>
+  </data>
+  <data name="URA0041CodeFixTitie" xml:space="preserve">
+    <value>Make the method as public</value>
+  </data>
+  <data name="URA0042CodeFixTitle" xml:space="preserve">
+    <value>Make the method as public</value>
+  </data>
+  <data name="URA0043CodeFixTitle" xml:space="preserve">
+    <value>Make the method callable over the network</value>
+  </data>
   <data name="URA0045CodeFixTitle" xml:space="preserve">
     <value>Create an empty method named '{0}'</value>
-    <comment>The title of the code fix.</comment>
   </data>
   <data name="URA0046CodeFixTitle" xml:space="preserve">
     <value>Remove UdonSyncType.Smooth option from UdonSynced attribute</value>
+  </data>
+  <data name="URA0047CodeFixTitle" xml:space="preserve">
+    <value>Generic method of GetComponent&lt;T&gt; is currently broken in Udon, use the GetComponent(Type) instead of GetComponent&lt;T&gt;()</value>
   </data>
 </root>

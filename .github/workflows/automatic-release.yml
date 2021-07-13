@@ -149,8 +149,8 @@ jobs:
       - name: Create MetaList for Packaging (Unity)
         working-directory: Source/UdonRabbit.Analyzer.UnityPackage
         run: |
-          echo ".\Assets\esnyaLaboratory.meta" >> MetaList
-          Get-ChildItem -Path ".\Assets\esnyaLaboratory" -Recurse -Filter "*.meta" -Name | %{ ".\Assets\esnyaLaboratory\{0}" -f $_ } >> MetaList
+          echo "Assets/esnyaLaboratory.meta" >> MetaList
+          Get-ChildItem -Path "Assets/esnyaLaboratory" -Recurse -Filter "*.meta" -Name | %{ "Assets/esnyaLaboratory/{0}" -f $_ } | %{ $_.Replace("\", "/") } >> MetaList
 
       - name: Packaging for Unity
         uses: pCYSl5EDgo/create-unitypackage@master

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="UdonRabbit.Analyzer.8c83ff44-e50b-427a-90b9-07308586965d" Version="0.12.1" Language="en-US" Publisher="esnya" />
+    <Identity Id="UdonRabbit.Analyzer.8c83ff44-e50b-427a-90b9-07308586965d" Version="0.13.0" Language="en-US" Publisher="esnya" />
     <DisplayName>UdonRabbit.Analyzer</DisplayName>
     <Description xml:space="preserve">UdonRabbit Analyzer is Roslyn Analyzer for VRChat Udon and UdonSharp.</Description>
   </Metadata>
   <Installation>
-    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0,)" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0,17.0)" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[16.0,17.0)" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[16.0,17.0)" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />

@@ -8,7 +8,7 @@ using Xunit;
 
 namespace UdonRabbit.Analyzer.Test
 {
-    public class MethodSpecifyForSendCustomNetworkEventMustBePublicTest : DiagnosticVerifier<MethodSpecifyForSendCustomNetworkEventMustBePublic>
+    public class MethodSpecifyForSendCustomNetworkEventMustBePublicTest : CodeFixVerifier<MethodSpecifyForSendCustomNetworkEventMustBePublic, MethodSpecifyForSendCustomNetworkEventMustBePublicCodeFixProvider>
     {
         [Fact]
         public async Task UdonSharpBehaviourSendCustomEventDelayedFramesThatAnotherReceiverMethodIsNonPublicHasDiagnosticsReport()
@@ -44,7 +44,34 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+using UnityEngine;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour1 : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private TestBehaviour2 _behaviour;
+
+        private void Update()
+        {
+            _behaviour.SendCustomEventDelayedFrames(""SomeNetworkEvent"", 10);
+        }
+    }
+
+    public class TestBehaviour2 : UdonSharpBehaviour
+    {
+        public void SomeNetworkEvent()
+        {
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
 
         [Fact]
@@ -81,7 +108,34 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+using UnityEngine;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour1 : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private TestBehaviour2 _behaviour;
+
+        private void Update()
+        {
+            _behaviour.SendCustomEventDelayedSeconds(""SomeNetworkEvent"", 10);
+        }
+    }
+
+    public class TestBehaviour2 : UdonSharpBehaviour
+    {
+        public void SomeNetworkEvent()
+        {
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
 
         [Fact]
@@ -118,7 +172,34 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+using UnityEngine;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour1 : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private TestBehaviour2 _behaviour;
+
+        private void Update()
+        {
+            _behaviour.SendCustomEvent(""SomeNetworkEvent"");
+        }
+    }
+
+    public class TestBehaviour2 : UdonSharpBehaviour
+    {
+        public void SomeNetworkEvent()
+        {
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
 
         [Fact]
@@ -190,7 +271,36 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+using UnityEngine;
+
+using VRC.Udon.Common.Interfaces;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour1 : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private TestBehaviour2 _behaviour;
+
+        private void Update()
+        {
+            _behaviour.SendCustomNetworkEvent(NetworkEventTarget.All, ""SomeNetworkEvent"");
+        }
+    }
+
+    public class TestBehaviour2 : UdonSharpBehaviour
+    {
+        public void SomeNetworkEvent()
+        {
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
     }
 }

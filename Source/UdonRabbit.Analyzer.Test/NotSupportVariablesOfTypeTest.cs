@@ -172,6 +172,27 @@ namespace UdonRabbit
         }
 
         [Fact]
+        public async Task UdonSharpBehaviourUdonAllowedVariableTypeInPropertyHasNoDiagnosticsReport()
+        {
+            const string source = @"
+using UdonSharp;
+
+using VRC.SDKBase;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        private VRC_Pickup Pickup { get; set; }
+    }
+}
+";
+
+            DisableVerifierOn("0.20.0", Comparision.LesserThan);
+            await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
         public async Task UdonSharpBehaviourUdonAllowedVrcTypesHasNoDiagnosticsReport()
         {
             const string source = @"
@@ -186,7 +207,7 @@ namespace UdonRabbit
     public class TestBehaviour : UdonSharpBehaviour
     {
         [SerializeField]
-        private VRC_Pickup _pickup;
+        public VRC_Pickup _pickup;
     }
 }
 ";
@@ -303,6 +324,31 @@ namespace UdonRabbit
 ";
 
             await VerifyAnalyzerAsync(source);
+        }
+
+        [Fact]
+        public async Task UdonSharpBehaviourUdonNotAllowedVariableTypeInPropertyHasDiagnosticsReport()
+        {
+            var diagnostic = ExpectDiagnostic(NotSupportVariablesOfType.ComponentId)
+                             .WithSeverity(DiagnosticSeverity.Error)
+                             .WithArguments("System.IntPtr");
+
+            const string source = @"
+using System;
+
+using UdonSharp;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        [|public IntPtr Ptr { get; set; }|]
+    }
+}
+";
+
+            DisableVerifierOn("0.20.0", Comparision.LesserThan);
+            await VerifyAnalyzerAsync(source, diagnostic);
         }
 
         [Fact]

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Composition;
 using System.Linq;
@@ -16,6 +15,7 @@ using Microsoft.CodeAnalysis.Text;
 
 using UdonRabbit.Analyzer.Abstractions;
 using UdonRabbit.Analyzer.Extensions;
+using UdonRabbit.Analyzer.Udon;
 
 namespace UdonRabbit.Analyzer
 {
@@ -23,20 +23,7 @@ namespace UdonRabbit.Analyzer
     [Shared]
     public class MethodSpecifyForSendCustomEventIsNotFoundInBehaviourCodeFixProvider : CodeFixProviderBase
     {
-        private static readonly HashSet<(string, int)> ScannedMethodLists = new()
-        {
-            ("SendCustomEvent", 0),
-            ("SendCustomNetworkEvent", 1),
-            ("SendCustomEventDelayedSeconds", 0),
-            ("SendCustomEventDelayedFrames", 0)
-        };
-
         public override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(MethodSpecifyForSendCustomEventIsNotFoundInBehaviour.ComponentId);
-
-        public override FixAllProvider GetFixAllProvider()
-        {
-            return WellKnownFixAllProviders.BatchFixer;
-        }
 
         public override async Task RegisterCodeFixesAsync(CodeFixContext context)
         {
@@ -106,7 +93,7 @@ namespace UdonRabbit.Analyzer
 
             var newNode = oldNode.AddMembers(SyntaxFactory.ParseMemberDeclaration(sb.ToString())).WithAdditionalAnnotations(Formatter.Annotation);
 
-            return await document.ReplaceNode(oldNode, newNode, cancellationToken).ConfigureAwait(false);
+            return await document.ReplaceNodeAsync(oldNode, newNode, cancellationToken).ConfigureAwait(false);
         }
 
         private static async Task<Solution> CreateNewEmptyMethodInAnotherDocumentAsync(Document document, TextSpan span, string missingMethodName, CancellationToken cancellationToken)
@@ -135,12 +122,7 @@ namespace UdonRabbit.Analyzer
             if (s.Symbol is not IMethodSymbol m)
                 return string.Empty; // UNREACHABLE
 
-            var i = ScannedMethodLists.First(w => w.Item1 == m.Name).Item2;
-            var arg = invocation.ArgumentList.Arguments.ElementAtOrDefault(i);
-            if (arg == null)
-                return string.Empty; // UNREACHABLE
-
-            return arg.Expression.ParseValue();
+            return UdonMethodInvoker.GetTargetMethodName(m, invocation);
         }
     }
 }

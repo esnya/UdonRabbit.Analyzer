@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -23,11 +22,6 @@ namespace UdonRabbit.Analyzer
         private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.URA0043Description), Resources.ResourceManager, typeof(Resources));
         private static readonly DiagnosticDescriptor RuleSet = new(ComponentId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, true, Description, HelpLinkUri);
 
-        private static readonly HashSet<(string, int)> ScannedMethodLists = new()
-        {
-            ("SendCustomNetworkEvent", 1)
-        };
-
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RuleSet);
 
         public override void Initialize(AnalysisContext context)
@@ -46,27 +40,8 @@ namespace UdonRabbit.Analyzer
             if (!declaration.Identifier.ValueText.StartsWith("_"))
                 return;
 
-            var @class = declaration.FirstAncestorOrSelf<ClassDeclarationSyntax>();
-            var invocations = @class.DescendantNodes()
-                                    .OfType<InvocationExpressionSyntax>()
-                                    .Select(w => (Info: ModelExtensions.GetSymbolInfo(context.SemanticModel, w), Syntax: w))
-                                    .Where(w =>
-                                    {
-                                        if (w.Info.Symbol is not IMethodSymbol symbol)
-                                            return false;
-                                        return ScannedMethodLists.Any(v => v.Item1 == symbol.Name);
-                                    })
-                                    .ToList();
-
-            var hasCaller = invocations.Any(w =>
-            {
-                var i = ScannedMethodLists.First(v => v.Item1 == w.Info.Symbol.Name).Item2;
-                var arg = w.Syntax.ArgumentList.Arguments.ElementAtOrDefault(i);
-                if (arg == null)
-                    return false;
-
-                return arg.Expression.ParseValue() == declaration.Identifier.Text;
-            });
+            var invocations = declaration.ScanMethodCallers(context.SemanticModel, UdonMethodInvoker.IsNetworkInvokerMethod).Select(w => new UdonMethodInvoker(w));
+            var hasCaller = invocations.Any(w => w.GetTargetMethodName() == declaration.Identifier.Text);
 
             if (hasCaller)
                 UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, declaration);

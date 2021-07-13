@@ -12,5 +12,6 @@
         public const string UdonCategory = "Udon";
         public const string UdonSharpCategory = "UdonSharp";
         public const string CompilerCategory = "Compiler";
+        public const string RefactoringCategory = "Refactoring";
     }
 }

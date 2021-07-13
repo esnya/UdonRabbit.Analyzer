@@ -6,6 +6,8 @@
 
         UdonSharp,
 
-        Compiler
+        Compiler,
+
+        Refactoring
     }
 }

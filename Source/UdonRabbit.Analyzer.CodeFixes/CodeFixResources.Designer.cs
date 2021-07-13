@@ -61,6 +61,60 @@ namespace UdonRabbit.Analyzer {
         }
         
         /// <summary>
+        ///   Use the regular static method call instead of using static directive に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0030CodeFixTitle {
+            get {
+                return ResourceManager.GetString("URA0030CodeFixTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Use the qualified type name instead of namespace alias に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0031CodeFixTitle {
+            get {
+                return ResourceManager.GetString("URA0031CodeFixTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Remove UdonSyncType.Linear option from UdonSynced attribute に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0034CodeFixTitle {
+            get {
+                return ResourceManager.GetString("URA0034CodeFixTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Make the method as public に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0041CodeFixTitie {
+            get {
+                return ResourceManager.GetString("URA0041CodeFixTitie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Make the method as public に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0042CodeFixTitle {
+            get {
+                return ResourceManager.GetString("URA0042CodeFixTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Make the method callable over the network に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0043CodeFixTitle {
+            get {
+                return ResourceManager.GetString("URA0043CodeFixTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Create an empty method named &apos;{0}&apos; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string URA0045CodeFixTitle {
@@ -75,6 +129,15 @@ namespace UdonRabbit.Analyzer {
         internal static string URA0046CodeFixTitle {
             get {
                 return ResourceManager.GetString("URA0046CodeFixTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Generic method of GetComponent&lt;T&gt; is currently broken in Udon, use the GetComponent(Type) instead of GetComponent&lt;T&gt;() に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0047CodeFixTitle {
+            get {
+                return ResourceManager.GetString("URA0047CodeFixTitle", resourceCulture);
             }
         }
     }

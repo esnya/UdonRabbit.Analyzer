@@ -11,6 +11,11 @@ namespace UdonRabbit.Analyzer.Abstractions
 {
     public abstract class CodeFixProviderBase : CodeFixProvider
     {
+        public override FixAllProvider GetFixAllProvider()
+        {
+            return WellKnownFixAllProviders.BatchFixer;
+        }
+
         protected static bool TryFindFirstAncestorOrSelf<T>(SyntaxNode root, TextSpan span, out T r) where T : SyntaxNode
         {
             r = root.FindNode(span).FirstAncestorOrSelf<T>();

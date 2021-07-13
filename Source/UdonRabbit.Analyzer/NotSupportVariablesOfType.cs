@@ -28,6 +28,7 @@ namespace UdonRabbit.Analyzer
             context.EnableConcurrentExecution();
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             context.RegisterSyntaxNodeAction(AnalyzeVariableDeclaration, SyntaxKind.VariableDeclaration);
+            context.RegisterSyntaxNodeAction(AnalyzePropertyDeclaration, SyntaxKind.PropertyDeclaration);
         }
 
         private static void AnalyzeVariableDeclaration(SyntaxNodeAnalysisContext context)
@@ -41,6 +42,27 @@ namespace UdonRabbit.Analyzer
 
             if (UdonSymbols.Instance == null)
                 UdonSymbols.Initialize();
+
+            var type = declaration.Type;
+            var typeSymbol = context.SemanticModel.GetTypeInfo(type);
+            if (UdonSymbols.Instance?.FindUdonTypeName(context.SemanticModel, typeSymbol.Type) == false)
+                UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, declaration, typeSymbol.Type.ToDisplayString());
+        }
+
+        private static void AnalyzePropertyDeclaration(SyntaxNodeAnalysisContext context)
+        {
+            var declaration = (PropertyDeclarationSyntax) context.Node;
+            if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntax(context.SemanticModel, declaration))
+                return;
+
+            if (!UdonAssemblyLoader.IsAssemblyLoaded)
+                UdonAssemblyLoader.LoadUdonAssemblies(context.Compilation.ExternalReferences.ToList());
+
+            if (UdonSymbols.Instance == null)
+                UdonSymbols.Initialize();
+
+            if (UdonSharpBehaviourUtility.IsUdonSharpLessThan(context.Compilation.ExternalReferences.ToList(), "0.20.0"))
+                return;
 
             var type = declaration.Type;
             var typeSymbol = context.SemanticModel.GetTypeInfo(type);
