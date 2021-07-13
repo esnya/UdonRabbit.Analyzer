@@ -1355,5 +1355,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0049Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support static user-defined property declarations に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0050Description {
+            get {
+                return ResourceManager.GetString("URA0050Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support static user-defined property declarations に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0050MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0050MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UdonSharp does not currently support static user-defined property declarations に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0050Title {
+            get {
+                return ResourceManager.GetString("URA0050Title", resourceCulture);
+            }
+        }
     }
 }
