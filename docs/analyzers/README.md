@@ -70,4 +70,4 @@ It is a restriction of language features by the specification of UdonSharp. Basi
 | URA0049     | [UdonSharp does not currently support C# 7.2 language features](./URA0049.md)                              |   UdonSharp   |   Error   |     x     |
 | URA0050     | [UdonSharp does not currently support static user-defined property declarations](./URA0050.md)             |   UdonSharp   |   Error   |     x     |
 | URA0051     | [UdonSharp does not currently support initializers on properties](./URA0051.md)                            |   UdonSharp   |   Error   |     x     |
-| URA0052     | [Cannot set field with FieldChangeCallbackAttribute, use a property or SetProgramVariable](./URA0052.md)   |   UdonSharp   |   Error   |     x     |
+| URA0052     | [Cannot set field with FieldChangeCallbackAttribute, use a property or SetProgramVariable](./URA0052.md)   |   UdonSharp   |   Error   |     o     |

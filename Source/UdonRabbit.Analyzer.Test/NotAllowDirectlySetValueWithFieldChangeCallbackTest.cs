@@ -8,7 +8,7 @@ using Xunit;
 
 namespace UdonRabbit.Analyzer.Test
 {
-    public class NotAllowDirectlySetValueWithFieldChangeCallbackTest : DiagnosticVerifier<NotAllowDirectlySetValueWithFieldChangeCallback>
+    public class NotAllowDirectlySetValueWithFieldChangeCallbackTest : CodeFixVerifier<NotAllowDirectlySetValueWithFieldChangeCallback, NotAllowDirectlySetValueWithFieldChangeCallbackCodeFixProvider>
     {
         [Fact]
         public async Task UdonSharpBehaviourDirectlySetFieldValueWithFieldChangeCallbackInAnotherClassHasDiagnosticsReport()
@@ -45,7 +45,36 @@ namespace UdonRabbit
 }
 ";
 
-            await VerifyAnalyzerAsync(source, diagnostic);
+            const string newSource = @"
+using UdonSharp;
+
+using UnityEngine;
+
+namespace UdonRabbit
+{
+    public class TestBehaviour : UdonSharpBehaviour
+    {
+        [SerializeField]
+        private TestBehaviour _behaviour;
+
+        [FieldChangeCallback(nameof(Hello))]
+        public string bkHello;
+
+        public string Hello
+        {
+            set => bkHello = value;
+            get => bkHello;
+        }
+
+        private void Start()
+        {
+            _behaviour.Hello = ""Test"";
+        }
+    }
+}
+";
+
+            await VerifyCodeFixAsync(source, new[] { diagnostic }, newSource);
         }
 
         [Fact]

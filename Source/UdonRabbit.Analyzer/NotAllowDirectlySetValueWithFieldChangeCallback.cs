@@ -44,7 +44,7 @@ namespace UdonRabbit.Analyzer
                 return;
 
             var attributes = field.GetAttributes();
-            if (attributes.None(w => w.AttributeClass.ToClassString() == "UdonSharp.FieldChangeCallbackAttribute"))
+            if (attributes.None(w => w.AttributeClass.ToClassString() == UdonConstants.UdonSharpFieldChangeCallbackFullName))
                 return;
 
             UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, assignment);
