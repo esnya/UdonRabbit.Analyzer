@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Composition;
 using System.Linq;
 using System.Threading;
@@ -51,11 +52,33 @@ namespace UdonRabbit.Analyzer
                 return document;
 
             var targetProperty = reference.ArgumentList.Arguments[0].Expression.ParseValue();
+            var t = semanticModel.GetTypeInfo(memberAccess.Expression);
+            var members = t.Type.GetMembers(targetProperty);
+            var property = members.FirstOrDefault(w => w is IPropertySymbol p && p.Name == targetProperty) as IPropertySymbol;
+            if (property == null)
+                return document;
 
-            var oldNode = assignment.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
-            var newNode = assignment.WithLeft(SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, memberAccess.Expression, SyntaxFactory.IdentifierName(targetProperty)));
+            if (property.SetMethod != default && property.SetMethod.DeclaredAccessibility == Accessibility.Public)
+            {
+                var oldNode = assignment.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
+                var newNode = assignment.WithLeft(SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, memberAccess.Expression, SyntaxFactory.IdentifierName(targetProperty)));
 
-            return await document.ReplaceNodeAsync(oldNode, newNode, cancellationToken).ConfigureAwait(false);
+                return await document.ReplaceNodeAsync(oldNode, newNode, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                var oldNode = assignment.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
+
+                var ma = SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, memberAccess.Expression, SyntaxFactory.IdentifierName("SetProgramVariable"));
+                var arguments = new List<ArgumentSyntax>
+                {
+                    SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression, SyntaxFactory.Literal(memberAccess.Name.Identifier.ValueText))),
+                    SyntaxFactory.Argument(assignment.Right)
+                };
+                var newNode = SyntaxFactory.InvocationExpression(ma, SyntaxFactory.ArgumentList(SyntaxFactory.SeparatedList(arguments)));
+
+                return await document.ReplaceNodeAsync(oldNode, newNode, cancellationToken).ConfigureAwait(false);
+            }
         }
     }
 }
