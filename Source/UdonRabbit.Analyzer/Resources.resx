@@ -508,4 +508,13 @@
   <data name="URA0051Title" xml:space="preserve">
     <value>UdonSharp does not currently support initializers on properties</value>
   </data>
+  <data name="URA0052Description" xml:space="preserve">
+    <value>Cannot set field with FieldChangeCallbackAttribute, use a property or SetProgramVariable</value>
+  </data>
+  <data name="URA0052MessageFormat" xml:space="preserve">
+    <value>Cannot set field with FieldChangeCallbackAttribute, use a property or SetProgramVariable</value>
+  </data>
+  <data name="URA0052Title" xml:space="preserve">
+    <value>Cannot set field with FieldChangeCallbackAttribute, use a property or SetProgramVariable</value>
+  </data>
 </root>

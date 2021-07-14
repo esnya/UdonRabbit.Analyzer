@@ -1409,5 +1409,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0051Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Cannot set field with FieldChangeCallbackAttribute, use a property or SetProgramVariable に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0052Description {
+            get {
+                return ResourceManager.GetString("URA0052Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cannot set field with FieldChangeCallbackAttribute, use a property or SetProgramVariable に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0052MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0052MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cannot set field with FieldChangeCallbackAttribute, use a property or SetProgramVariable に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0052Title {
+            get {
+                return ResourceManager.GetString("URA0052Title", resourceCulture);
+            }
+        }
     }
 }
