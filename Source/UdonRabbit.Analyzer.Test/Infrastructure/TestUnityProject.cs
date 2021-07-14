@@ -177,7 +177,7 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
                 return;
             }
 
-            const string filename = "TestBehaviour";
+            const string filename = "TestBehaviour.cs";
 
             var codeFix = new TCodeFix();
             var documentId = DocumentId.CreateNewId(_solution.ProjectIds.First(), filename);
