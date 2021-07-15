@@ -8,7 +8,7 @@ using Xunit;
 
 namespace UdonRabbit.Analyzer.Test
 {
-    public class InvalidTargetPropertyFieldChangeCallbackTest : DiagnosticVerifier<InvalidTargetPropertyFieldChangeCallback>
+    public class InvalidTargetPropertyForFieldChangeCallbackTest : DiagnosticVerifier<InvalidTargetPropertyForFieldChangeCallback>
     {
         [Fact]
         public async Task UdonSharpBehaviourSpecifyDeclaredPropertyInFieldChangeCallbackHasNoDiagnosticsReport()
@@ -34,7 +34,7 @@ namespace UdonRabbit
         [Fact]
         public async Task UdonSharpBehaviourSpecifyNoDeclaredPropertyInFieldChangeCallbackHasDiagnosticsReport()
         {
-            var diagnostic = ExpectDiagnostic(InvalidTargetPropertyFieldChangeCallback.ComponentId)
+            var diagnostic = ExpectDiagnostic(InvalidTargetPropertyForFieldChangeCallback.ComponentId)
                              .WithSeverity(DiagnosticSeverity.Error)
                              .WithArguments("TestBehaviour");
 

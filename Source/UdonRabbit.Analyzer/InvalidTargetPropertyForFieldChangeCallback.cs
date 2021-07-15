@@ -12,7 +12,7 @@ using UdonRabbit.Analyzer.Udon;
 namespace UdonRabbit.Analyzer
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class InvalidTargetPropertyFieldChangeCallback : DiagnosticAnalyzer
+    public class InvalidTargetPropertyForFieldChangeCallback : DiagnosticAnalyzer
     {
         public const string ComponentId = "URA0053";
         private const string Category = UdonConstants.UdonSharpCategory;
