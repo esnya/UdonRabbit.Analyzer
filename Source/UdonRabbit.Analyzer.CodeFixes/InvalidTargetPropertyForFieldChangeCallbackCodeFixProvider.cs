@@ -29,7 +29,7 @@ namespace UdonRabbit.Analyzer
 
             var document = context.Document;
             var diagnostic = context.Diagnostics[0];
-            var action = CreateCodeAction(CodeFixResources.URA0052CodeFixTitle, ct => CreatePropertyDeclaration(document, declaration, ct), diagnostic.Id);
+            var action = CreateCodeAction(CodeFixResources.URA0053CodeFixTitle, ct => CreatePropertyDeclaration(document, declaration, ct), diagnostic.Id);
             context.RegisterCodeFix(action, diagnostic);
         }
 

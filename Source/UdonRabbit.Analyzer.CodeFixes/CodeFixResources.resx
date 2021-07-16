@@ -147,4 +147,7 @@
   <data name="URA0052CodeFixTitle" xml:space="preserve">
     <value>Use property setter assignment instead of field assignment</value>
   </data>
+  <data name="URA0053CodeFixTitle" xml:space="preserve">
+    <value>Create a new property</value>
+  </data>
 </root>
