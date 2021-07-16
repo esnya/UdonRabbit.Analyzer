@@ -58,7 +58,7 @@ namespace UdonRabbit.Analyzer
             if (property == null)
                 return document;
 
-            if (property.SetMethod != default && property.SetMethod.DeclaredAccessibility == Accessibility.Public)
+            if (property.SetMethod is { DeclaredAccessibility: Accessibility.Public })
             {
                 var oldNode = assignment.FirstAncestorOrSelf<AssignmentExpressionSyntax>();
                 var newNode = assignment.WithLeft(SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, memberAccess.Expression, SyntaxFactory.IdentifierName(targetProperty)));
