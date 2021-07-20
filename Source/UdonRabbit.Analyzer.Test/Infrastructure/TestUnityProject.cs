@@ -166,7 +166,7 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
             Diagnostics.Clear();
             Diagnostics.AddRange(diagnostics);
 
-            VerifyDiagnosticsResults(diagnostics.ToArray(), ExpectedDiagnostics.ToArray());
+            VerifyDiagnosticsResults(diagnostics.OrderBy(w => w.Location.GetLineSpan().StartLinePosition).ThenBy(w => w.Location.GetLineSpan().Span.Start).ToArray(), ExpectedDiagnostics.ToArray());
         }
 
         public async Task RunCodeFixAsync<TCodeFix>(string fixedSource, CancellationToken cancellationToken) where TCodeFix : CodeFixProvider, new()
