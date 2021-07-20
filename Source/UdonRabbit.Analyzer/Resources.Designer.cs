@@ -1463,5 +1463,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0053Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Only one field may target property に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0054Description {
+            get {
+                return ResourceManager.GetString("URA0054Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Only one field may target property &apos;{0}&apos; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0054MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0054MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Only one field may target property に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0054Title {
+            get {
+                return ResourceManager.GetString("URA0054Title", resourceCulture);
+            }
+        }
     }
 }
