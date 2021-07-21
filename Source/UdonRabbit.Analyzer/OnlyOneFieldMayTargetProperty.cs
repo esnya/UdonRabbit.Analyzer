@@ -37,17 +37,9 @@ namespace UdonRabbit.Analyzer
             if (!UdonSharpBehaviourUtility.ShouldAnalyzeSyntax(context.SemanticModel, declaration))
                 return;
 
-            bool IsFieldChangeCallbackAttribute(AttributeSyntax attr)
-            {
-                var t = context.SemanticModel.GetTypeInfo(attr);
-                if (t.Type == null)
-                    return false;
-                return t.Type.Equals(context.SemanticModel.Compilation.GetTypeByMetadataName(UdonConstants.UdonSharpFieldChangeCallbackFullName), SymbolEqualityComparer.Default);
-            }
-
-            var hasFieldChangeCallbackAttribute = declaration.AttributeLists.SelectMany(w => w.Attributes).Any(IsFieldChangeCallbackAttribute);
-            var attribute = declaration.AttributeLists.SelectMany(w => w.Attributes).First(IsFieldChangeCallbackAttribute);
-            var targetProperty = attribute.ArgumentList.Arguments.FirstOrDefault()?.Expression.ParseValue();
+            var hasFieldChangeCallbackAttribute = declaration.HasAttribute(context.SemanticModel, UdonConstants.UdonSharpFieldChangeCallbackFullName);
+            var attribute = declaration.GetAttributes(context.SemanticModel, UdonConstants.UdonSharpFieldChangeCallbackFullName).FirstOrDefault();
+            var targetProperty = attribute?.ArgumentList.Arguments.FirstOrDefault().Expression.ParseValue();
 
             if (hasFieldChangeCallbackAttribute && declaration.Declaration.Variables.Count >= 2)
             {
@@ -58,14 +50,14 @@ namespace UdonRabbit.Analyzer
             var cls = declaration.FirstAncestorOrSelf<ClassDeclarationSyntax>();
             var callbacks = cls.DescendantNodes()
                                .OfType<FieldDeclarationSyntax>()
-                               .Where(w => w.AttributeLists.SelectMany(v => v.Attributes).Any(IsFieldChangeCallbackAttribute));
+                               .Where(w => w.HasAttribute(context.SemanticModel, UdonConstants.UdonSharpFieldChangeCallbackFullName));
 
             foreach (var callback in callbacks)
             {
                 if (callback.IsEquivalentTo(declaration))
                     continue;
 
-                var attr = callback.AttributeLists.SelectMany(w => w.Attributes).First(IsFieldChangeCallbackAttribute);
+                var attr = callback.GetAttributes(context.SemanticModel, UdonConstants.UdonSharpFieldChangeCallbackFullName).First();
                 if (attr.ArgumentList.Arguments.FirstOrDefault()?.Expression.ParseValue() == targetProperty)
                 {
                     UdonSharpBehaviourUtility.ReportDiagnosticsIfValid(context, RuleSet, declaration, targetProperty);

@@ -73,3 +73,4 @@ It is a restriction of language features by the specification of UdonSharp. Basi
 | URA0052     | [Cannot set field with FieldChangeCallbackAttribute, use a property or SetProgramVariable](./URA0052.md)   |   UdonSharp   |   Error   |     o     |
 | URA0053     | [Invalid target property for FieldChangeCallbackAttribute](./URA0053.md)                                   |   UdonSharp   |   Error   |     o     |
 | URA0054     | [Only one field may target property](./URA0054.md)                                                         |   UdonSharp   |   Error   |     x     |
+| URA0055     | [Types must match between property and variable change field](./URA0055.md)                                |   UdonSharp   |   Error   |     x     |

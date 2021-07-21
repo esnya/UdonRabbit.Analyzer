@@ -1490,5 +1490,32 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0054Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Types must match between property and variable change field に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0055Description {
+            get {
+                return ResourceManager.GetString("URA0055Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Types must match between property and variable change field に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0055MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0055MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Types must match between property and variable change field に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0055Title {
+            get {
+                return ResourceManager.GetString("URA0055Title", resourceCulture);
+            }
+        }
     }
 }
