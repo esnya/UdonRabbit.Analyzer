@@ -1409,5 +1409,113 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0051Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Cannot set field with FieldChangeCallbackAttribute, use a property or SetProgramVariable に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0052Description {
+            get {
+                return ResourceManager.GetString("URA0052Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cannot set field with FieldChangeCallbackAttribute, use a property or SetProgramVariable に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0052MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0052MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cannot set field with FieldChangeCallbackAttribute, use a property or SetProgramVariable に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0052Title {
+            get {
+                return ResourceManager.GetString("URA0052Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Invalid target property for FieldChangeCallbackAttribute に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0053Description {
+            get {
+                return ResourceManager.GetString("URA0053Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Invalid target property for FieldChangeCallbackAttribute on {0} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0053MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0053MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Invalid target property for FieldChangeCallbackAttribute に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0053Title {
+            get {
+                return ResourceManager.GetString("URA0053Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Only one field may target property に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0054Description {
+            get {
+                return ResourceManager.GetString("URA0054Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Only one field may target property &apos;{0}&apos; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0054MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0054MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Only one field may target property に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0054Title {
+            get {
+                return ResourceManager.GetString("URA0054Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Types must match between property and variable change field に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0055Description {
+            get {
+                return ResourceManager.GetString("URA0055Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Types must match between property and variable change field に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0055MessageFormat {
+            get {
+                return ResourceManager.GetString("URA0055MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Types must match between property and variable change field に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0055Title {
+            get {
+                return ResourceManager.GetString("URA0055Title", resourceCulture);
+            }
+        }
     }
 }

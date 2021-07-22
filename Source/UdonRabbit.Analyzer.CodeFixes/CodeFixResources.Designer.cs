@@ -140,5 +140,23 @@ namespace UdonRabbit.Analyzer {
                 return ResourceManager.GetString("URA0047CodeFixTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Use property setter assignment instead of field assignment に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0052CodeFixTitle {
+            get {
+                return ResourceManager.GetString("URA0052CodeFixTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Create a new property に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string URA0053CodeFixTitle {
+            get {
+                return ResourceManager.GetString("URA0053CodeFixTitle", resourceCulture);
+            }
+        }
     }
 }

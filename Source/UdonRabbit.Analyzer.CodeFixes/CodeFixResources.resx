@@ -144,4 +144,10 @@
   <data name="URA0047CodeFixTitle" xml:space="preserve">
     <value>Generic method of GetComponent&lt;T&gt; is currently broken in Udon, use the GetComponent(Type) instead of GetComponent&lt;T&gt;()</value>
   </data>
+  <data name="URA0052CodeFixTitle" xml:space="preserve">
+    <value>Use property setter assignment instead of field assignment</value>
+  </data>
+  <data name="URA0053CodeFixTitle" xml:space="preserve">
+    <value>Create a new property</value>
+  </data>
 </root>

@@ -65,13 +65,13 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: UdonRabbit.Analyzer.VisualStudio.vsix
-          path: Source/UdonRabbit.Analyzer.VisualStudio/bin/Release/**/UdonRabbit.Analyzer.VisualStudio.vsix
+          name: UdonRabbit.Analyzer.VisualStudio.2019.vsix
+          path: Source/UdonRabbit.Analyzer.VisualStudio/bin/Release/**/UdonRabbit.Analyzer.VisualStudio.2019.vsix
 
       - name: Publish the package to Releases
         uses: softprops/action-gh-release@v1
         with:
-          files: Source/UdonRabbit.Analyzer.VisualStudio/bin/Release/**/UdonRabbit.Analyzer.VisualStudio.vsix
+          files: Source/UdonRabbit.Analyzer.VisualStudio/bin/Release/**/UdonRabbit.Analyzer.VisualStudio.2019.vsix
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

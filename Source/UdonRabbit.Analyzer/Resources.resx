@@ -508,4 +508,40 @@
   <data name="URA0051Title" xml:space="preserve">
     <value>UdonSharp does not currently support initializers on properties</value>
   </data>
+  <data name="URA0052Description" xml:space="preserve">
+    <value>Cannot set field with FieldChangeCallbackAttribute, use a property or SetProgramVariable</value>
+  </data>
+  <data name="URA0052MessageFormat" xml:space="preserve">
+    <value>Cannot set field with FieldChangeCallbackAttribute, use a property or SetProgramVariable</value>
+  </data>
+  <data name="URA0052Title" xml:space="preserve">
+    <value>Cannot set field with FieldChangeCallbackAttribute, use a property or SetProgramVariable</value>
+  </data>
+  <data name="URA0053Description" xml:space="preserve">
+    <value>Invalid target property for FieldChangeCallbackAttribute</value>
+  </data>
+  <data name="URA0053MessageFormat" xml:space="preserve">
+    <value>Invalid target property for FieldChangeCallbackAttribute on {0}</value>
+  </data>
+  <data name="URA0053Title" xml:space="preserve">
+    <value>Invalid target property for FieldChangeCallbackAttribute</value>
+  </data>
+  <data name="URA0054Description" xml:space="preserve">
+    <value>Only one field may target property</value>
+  </data>
+  <data name="URA0054MessageFormat" xml:space="preserve">
+    <value>Only one field may target property '{0}'</value>
+  </data>
+  <data name="URA0054Title" xml:space="preserve">
+    <value>Only one field may target property</value>
+  </data>
+  <data name="URA0055Description" xml:space="preserve">
+    <value>Types must match between property and variable change field</value>
+  </data>
+  <data name="URA0055MessageFormat" xml:space="preserve">
+    <value>Types must match between property and variable change field</value>
+  </data>
+  <data name="URA0055Title" xml:space="preserve">
+    <value>Types must match between property and variable change field</value>
+  </data>
 </root>

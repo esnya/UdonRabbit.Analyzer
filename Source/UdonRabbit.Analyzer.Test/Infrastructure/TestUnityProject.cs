@@ -166,7 +166,7 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
             Diagnostics.Clear();
             Diagnostics.AddRange(diagnostics);
 
-            VerifyDiagnosticsResults(diagnostics.ToArray(), ExpectedDiagnostics.ToArray());
+            VerifyDiagnosticsResults(diagnostics.OrderBy(w => w.Location.GetLineSpan().StartLinePosition).ThenBy(w => w.Location.GetLineSpan().Span.Start).ToArray(), ExpectedDiagnostics.ToArray());
         }
 
         public async Task RunCodeFixAsync<TCodeFix>(string fixedSource, CancellationToken cancellationToken) where TCodeFix : CodeFixProvider, new()
@@ -177,7 +177,7 @@ namespace UdonRabbit.Analyzer.Test.Infrastructure
                 return;
             }
 
-            const string filename = "TestBehaviour";
+            const string filename = "TestBehaviour.cs";
 
             var codeFix = new TCodeFix();
             var documentId = DocumentId.CreateNewId(_solution.ProjectIds.First(), filename);

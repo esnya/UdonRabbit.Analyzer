@@ -5,7 +5,7 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <RootNamespace>UdonRabbit.Analyzer.VisualStudio</RootNamespace>
-    <AssemblyName>UdonRabbit.Analyzer.VisualStudio</AssemblyName>
+    <AssemblyName>UdonRabbit.Analyzer.VisualStudio.2019</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup>
