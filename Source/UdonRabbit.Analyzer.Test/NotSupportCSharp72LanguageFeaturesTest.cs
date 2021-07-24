@@ -55,6 +55,7 @@ namespace UdonRabbit
             var d0 = 0x0001_F408;
             var d1 = [|0x_0001_F408|];
             var d2 = [|0X_0001_F408|];
+            var d3 = 0x000b_0000;
         }
     }
 }

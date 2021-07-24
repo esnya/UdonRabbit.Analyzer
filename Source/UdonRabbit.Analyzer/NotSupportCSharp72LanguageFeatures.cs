@@ -21,7 +21,7 @@ namespace UdonRabbit.Analyzer
         private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.URA0049Description), Resources.ResourceManager, typeof(Resources));
         private static readonly DiagnosticDescriptor RuleSet = new(ComponentId, Title, MessageFormat, Category, DiagnosticSeverity.Error, true, Description, HelpLinkUri);
 
-        private static readonly Regex LeadingDigitSeparatorNumericLiteralRegex = new("0(b|B|x|X)_", RegexOptions.Compiled);
+        private static readonly Regex LeadingDigitSeparatorNumericLiteralRegex = new("^0(b|B|x|X)_", RegexOptions.Compiled);
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(RuleSet);
 
