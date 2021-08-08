@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 using UnityEditor;
 
-namespace esnyaLaboratory.UdonRabbit.Analyzer
+namespace EsnyaFactory.UdonRabbit.Analyzer
 {
     public class SolutionGeneratorHook : AssetPostprocessor
     {
