@@ -143,14 +143,14 @@ jobs:
       - name: Copy Build Artifacts (Unity)
         working-directory: Source/UdonRabbit.Analyzer.UnityPackage
         run: |
-          cp ../UdonRabbit.Analyzer.Package/bin/Release/netstandard2.0/UdonRabbit.Analyzer.CodeFixes.dll ./Assets/EsnyaFactory/UdonRabbit/Analyzer/Plugins/UdonRabbit.Analyzer.CodeFixes.dll
-          cp ../UdonRabbit.Analyzer.Package/bin/Release/netstandard2.0/UdonRabbit.Analyzer.dll ./Assets/EsnyaFactory/UdonRabbit/Analyzer/Plugins/UdonRabbit.Analyzer.dll
+          cp ../UdonRabbit.Analyzer.Package/bin/Release/netstandard2.0/UdonRabbit.Analyzer.CodeFixes.dll ./Assets/UdonRabbit/Analyzer/Plugins/UdonRabbit.Analyzer.CodeFixes.dll
+          cp ../UdonRabbit.Analyzer.Package/bin/Release/netstandard2.0/UdonRabbit.Analyzer.dll ./Assets/UdonRabbit/Analyzer/Plugins/UdonRabbit.Analyzer.dll
 
       - name: Create MetaList for Packaging (Unity)
         working-directory: Source/UdonRabbit.Analyzer.UnityPackage
         run: |
-          echo "Assets/EsnyaFactory.meta" >> MetaList
-          Get-ChildItem -Path "Assets/EsnyaFactory" -Recurse -Filter "*.meta" -Name | %{ "Assets/EsnyaFactory/{0}" -f $_ } | %{ $_.Replace("\", "/") } >> MetaList
+          echo "Assets/UdonRabbit.meta" >> MetaList
+          Get-ChildItem -Path "Assets/UdonRabbit" -Recurse -Filter "*.meta" -Name | %{ "Assets/{0}" -f $_ } | %{ $_.Replace("\", "/") } >> MetaList
 
       - name: Packaging for Unity
         uses: pCYSl5EDgo/create-unitypackage@master
